@@ -97,12 +97,16 @@ class CartController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
 public function tambahLayanan(Request $request, $id)
 {
     $lay = $request->input('lay');
 
     $layanan = Service::findOrFail($id);
+
+    // Pastikan ada cukup stok sebelum menambahkan ke keranjang
+    if ($layanan->quantity < $lay) {
+        return back()->with('error', 'Stok tidak mencukupi');
+    }
 
     $cart = Cart::where('name', $layanan->name)->first();
 
@@ -112,8 +116,11 @@ public function tambahLayanan(Request $request, $id)
         $cart = new Cart();
         $cart->customer_id = $id_customer;
         $cart->name = $layanan->name;
-        $cart->price = $layanan->price*$lay;
+        $cart->price = $layanan->price * $lay;
         $cart->quantity = $lay;
+
+        $layanan->quantity -= $lay;
+        $layanan->save();
 
         $imagePath = public_path('layanan/' . $layanan->img_service);
         $newImagePath = public_path('keranjang/' . $layanan->img_service);
@@ -126,7 +133,11 @@ public function tambahLayanan(Request $request, $id)
         $cart->save();
     } else {
         $cart->quantity += $lay;
-        $cart->price = $cart->quantity*$layanan->price;
+        $cart->price = $cart->quantity * $layanan->price;
+
+        // Update kolom quantity pada layanan
+        $layanan->quantity -= $lay;
+        $layanan->save();
 
         $imagePath = public_path('layanan/' . $layanan->img_service);
         $newImagePath = public_path('keranjang/' . $layanan->img_service);
@@ -144,6 +155,7 @@ public function tambahLayanan(Request $request, $id)
 
 
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -156,17 +168,41 @@ public function tambahLayanan(Request $request, $id)
 
     $cart = Cart::findOrFail($id);
 
-    if ($cart && $min > 0) {
-        $originalPrice = $cart->price / $cart->quantity;
-        $newPrice = $originalPrice * $min;
+    if ($cart) {
+        $originalQuantity = $cart->quantity;
 
         $cart->quantity = $min;
-        $cart->price = $newPrice;
+        $cart->price = $cart->price / $originalQuantity * $min;
         $cart->save();
+
+        $product = Product::where('name', $cart->name)->first();
+        if ($product) {
+            // Pengecekan stok produk
+            if ($product->quantity >= ($originalQuantity - $min)) {
+                $product->quantity += ($originalQuantity - $min);
+                $product->save();
+            } else {
+                return back()->with('error', 'Stok produk habis');
+            }
+        }
+
+        $service = Service::where('name', $cart->name)->first();
+        if ($service) {
+            // Pengecekan stok layanan
+            if ($service->quantity >= ($originalQuantity - $min)) {
+                $service->quantity += ($originalQuantity - $min);
+                $service->save();
+            } else {
+                return back()->with('error', 'Stok layanan habis');
+            }
+        }
     }
 
     return back();
 }
+
+
+
 
 
     /**
@@ -188,17 +224,38 @@ public function tambahLayanan(Request $request, $id)
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        $item = Cart::findOrFail($id);
+{
+    $item = Cart::findOrFail($id);
 
-        if($item){
+    if ($item) {
+        $name = $item->name;
+        $quantity = $item->quantity;
+
+        // Hapus item dari tabel cart
         $item->delete();
 
-        return back()->with('success', 'Item dihapus');
-        }else{
-            return back()->with('error', 'Gagal menghapus.');
+        // Cek apakah item ada dalam tabel products
+        $product = Product::where('name', $name)->first();
+        if ($product) {
+            // Jika ada, tambahkan quantity ke tabel products
+            $product->quantity += $quantity;
+            $product->save();
         }
+
+        // Cek apakah item ada dalam tabel service
+        $service = Service::where('name', $name)->first();
+        if ($service) {
+            // Jika ada, tambahkan quantity ke tabel service
+            $service->quantity += $quantity;
+            $service->save();
+        }
+
+        return back()->with('success', 'Item dihapus dan quantity ditambahkan');
+    } else {
+        return back()->with('error', 'Gagal menghapus.');
     }
+}
+
 
     public function checkout(Request $request){
 

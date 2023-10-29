@@ -51,7 +51,7 @@
                 </form>
                 @elseif ($singleOrder->order_satus === 'Diproses' && $singleOrder->payment_status === 'Lunas')
                 <br>
-                <button type="button" class="btn btn-info">Cetak nota</button>
+                <a href="{{url('cetakNota/'.$singleOrder->id)}}" class="btn btn-info">Cetak nota</a>
                 @endif
             </div>
         @endforeach

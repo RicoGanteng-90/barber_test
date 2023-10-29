@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Mpdf\Mpdf;
+
+use App\Models\Order;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
 {
@@ -11,9 +16,11 @@ class NoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $note = Order::findOrFail($id);
+
+        return view('cetak', compact('note'));
     }
 
     /**
@@ -21,9 +28,16 @@ class NoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function cetak_pdf($id)
     {
-        //
+        $user = Auth::user();
+
+        $note = Order::findOrFail($id);
+        $pdf = app()->make('dompdf.wrapper');
+        $pdf->loadView('cetak', compact('note'));
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->stream('Order-Dari-'.$user->name.'-'.$note->id);
+
     }
 
     /**

@@ -18,6 +18,10 @@
     </div>
     <!-- Page Header End -->
 
+    @if(session('error'))
+        <div style="text-align: center;" class="alert alert-danger">{{session('error')}}</div>
+    @endif
+
     <!-- Product Start -->
     <div class="container-xxl py-5">
         <div class="container">

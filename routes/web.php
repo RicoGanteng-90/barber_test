@@ -11,6 +11,7 @@ use App\Http\Controllers\admin\StockController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
@@ -61,6 +62,10 @@ Route::post('/uploadBukti/{id}', [OrderController::class,'uploadBukti'])->name('
 
 //Route untuk halaman layanan customer
 Route::get('/service', [ServiceController::class,'index'])->name('service.index');
+
+//Route untuk halaman pdf
+Route::get('/note/{id}', [NoteController::class,'index'])->name('note.index');
+Route::get('/cetakNota/{id}', [NoteController::class,'cetak_pdf'])->name('note.cetak_pdf');
 
 });
 

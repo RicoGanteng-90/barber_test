@@ -90,9 +90,6 @@
                     <a href="{{ route('order.index') }}" class="nav-item nav-link {{ Request::is('order*') ? 'active' : '' }}">Order</a>
                 </div>
                 <div class="d-none d-lg-flex ms-2">
-                    <a class="btn-sm-square bg-dark rounded-circle ms-3" href="">
-                        <small class="fa fa-search text-body"></small>
-                    </a>
 
                     <div class="dropdown">
                         <small class="fa fa-user text-body btn-sm-square bg-dark rounded-circle ms-3" data-bs-toggle="dropdown" aria-expanded="false" style="cursor:pointer;"></small>
@@ -106,9 +103,17 @@
                     </ul>
                     </div>
 
-                    <a class="btn-sm-square bg-dark rounded-circle ms-3" href="{{ route ('cart.index')}}">
+                    @php
+                        $totalQuantity = \App\Models\Cart::sum('quantity');
+                    @endphp
+
+                    <a class="btn-sm-square bg-dark rounded-circle ms-3" href="{{ route('cart.index') }}">
                         <small class="fa fa-shopping-bag text-body"></small>
+                        @if($totalQuantity > 0)
+                            <span class="badge badge-pill badge-danger">{{ $totalQuantity }}</span>
+                        @endif
                     </a>
+
                 </div>
             </div>
         </nav>
