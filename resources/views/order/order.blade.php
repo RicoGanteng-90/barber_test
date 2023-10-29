@@ -43,8 +43,12 @@
                 <button type="submit" class="btn btn-danger">Hapus order</button>
                 </form>
                 @elseif ($singleOrder->order_satus === 'Diproses' && $singleOrder->payment_status === 'Belum lunas')
-                <input type="file" name="proof">
-                <button type="button" class="btn btn-secondary">Kirim</button>
+                <form action="{{url('uploadBukti/'.$singleOrder->id)}}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" id="order_img" name="order_img">
+                    <div id="file-name"></div>
+                    <button type="submit" class="btn btn-secondary">Kirim</button>
+                </form>
                 @elseif ($singleOrder->order_satus === 'Diproses' && $singleOrder->payment_status === 'Lunas')
                 <br>
                 <button type="button" class="btn btn-info">Cetak nota</button>

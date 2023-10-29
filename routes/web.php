@@ -57,6 +57,7 @@ Route::get('/about', [AboutController::class,'index'])->name('about.index');
 //Route untuk halaman order customer
 Route::get('/order', [OrderController::class,'index'])->name('order.index');
 Route::delete('/orderDelete/{id}', [OrderController::class,'hapusOrder'])->name('order.delete');
+Route::post('/uploadBukti/{id}', [OrderController::class,'uploadBukti'])->name('order.bukti');
 
 //Route untuk halaman layanan customer
 Route::get('/service', [ServiceController::class,'index'])->name('service.index');
