@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Models\Stok_supplier;
 use App\Http\Controllers\Controller;
-use App\Models\Kelola_barang;
-use App\Models\Kelola_supplier;
+use App\Models\Feature;
+use App\Models\Jual_layanan;
+use App\Models\User;
+use Illuminate\Http\Request;
 
-class SupplierController extends Controller
+class AdminServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,16 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Kelola_supplier::all();
+        $layanan = Jual_layanan::all();
 
-        return view('admin.supplier.supplier', compact('suppliers'));
+        return view('admin.layanan.laporan3', compact('layanan'));
+    }
+
+    public function tampilUser()
+    {
+        $user = User::all();
+
+        return view('admin.layanan.service', compact('user'));
     }
 
     /**
@@ -27,18 +34,38 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $supplier = Kelola_supplier::all();
+        //
+    }
 
-        if($supplier){
-            $suppliers = new Kelola_supplier();
-            $suppliers->nama_supplier = $request->input('nama_supplier');
-            $suppliers->email = $request->input('email');
-            $suppliers->no_telp = $request->input('no_telp');
-            $suppliers->alamat = $request->input('alamat');
-            $suppliers->save();
+
+    public function jualLayanan(){
+        $feature = Feature::all();
+
+        $totalPrice = 0;
+        $total = 0;
+        $productNames = [];
+
+        foreach ($feature as $item) {
+            $totalPrice += $item->subtotal;
+            $total += $item->total;
+            $productNames[] = $item->name . '(' . $item->total . ')';
+            $customer = $item->customer;
         }
+
+        $productList = implode(', ', $productNames);
+
+        Feature::truncate();
+
+            $notabarang = new Jual_layanan();
+            $notabarang->tanggal_transaksi = now();
+            $notabarang->customer = $customer;
+            $notabarang->jumlah = $total;
+            $notabarang->total_harga = $totalPrice;
+            $notabarang->layanan = $productList;
+            $notabarang->save();
+
         return back();
     }
 
@@ -48,7 +75,7 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
         //
     }
@@ -84,16 +111,7 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $supplier = Kelola_supplier::findOrFail($id);
-
-        if($supplier){
-            $supplier->nama_supplier = $request->input('nama_supplier');
-            $supplier->email = $request->input('email');
-            $supplier->no_telp = $request->input('no_telp');
-            $supplier->alamat = $request->input('alamat');
-            $supplier->save();
-        }
-        return back();
+        //
     }
 
     /**
@@ -104,10 +122,6 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        $supplier = Kelola_supplier::findOrFail($id);
-
-        $supplier->delete();
-
-        return back();
+        //
     }
 }

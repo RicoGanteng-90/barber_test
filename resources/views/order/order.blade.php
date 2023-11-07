@@ -23,33 +23,34 @@
         @foreach ($order as $singleOrder)
             <div class="order-box" style="color: aliceblue;">
                 <ul>
-                    <li><strong>Nama: {{ $singleOrder->name }}</strong></li>
+                    <li><strong>Nama: {{ $singleOrder->nama_customer }}</strong></li>
+                    <li><strong>Email: {{ $singleOrder->email_customer }}</strong></li>
+                    <li><strong>Nomor: {{ $singleOrder->no_telp }}</strong></li>
                     <li><strong>Barang/layanan: {{ $singleOrder->product }}</strong></li>
-                    <li><strong>Total: {{ $singleOrder->total }}</strong></li>
-                    <li><strong>Tanggal order: {{ $singleOrder->order_time }}</strong></li>
-                    <li><strong>Tanggal Acara: {{ $singleOrder->event_time }}</strong></li>
-                    <li><strong>Metode pembayaran: {{ $singleOrder->payment_method }}</strong></li>
-                    <li><strong>Status pesanan: {{ $singleOrder->order_satus }}</strong></li>
-                    <li><strong>Status pembayaran: {{ $singleOrder->payment_status }}</strong></li>
+                    <li><strong>Tanggal order: {{ $singleOrder->tanggal_transaksi }}</strong></li>
+                    <li><strong>Tanggal Acara: {{ $singleOrder->tanggal_pemesanan }}</strong></li>
+                    <li><strong>Metode pembayaran: {{ $singleOrder->metode_pembayaran }}</strong></li>
+                    <li><strong>Status pesanan: {{ $singleOrder->status_pemesanan }}</strong></li>
+                    <li><strong>Status pembayaran: {{ $singleOrder->status_pembayaran }}</strong></li>
                 </ul>
                 <div class="total">
-                    <strong>Total Harga: {{ $singleOrder->total_price }}</strong>
+                    <strong>Total Harga: {{ $singleOrder->total_bayar }}</strong>
                 </div>
                 <br>
-                @if ($singleOrder->order_satus === 'Menunggu konfirmasi' && $singleOrder->payment_status === 'Belum lunas')
+                @if ($singleOrder->status_pemesanan === 'Menunggu konfirmasi' && $singleOrder->status_pembayaran === 'Belum lunas')
                 <form action="{{url('orderDelete/'.$singleOrder->id)}}" method="post">
                     @csrf
                     @method('DELETE')
                 <button type="submit" class="btn btn-danger">Hapus order</button>
                 </form>
-                @elseif ($singleOrder->order_satus === 'Diproses' && $singleOrder->payment_status === 'Belum lunas')
+                @elseif ($singleOrder->status_pemesanan === 'Diproses' && $singleOrder->status_pembayaran === 'Belum lunas')
                 <form action="{{url('uploadBukti/'.$singleOrder->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="file" id="order_img" name="order_img">
                     <div id="file-name"></div>
                     <button type="submit" class="btn btn-secondary">Kirim</button>
                 </form>
-                @elseif ($singleOrder->order_satus === 'Diproses' && $singleOrder->payment_status === 'Lunas')
+                @elseif ($singleOrder->status_pemesanan === 'Diproses' && $singleOrder->status_pembayaran === 'Lunas')
                 <br>
                 <a href="{{url('cetakNota/'.$singleOrder->id)}}" class="btn btn-info">Cetak nota</a>
                 @endif

@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Kelola_pembelian extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name', 'price', 'information', 'product_img','quantity'
+        'name', 'price', 'product_img', 'quantity', 'supplier', 'tanggal'
     ];
 }
-

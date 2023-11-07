@@ -111,8 +111,8 @@
 								</td>
 
 								<td>
-									Tanggal order: {{$note->order_time}}<br />
-									Tanggal acara: {{$note->event_time}}
+									Tanggal order: {{$note->tanggal_transaksi}}<br />
+									Tanggal acara: {{$note->tanggal_pemesanan}}
 								</td>
 							</tr>
 						</table>
@@ -130,7 +130,7 @@
 								</td>
 
 								<td>
-									{{$note->name}}
+									{{$note->nama_customer}}
 								</td>
 							</tr>
 						</table>
@@ -144,7 +144,7 @@
 				</tr>
 
 				<tr class="details">
-					<td>{{$note->payment_method}}</td>
+					<td>{{$note->metode_pembayaran}}</td>
 
 					<td></td>
 				</tr>
@@ -158,7 +158,7 @@
 				<tr class="item">
 					<td>{{$note->product}}</td>
 
-					<td>{{$note->total_price}}</td>
+					<td>{{$note->total_bayar}}</td>
 				</tr>
 
 				<tr class="total">

@@ -56,7 +56,7 @@
                     <h2>Create your Account</h2>
                     <label>
                         <span>Name</span>
-                        <input name="name" type="text" required/>
+                        <input name="nama_user" type="text" required/>
                     </label>
                     <label>
                         <span>Email</span>
@@ -67,8 +67,12 @@
                         <input name="password" type="password" required/>
                     </label>
                     <label>
-                        <span>Number</span>
-                        <input name="number" type="text" required/>
+                        <span>Nomor_telp</span>
+                        <input name="no_telp" type="text" required/>
+                    </label>
+                    <label>
+                        <span>Alamat</span>
+                        <input name="alamat" type="text" required/>
                     </label>
                     <button type="submit" class="submit">Sign Up</button>
                 </div>

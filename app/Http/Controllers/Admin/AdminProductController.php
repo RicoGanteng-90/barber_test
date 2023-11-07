@@ -3,11 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Items;
-use App\Models\Product;
-use App\Models\Supplier;
 use Illuminate\Http\Request;
 use App\Models\Stok_supplier;
 use App\Http\Controllers\Controller;
+use App\Models\Jual_barang;
+use App\Models\Kelola_barang;
+use App\Models\Kelola_layanan;
+use App\Models\Kelola_pembelian;
+use App\Models\Kelola_supplier;
+use App\Models\Nota_barang;
+use App\Models\User;
 use Illuminate\Support\Facades\Date;
 
 class AdminProductController extends Controller
@@ -19,31 +24,65 @@ class AdminProductController extends Controller
      */
     public function index()
     {
-        $items = Items::all();
+        $items = Kelola_pembelian::all();
 
-        $supplier = Supplier::all();
+        $supplier = Kelola_supplier::all();
 
         $barangSup = Stok_supplier::all();
 
-        return view('admin.product.product', compact('items', 'supplier', 'barangSup'));
+        $customer = User::all();
+
+        $barang = Kelola_barang::all();
+
+        return view('admin.product.product', compact('items', 'supplier', 'barangSup', 'customer', 'barang'));
     }
 
 
     public function tambahSupplier(Request $request, $id)
     {
-        $items2 = Items::all();
+        $items2 = Kelola_pembelian::all();
 
         foreach($items2 as $items2)
         {
-            $supplier = Supplier::findOrFail($id);
+            $supplier = Kelola_supplier::findOrFail($id);
             if($supplier)
             {
-                $items2->supplier = $supplier->name;
+                $items2->supplier = $supplier->nama_supplier;
                 $items2->save();
             }
         }
         return back();
     }
+
+    public function tambahBarang(){
+        $kelola_pembelian = Kelola_pembelian::all();
+
+        $totalPrice = 0;
+        $total = 0;
+        $productNames = [];
+
+        foreach ($kelola_pembelian as $item) {
+            $totalPrice += $item->total_beli;
+            $total += $item->quantity;
+            $productNames[] = $item->name . '(' . $item->quantity . ')';
+            $supplier = $item->supplier;
+        }
+
+        $productList = implode(', ', $productNames);
+
+        Kelola_pembelian::truncate();
+
+            $notabarang = new Nota_barang();
+            $notabarang->tanggal_transaksi = now();
+            $notabarang->supplier = $supplier;
+            $notabarang->jumlah = $total;
+            $notabarang->total = $totalPrice;
+            $notabarang->barang = $productList;
+            $notabarang->save();
+
+        return back();
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -55,18 +94,18 @@ class AdminProductController extends Controller
         $qtyy = $request->input('qtyy');
 
     // Ambil stok dari database berdasarkan ID yang diberikan
-    $item = Stok_supplier::findOrFail($id);
+    $item = Kelola_barang::findOrFail($id);
 
     if ($item->quantity >= $qtyy && $qtyy > 0) {
         // Periksa apakah produk sudah ada
-        $items = Items::where('name', $item->name)->first();
+        $items = Kelola_pembelian::where('name', $item->nama_barang)->first();
 
         if (!$items) {
             // Produk belum ada, buat entri produk baru
-            $items = new Items();
-            $items->name = $item->name;
-            $items->price = $item->price;
-            $items->subtotal = $qtyy * $item->price;
+            $items = new Kelola_pembelian();
+            $items->name = $item->nama_barang;
+            $items->price = $item->harga_barang;
+            $items->total_beli = $qtyy * $item->harga_barang;
             $items->product_img = $item->product_img;
             $items->quantity = $qtyy;
             $items->tanggal = now();
@@ -74,13 +113,13 @@ class AdminProductController extends Controller
         } else {
             // Produk sudah ada, tambahkan qty2 ke quantity
             $items->quantity += $qtyy;
-            $items->subtotal = $items->quantity * $item->price;
+            $items->total_beli = $items->quantity * $item->harga_barang;
             $items->save();
         }
 
-        return back()->with('success', 'Stok dan quantity produk telah berhasil diperbarui');
+        return back()->with('success', 'Stok berhasil diperbarui');
     } else {
-        return back()->with('error', 'Stok habis atau qty2 tidak valid');
+        return back()->with('error', 'Stok habis');
     }
     }
 
@@ -102,11 +141,20 @@ class AdminProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function tampilNota()
     {
+        $nota = Nota_barang::all();
 
+        return view('admin.product.laporan', compact('nota'));
     }
 
+
+    public function tampilNota2()
+    {
+        $jual = Jual_barang::all();
+
+        return view('admin.product.laporan2', compact('jual'));
+    }
     /**
      * Show the form for editing the specified resource.
      *

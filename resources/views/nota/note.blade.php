@@ -1,6 +1,6 @@
 @extends('admin.layout.layout')
 
-@section('title', 'Dashboard')
+@section('title', 'Nota')
 
 @section('content')
             <div id="layoutSidenav_content">

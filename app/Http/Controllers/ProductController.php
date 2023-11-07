@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelola_barang;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product2 = Product::all();
+        $product2 = Kelola_barang::all();
 
         return view('product.product', compact('product2'));
     }
@@ -27,18 +28,18 @@ class ProductController extends Controller
     public function create(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:80',
+            'nama_barang' => 'required|string|max:80',
             'information' => 'string|max:500',
-            'price' => 'required|string|max:50',
+            'harga_barang' => 'required|string|max:50',
             'product_img' => 'image|max:2048',
-            'Quantity' => 'string',
+            'quantity' => 'string',
         ]);
 
         if($validatedData){
-        $product = new Product();
-        $product->name = $validatedData['name'];
+        $product = new Kelola_barang();
+        $product->nama_barang = $validatedData['nama_barang'];
         $product->information = $validatedData['information'];
-        $product->price = $validatedData['price'];
+        $product->harga_barang = $validatedData['harga_barang'];
         $product->quantity = $validatedData['quantity'];
 
         if ($request->hasFile('product_img')) {

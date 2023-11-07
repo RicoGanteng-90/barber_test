@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kelola_pemesanan;
 use Illuminate\Http\Request;
 
 class AdminOrderController extends Controller
@@ -14,7 +15,9 @@ class AdminOrderController extends Controller
      */
     public function index()
     {
-        return view('admin.order.order');
+        $order = Kelola_pemesanan::all();
+
+        return view('admin.order.order', compact('order'));
     }
 
     /**
@@ -36,6 +39,19 @@ class AdminOrderController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function download($order_img)
+    {
+        $filePath = public_path('bukti/'.$order_img);
+        if (file_exists($filePath)) {
+            $originalFileName = pathinfo($order_img, PATHINFO_FILENAME);
+            $extension = pathinfo($order_img, PATHINFO_EXTENSION);
+
+            $newFileName = 'buktiPembayaran.'.$extension; // Nama baru yang diinginkan untuk file yang diunduh
+            return response()->download($filePath, $newFileName);
+        }
+        return back();
     }
 
     /**
@@ -69,7 +85,17 @@ class AdminOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $order = Kelola_pemesanan::findOrFail($id);
+
+        $orderStatus = $request->input('status_pemesanan');
+        $paymentStatus = $request->input('status_pembayaran');
+
+        $order->status_pemesanan = $orderStatus;
+        $order->status_pembayaran = $paymentStatus;
+        $order->save();
+
+        return back();
+
     }
 
     /**
@@ -80,6 +106,17 @@ class AdminOrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $order = Kelola_pemesanan::findOrFail($id);
+
+        if ($order->order_img) {
+            $oldFilePath = public_path('bukti/'.$order->order_img);
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
+        }
+
+        $order->delete();
+
+        return back();
     }
 }

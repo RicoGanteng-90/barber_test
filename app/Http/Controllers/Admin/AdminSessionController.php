@@ -48,7 +48,7 @@ class AdminSessionController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // Jika berhasil login, arahkan sesuai dengan peran pengguna.
-            if (Auth::user()->role == 'admin') {
+            if (Auth::user()->role_user == 'owner') {
                 return redirect()->route('admindashboard.index');
             } else {
                 return redirect()->route('home.index');
@@ -99,8 +99,14 @@ class AdminSessionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/adminlogin');
     }
 }

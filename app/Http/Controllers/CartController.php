@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use App\Models\Order;
-use App\Models\Product;
-use App\Models\Service;
+use App\Models\Kelola_barang;
+use App\Models\Kelola_layanan;
+use App\Models\Kelola_pemesanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -34,18 +34,18 @@ class CartController extends Controller
     {
         $qty3 = $request->input('jumlah');
 
-    $prod = Product::findOrFail($id);
+    $prod = Kelola_barang::findOrFail($id);
 
     $id_customer = Auth::id();
 
     if ($prod->quantity >= $qty3 && $qty3 > 0) {
-        $cart = Cart::where('name', $prod->name)->first();
+        $cart = Cart::where('name', $prod->nama_barang)->first();
 
         if (!$cart) {
             $cart = new cart();
             $cart->customer_id = $id_customer;
-            $cart->name = $prod->name;
-            $cart->price = $prod->price*$qty3;
+            $cart->name = $prod->nama_barang;
+            $cart->price = $prod->harga_barang*$qty3;
             $cart->quantity = $qty3;
 
             $imagePath = public_path('product/' . $prod->product_img);
@@ -59,7 +59,7 @@ class CartController extends Controller
             $cart->save();
         } else {
             $cart->quantity += $qty3;
-            $cart->price = $cart->quantity*$prod->price;
+            $cart->price = $cart->quantity*$prod->harga_barang;
 
             $imagePath = public_path('product/' . $prod->product_img);
             $newImagePath = public_path('keranjang/' . $prod->product_img);
@@ -101,22 +101,22 @@ public function tambahLayanan(Request $request, $id)
 {
     $lay = $request->input('lay');
 
-    $layanan = Service::findOrFail($id);
+    $layanan = Kelola_layanan::findOrFail($id);
 
     // Pastikan ada cukup stok sebelum menambahkan ke keranjang
     if ($layanan->quantity < $lay) {
         return back()->with('error', 'Stok tidak mencukupi');
     }
 
-    $cart = Cart::where('name', $layanan->name)->first();
+    $cart = Cart::where('name', $layanan->nama_layanan)->first();
 
     $id_customer = Auth::id();
 
     if (!$cart) {
         $cart = new Cart();
         $cart->customer_id = $id_customer;
-        $cart->name = $layanan->name;
-        $cart->price = $layanan->price * $lay;
+        $cart->name = $layanan->nama_layanan;
+        $cart->price = $layanan->harga_layanan * $lay;
         $cart->quantity = $lay;
 
         $layanan->quantity -= $lay;
@@ -133,7 +133,7 @@ public function tambahLayanan(Request $request, $id)
         $cart->save();
     } else {
         $cart->quantity += $lay;
-        $cart->price = $cart->quantity * $layanan->price;
+        $cart->price = $cart->quantity * $layanan->harga_layanan;
 
         // Update kolom quantity pada layanan
         $layanan->quantity -= $lay;
@@ -175,7 +175,7 @@ public function tambahLayanan(Request $request, $id)
         $cart->price = $cart->price / $originalQuantity * $min;
         $cart->save();
 
-        $product = Product::where('name', $cart->name)->first();
+        $product = Kelola_barang::where('nama_barang', $cart->nama_barang)->first();
         if ($product) {
             // Pengecekan stok produk
             if ($product->quantity >= ($originalQuantity - $min)) {
@@ -186,7 +186,7 @@ public function tambahLayanan(Request $request, $id)
             }
         }
 
-        $service = Service::where('name', $cart->name)->first();
+        $service = Kelola_layanan::where('nama_layanan', $cart->name)->first();
         if ($service) {
             // Pengecekan stok layanan
             if ($service->quantity >= ($originalQuantity - $min)) {
@@ -231,21 +231,16 @@ public function tambahLayanan(Request $request, $id)
         $name = $item->name;
         $quantity = $item->quantity;
 
-        // Hapus item dari tabel cart
         $item->delete();
 
-        // Cek apakah item ada dalam tabel products
-        $product = Product::where('name', $name)->first();
+        $product = Kelola_barang::where('nama_barang', $name)->first();
         if ($product) {
-            // Jika ada, tambahkan quantity ke tabel products
             $product->quantity += $quantity;
             $product->save();
         }
 
-        // Cek apakah item ada dalam tabel service
-        $service = Service::where('name', $name)->first();
+        $service = Kelola_layanan::where('nama_layanan', $name)->first();
         if ($service) {
-            // Jika ada, tambahkan quantity ke tabel service
             $service->quantity += $quantity;
             $service->save();
         }
@@ -265,17 +260,18 @@ public function tambahLayanan(Request $request, $id)
 
             if ($user) {
 
-                $order = new Order();
+                $order = new Kelola_pemesanan();
                     $order->customer_id = $user->id;
-                    $order->name = $user->name;
+                    $order->nama_customer = $user->nama_user;
+                    $order->email_customer = $user->email;
+                    $order->no_telp = $user->no_telp;
                     $order->product = $request->input('product');
-                    $order->order_time = now();
-                    $order->event_time = $request->input('event_time');
-                    $order->total = $request->input('total');
-                    $order->payment_method = $request->input('payment_method');
-                    $order->order_satus = 'Menunggu konfirmasi';
-                    $order->payment_status = 'Belum lunas';
-                    $order->total_price = $request->input('total_price');
+                    $order->tanggal_transaksi = now();
+                    $order->tanggal_pemesanan = $request->input('event_time');
+                    $order->metode_pembayaran = $request->input('payment_method');
+                    $order->status_pemesanan = 'Menunggu konfirmasi';
+                    $order->status_pembayaran = 'Belum lunas';
+                    $order->total_bayar = $request->input('total_price');
                     $order->save();
 
                     Cart::where('customer_id', $customer_id)->delete();

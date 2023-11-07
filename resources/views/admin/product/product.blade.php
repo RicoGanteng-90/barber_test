@@ -28,17 +28,16 @@
                     </div>
                 </div>
                 <!-- Customer's Product End -->
+
+                        @php
+                            $totalPrice = 0;
+                        @endphp
 <br>
                         <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable Example
-                            </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Preview</th>
                                             <th>Barang</th>
                                             <th>Harga</th>
                                             <th>Jumlah</th>
@@ -49,12 +48,14 @@
                                     </thead>
                                     <tbody>
                                         @foreach($items as $item)
+                                        @php
+                                            $totalPrice += $item->total_beli;
+                                        @endphp
                                         <tr>
-                                            <td>{{$item->product_img}}</td>
                                             <td>{{$item->name}}</td>
                                             <td>{{$item->price}}</td>
                                             <td>{{$item->quantity}}</td>
-                                            <td>{{$item->subtotal}}</td>
+                                            <td>{{$item->total_beli}}</td>
                                             <td>{{$item->supplier}}</td>
                                             <td>{{$item->tanggal}}</td>
                                         </tr>
@@ -63,6 +64,41 @@
                                 </table>
                             </div>
                         </div>
+
+                        @php
+                            $formattedTotalPrice = "Rp. " . number_format($totalPrice, 2, ',', '.');
+                        @endphp
+
+                        <div class="container">
+                            <h1>{{$formattedTotalPrice}}</h1>
+        <br>
+                            <p>Nominal : <input type="text" id="nominal" name="nominal"></p>
+                            <p>Kembali : <input type="text" id="kembali" name="kembali" readonly></p>
+                            <button type="button" class="btn btn-warning" onclick="hitungKembali()">Proses</button>
+                            <form action="{{route('nota.tambahBarang')}}" method="post">
+                                @csrf
+                            <button type="submit" class="btn btn-success">Buat nota</button>
+                            </form>
+                        </div>
+
+                        <script>
+    function hitungKembali() {
+        var totalPrice = <?php echo $totalPrice; ?>;
+        var nominal = parseFloat(document.getElementById('nominal').value);
+
+        if (!isNaN(nominal)) {
+            var kembali = nominal - totalPrice;
+            if (kembali >= 0) {
+                var formattedKembali = "Rp. " + kembali.toLocaleString('id-ID') + ",00";
+                document.getElementById('kembali').value = formattedKembali;
+            } else {
+                alert("Nominal tidak mencukupi!");
+            }
+        } else {
+            alert("Masukkan nominal yang valid.");
+        }
+    }
+</script>
 
                 <!--Product's modal-->
                 <div class="modal fade" id="cariBarang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -84,11 +120,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($barangSup as $bar)
+                        @foreach($barang as $bar)
                         <tr>
-                            <td>{{$bar->product_img}}</td>
-                            <td>{{$bar->name}}</td>
-                            <td>{{$bar->price}}</td>
+                            <td><img src="{{asset('product/'.$bar->product_img)}}" alt="Image" style="object-fit: cover; width: 95px;"></td>
+                            <td>{{$bar->nama_barang}}</td>
+                            <td>{{$bar->harga_barang}}</td>
                             <form action="{{url('adminproductcreate/'.$bar->id)}}" method="post" enctype="multipart/form-data">
                                 @csrf
                             <td><input type="number" name="qtyy" style="width: 50px;"></td>
@@ -101,7 +137,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                     </div>
                 </div>
@@ -113,15 +148,11 @@
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Modal title</h5>
+                        <h5 class="modal-title">Supplier</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                     <div class="card mb-4">
-                            <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                DataTable Example
-                            </div>
                             <div class="card-body">
                                 <table id="cariSupplier2">
                                     <thead>
@@ -136,10 +167,10 @@
                                     <tbody>
                                         @foreach($supplier as $supplier)
                                         <tr>
-                                            <td>{{$supplier->name}}</td>
+                                            <td>{{$supplier->nama_supplier}}</td>
                                             <td>{{$supplier->email}}</td>
-                                            <td>{{$supplier->number}}</td>
-                                            <td>{{$supplier->address}}</td>
+                                            <td>{{$supplier->no_telp}}</td>
+                                            <td>{{$supplier->alamat}}</td>
                                             <form action="{{url('supplierAdd/'.$supplier->id)}}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             <td>
@@ -155,7 +186,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                     </div>
                 </div>

@@ -452,20 +452,19 @@
 }
 
 .file-upload {
-    display: flex; /* Menggunakan Flexbox */
-    align-items: center; /* Membuat tombol dan input berada pada garis yang sama */
+    display: flex;
+    align-items: center;
 }
 
 .file-upload input {
-    margin-right: 10px; /* Menambahkan ruang di antara input dan tombol */
+    margin-right: 10px;
 }
 
 .order-container {
-    display: flex; /* Menggunakan display: flex untuk elemen sejajar */
-    flex-wrap: wrap; /* Jika perlu, elemen akan melanjutkan ke baris berikutnya jika tidak cukup ruang */
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .order-box {
-    margin: 10px; /* Memberi jarak antara elemen-elemen order-box */
-    /* Masukkan gaya lain yang Anda inginkan untuk setiap elemen order-box */
+    margin: 10px;
 }

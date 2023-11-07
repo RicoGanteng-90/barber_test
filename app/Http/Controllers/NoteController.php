@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Jual_barang;
+use App\Models\Jual_layanan;
+use App\Models\Kelola_pemesanan;
+use App\Models\Nota_barang;
 use Mpdf\Mpdf;
-
-use App\Models\Order;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +20,7 @@ class NoteController extends Controller
      */
     public function index($id)
     {
-        $note = Order::findOrFail($id);
+        $note = Kelola_pemesanan::findOrFail($id);
 
         return view('cetak', compact('note'));
     }
@@ -32,7 +34,7 @@ class NoteController extends Controller
     {
         $user = Auth::user();
 
-        $note = Order::findOrFail($id);
+        $note = Kelola_pemesanan::findOrFail($id);
         $pdf = app()->make('dompdf.wrapper');
         $pdf->loadView('cetak', compact('note'));
         $pdf->setPaper('A4', 'portrait');
@@ -46,9 +48,19 @@ class NoteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function beliBarang(Request $request)
     {
-        //
+        $user = Auth::user();
+
+        $barang = Nota_barang::all();
+        $pdf = app()->make('dompdf.wrapper');
+
+        $filename = 'Nota_' . now()->timestamp . '.pdf';
+
+        $pdf->loadView('cetak2', compact('barang'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->stream($filename);
     }
 
     /**
@@ -57,9 +69,11 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        //
+        $barang = Nota_barang::all();
+
+        return view('cetak2', compact('barang'));
     }
 
     /**
@@ -68,9 +82,26 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function tampilNotaBarang(Request $request)
     {
-        //
+        $jual = Nota_barang::all();
+
+        return view('cetak3', compact('jual'));
+    }
+
+    public function notaJual(Request $request)
+    {
+        $user = Auth::user();
+
+        $jual = Jual_barang::all();
+        $pdf = app()->make('dompdf.wrapper');
+
+        $filename = 'Nota_' . now()->timestamp . '.pdf';
+
+        $pdf->loadView('cetak3', compact('jual'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->stream($filename);
     }
 
     /**
@@ -80,6 +111,29 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+     public function tampilNotaLayanan(Request $request)
+     {
+         $layan = Jual_layanan::all();
+
+         return view('cetak3', compact('layan'));
+     }
+
+     public function notaLayan(Request $request)
+    {
+        $user = Auth::user();
+
+        $layan = Jual_layanan::all();
+        $pdf = app()->make('dompdf.wrapper');
+
+        $filename = 'Nota_' . now()->timestamp . '.pdf';
+
+        $pdf->loadView('cetak3', compact('layan'));
+        $pdf->setPaper('A4', 'portrait');
+
+        return $pdf->stream($filename);
+    }
+
     public function update(Request $request, $id)
     {
         //

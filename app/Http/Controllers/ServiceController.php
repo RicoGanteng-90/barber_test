@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Service;
+use App\Models\Kelola_layanan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class ServiceController extends Controller
 {
@@ -15,7 +14,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $service = Service::all();
+        $service = Kelola_layanan::all();
 
         return view('product.feature', compact('service'));
     }
@@ -28,16 +27,16 @@ class ServiceController extends Controller
     public function create(Request $request, $id)
     {
         $validate = $request->validate([
-            'name'=>'required|string',
-            'harga'=>'required|string',
+            'nama_layanan'=>'required|string',
+            'harga_layanan'=>'required|string',
+            'note_service'=>'string',
             'img_service'=>'required',
-            'number'=>'string|required'
         ]);
 
         if($validate){
-        $user = new Service();
-        $user->name = $request->name;
-        $user->price = $request->price;
+        $user = new Kelola_layanan();
+        $user->nama_layanan = $request->nama_layanan;
+        $user->harga_layanan = $request->harga_layanan;
         $user->note_service = $request->note_service;
         $user->img_service = $request->img_service;
         $user->save();

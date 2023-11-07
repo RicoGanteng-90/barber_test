@@ -57,6 +57,16 @@
         .mb-3{
             color:aliceblue;
         }
+
+        .center-box {
+        text-align: center;
+        background-color: #303030;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin: 0 auto;
+        width: 500px;
+    }
     </style>
 </head>
 
@@ -93,9 +103,8 @@
 
                     <div class="dropdown">
                         <small class="fa fa-user text-body btn-sm-square bg-dark rounded-circle ms-3" data-bs-toggle="dropdown" aria-expanded="false" style="cursor:pointer;"></small>
-                    <ul class="dropdown-menu" style="left: -130%;" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <ul class="dropdown-menu" style="left: -105%;" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="{{route('profile.index')}}">Ganti password</a></li>
                         <form id="logout-form" action="{{route('session.destroy')}}" method="post" enctype="multipart/form-data">
                             @csrf
                         <li style="cursor: pointer;"><a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
@@ -104,7 +113,8 @@
                     </div>
 
                     @php
-                        $totalQuantity = \App\Models\Cart::sum('quantity');
+                        $user = Auth::user();
+                        $totalQuantity = \App\Models\Cart::where('customer_id', $user->id)->sum('quantity');
                     @endphp
 
                     <a class="btn-sm-square bg-dark rounded-circle ms-3" href="{{ route('cart.index') }}">

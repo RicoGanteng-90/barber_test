@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kelola_barang;
-use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class DashboardController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $product = Kelola_barang::all();
-
-        return view('home.index', compact('product'));
+        return view('session.profile');
     }
 
     /**
@@ -58,9 +56,21 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        if(!Hash::check($request->oldPassword, auth()->user()->password)){
+            return back()->with('error', 'Password tidak ada dalam database');
+        }
+
+        if($request->newPassword != $request->repeatPassword){
+            return back()->with('error', 'Password saat ini dan password baru tidak sama');
+        }
+
+        auth()->user()->update([
+            'password' => Hash::make($request->newPassword)
+        ]);
+
+        return back()->with('success', 'Password berhasil diubah');
     }
 
     /**
@@ -70,10 +80,28 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request)
+{
+    $user = Auth::user();
+
+    $request->validate([
+        'nama' => 'nullable|string',
+        'email' => 'nullable|email|unique:users,email,'.Auth::id(),
+        'no_telp' => 'nullable|string',
+    ]);
+
+    try {
+        $user->nama_user = $request->input('nama');
+        $user->email = $request->input('email');
+        $user->no_telp = $request->input('not_telp');
+        $user->save();
+
+        return back()->with('success2', 'User berhasil diupdate');
+    } catch (\Exception $e) {
+        return back()->with('error2', 'Gagal mengupdate user');
     }
+}
+
 
     /**
      * Remove the specified resource from storage.

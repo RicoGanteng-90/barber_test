@@ -1,29 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\admin;
+namespace App\Http\Controllers\Admin;
 
-
-use Illuminate\Http\Request;
-use App\Models\Kelola_barang;
-use App\Models\Stok_supplier;
 use App\Http\Controllers\Controller;
+use App\Models\Kelola_barang;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Symfony\Component\HttpKernel\Controller\ArgumentResolver\BackedEnumValueResolver;
 
-class StockController extends Controller
+class BarangController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $stoks = Stok_supplier::all();
-
         $barang = Kelola_barang::all();
 
-        return view('admin.stock.stock', compact('stoks', 'barang'));
+        return view('admin.product.barang', compact('barang'));
     }
 
     /**
@@ -31,49 +26,29 @@ class StockController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request, $id)
-{
-    $qty2 = $request->input('qty2');
+    public function create(Request $request)
+    {
+        $barang = Kelola_barang::all();
 
-    // Ambil stok dari database berdasarkan ID yang diberikan
-    $stok = Stok_supplier::findOrFail($id);
+        if($barang){
+            $barang = new Kelola_barang();
+            $barang->nama_barang = $request->input('nama_barang');
+            $barang->jenis_barang = $request->input('jenis_barang');
+            $barang->harga_barang = $request->input('harga_barang');
+            $barang->information = $request->input('information');
+            $barang->quantity = $request->input('quantity');
 
-    if ($stok->quantity >= $qty2 && $qty2 > 0) {
-        // Periksa apakah produk sudah ada
-        $product = Kelola_barang::where('nama_barang', $stok->name)->first();
+            if ($request->hasFile('product_img')) {
+                $image = $request->file('product_img');
+                $imageName = time() . '.' . $image->getClientOriginalName();
+                $image->move(public_path('product'), $imageName);
+                $barang->product_img = $imageName;
+            }
 
-        if (!$product) {
-            // Produk belum ada, buat entri produk baru
-            $product = new Kelola_barang();
-            $product->nama_barang = $stok->name;
-            $product->harga_barang = $stok->price;
-            $product->information = $stok->information;
-            $product->product_img = $stok->product_img;
-            $product->quantity = $qty2;
-            $product->save();
-        } else {
-            // Produk sudah ada, tambahkan qty2 ke quantity
-            $product->quantity += $qty2;
-            $product->save();
+            $barang->save();
         }
-
-        // Kurangi stok dari stok supplier
-        $stok->quantity -= $qty2;
-        $stok->save();
-
-        return back()->with('success', 'Stok berhasil diperbarui');
-    } else {
-        return back()->with('error', 'Stok habis');
+        return back();
     }
-}
-
-
-
-
-
-
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -81,9 +56,9 @@ class StockController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-
+        //
     }
 
     /**
@@ -116,11 +91,12 @@ class StockController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-{
-    $product = Kelola_barang::findOrFail($id);
+    {
+        $product = Kelola_barang::findOrFail($id);
 
     if ($product) {
         $product->nama_barang = $request->input('nama_barang');
+        $product->jenis_barang = $request->input('jenis_barang');
         $product->information = $request->input('information');
         $product->harga_barang = $request->input('harga_barang');
         $product->quantity = $request->input('quantity');
@@ -139,11 +115,7 @@ class StockController extends Controller
         $product->save();
 
         return back()->with('success', 'Product berhasil diupdate');
-    }
-
-    return back()->with('error', 'Product tidak ditemukan');
-}
-
+    }}
 
     /**
      * Remove the specified resource from storage.

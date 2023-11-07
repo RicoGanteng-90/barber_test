@@ -46,10 +46,10 @@
                                     <div class="product-details">
                                         <img src="{{asset('product/'.$product2->product_img)}}" alt="Image" style="object-fit: cover; width: 230px; height: 200px;">
                                         <div class="product-info">
-                                            <p><strong>Nama:</strong> {{$product2->name}}</p>
-                                            <p><strong>Jenis:</strong> {{$product2->jenis}}</p>
+                                            <p><strong>Nama:</strong> {{$product2->nama_barang}}</p>
+                                            <p><strong>Jenis:</strong> {{$product2->jenis_barang}}</p>
                                             <p><strong>Jumlah:</strong> {{$product2->quantity}}</p>
-                                            <p><strong>Harga:</strong> Rp. {{number_format($product2->price, 2, ',', '.')}}</p>
+                                            <p><strong>Harga:</strong> Rp. {{number_format($product2->harga_barang, 2, ',', '.')}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -68,8 +68,8 @@
                                     <img class="img-fluid w-100" src="{{asset('product/'.$product2->product_img)}}" alt="Image" style="object-fit: cover; width: 280px; height:220px;">
                                 </div>
                                 <div class="text-center p-4">
-                                    <a class="d-block h5 mb-2">{{$product2->name}}</a>
-                                    <span class="text-primary me-1"><span>Rp. </span>{{number_format($product2->price,2,',','.')}}<span></span></span>
+                                    <a class="d-block h5 mb-2">{{$product2->nama_barang}}</a>
+                                    <span class="text-primary me-1"><span>Rp. </span>{{number_format($product2->harga_barang,2,',','.')}}<span></span></span>
                                 </div>
                                 <div class="d-flex border-top" style="justify-content: center; display: flex;">
                                     <small class="w-50 text-center py-2">

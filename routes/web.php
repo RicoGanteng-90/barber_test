@@ -1,12 +1,15 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\Admin\AdminBarangJual;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminLayananController;
 use App\Http\Controllers\Admin\AdminOrderController;
 use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Admin\AdminSessionController;
-use App\Http\Controllers\Admin\SessionAdminController;
+use App\Http\Controllers\Admin\BarangController;
+use App\Http\Controllers\Admin\PenjualanController;
 use App\Http\Controllers\admin\StockController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\CartController;
@@ -14,6 +17,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NoteController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +43,11 @@ Route::middleware(['customer'])->group(function () {
 
 //Route untuk halaman home customer
 Route::get('/home', [DashboardController::class,'index'])->name('home.index');
+
+//Route untuk halaman profile customer
+Route::get('/profile', [ProfileController::class,'index'])->name('profile.index');
+Route::post('/profile-update', [ProfileController::class,'update'])->name('profile.update');
+Route::post('/profile-edit', [ProfileController::class,'edit'])->name('profile.edit');
 
 //Route untuk halaman produk customer
 Route::get('/productPage', [ProductController::class,'index'])->name('product.index');
@@ -66,7 +75,6 @@ Route::get('/service', [ServiceController::class,'index'])->name('service.index'
 //Route untuk halaman pdf
 Route::get('/note/{id}', [NoteController::class,'index'])->name('note.index');
 Route::get('/cetakNota/{id}', [NoteController::class,'cetak_pdf'])->name('note.cetak_pdf');
-
 });
 
 
@@ -75,20 +83,34 @@ Route::get('/cetakNota/{id}', [NoteController::class,'cetak_pdf'])->name('note.c
 Route::get('/adminlogin', [AdminSessionController::class,'index'])->name('adminsession.index');
 Route::post('/adminlogin', [AdminSessionController::class,'store'])->name('adminsession.store');
 Route::get('/adminregister', [AdminSessionController::class,'register'])->name('adminsession.register');
+Route::get('/logout', [AdminSessionController::class,'destroy'])->name('adminsession.destroy');
 
-Route::middleware(['admin'])->group(function () {
+Route::middleware(['owner'])->group(function () {
 
 //Route untuk halaman dashboard admin
 Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('admindashboard.index');
 
 //Route untuk halaman produk admin
 Route::get('/adminproduct', [AdminProductController::class,'index'])->name('adminproduct.index');
+Route::post('/notaBeli', [AdminProductController::class,'tambahBarang'])->name('nota.tambahBarang');
+Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota');
+Route::get('/cetakNota2', [AdminProductController::class,'tampilNota2'])->name('nota.tampilNota2');
+Route::get('/adminlayanan', [AdminProductController::class,'show'])->name('adminproduct.show');
 Route::post('/adminproductcreate/{id}', [AdminProductController::class,'create'])->name('adminproduct.create');
 Route::post('/supplierAdd/{id}', [AdminProductController::class,'tambahSupplier'])->name('supplierAdd.tambahSupplier');
+Route::post('/customerAdd/{id}', [AdminProductController::class,'tambahCustomer'])->name('customerAdd.tambahCustomer');
 
 //Route untuk layanan produk admin
 Route::get('/adminservice', [AdminLayananController::class,'index'])->name('adminlayanan.index');
 Route::post('/addService/{id}', [AdminLayananController::class,'create'])->name('addService.create');
+Route::post('/addUser/{id}', [AdminLayananController::class,'tambahUser'])->name('addService.tambahUser');
+
+//Route untuk penjualan produk admin
+Route::get('/barang', [AdminBarangJual::class,'index'])->name('barang.index');
+Route::post('/barangAdd/{id}', [AdminBarangJual::class,'create'])->name('barang.create');
+Route::post('/customerAdd/{id}', [AdminBarangJual::class,'store'])->name('barang.store');
+
+Route::post('/jualBarang', [PenjualanController::class,'jualBarang'])->name('jual.barang');
 
 //Route untuk halaman order admin
 Route::get('/adminorder', [AdminOrderController::class,'index'])->name('adminorder.index');
@@ -96,4 +118,34 @@ Route::get('/adminorder', [AdminOrderController::class,'index'])->name('adminord
 //Route untuk halaman stock admin
 Route::get('/adminStock', [StockController::class,'index'])->name('stock.index');
 Route::post('/adminStockStore/{id}', [StockController::class,'create'])->name('stock.create');
+
+Route::get('/showNote', [NoteController::class,'show'])->name('note.show');
+Route::get('/beliBarang', [NoteController::class,'beliBarang'])->name('note.beliBarang');
+
+Route::get('/jualShow', [NoteController::class,'tampilNotaBarang'])->name('jual.show');
+Route::get('/jualProduct', [NoteController::class,'notaJual'])->name('note.jualBarang');
+
+Route::get('/jualLayan', [NoteController::class,'tampilNotaLayanan'])->name('jual.layan');
+Route::get('/jualLayanan', [NoteController::class,'notaLayan'])->name('note.jualLayanan');
+
+Route::get('/cetakNota3', [AdminServiceController::class,'index'])->name('layanan2.index');
+Route::post('/jualLayanan', [AdminServiceController::class,'jualLayanan'])->name('layanan2.jualLayanan');
+
+Route::post('/order-update/{id}', [AdminOrderController::class,'update'])->name('order.update');
+Route::delete('/order-delete/{id}', [AdminOrderController::class,'destroy'])->name('order.destroy');
+
+Route::get('/download-image/{order_img}', [AdminOrderController::class, 'download'])->name('image.download');
+
+Route::post('/update-barang/{id}', [StockController::class, 'update'])->name('barang.update');
+Route::delete('/hapus-barang/{id}', [StockController::class, 'destroy'])->name('barang.destroy');
+
+Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
+Route::post('/addSupplier', [SupplierController::class, 'create'])->name('supplier.create');
+Route::post('/updateSupplier/{id}', [SupplierController::class, 'update'])->name('supplier.update');
+Route::delete('/deleteSupplier/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+
+Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+Route::post('/addBarang', [BarangController::class, 'create'])->name('barang.create');
+Route::post('/updateBarang/{id}', [BarangController::class, 'update'])->name('barang.update');
+Route::delete('/deleteBarang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
 });

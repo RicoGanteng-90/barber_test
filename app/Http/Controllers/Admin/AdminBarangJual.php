@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Feature;
-use App\Models\Kelola_layanan;
+use App\Models\Kelola_barang;
+use App\Models\Kelola_penjualan;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AdminLayananController extends Controller
+class AdminBarangJual extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,29 +17,13 @@ class AdminLayananController extends Controller
      */
     public function index()
     {
-        $layanan = Kelola_layanan::all();
+        $barang = Kelola_barang::all();
 
-        $layan = Feature::all();
+        $customer = User::all();
 
-        $user = User::all();
+        $buku = Kelola_penjualan::all();
 
-        return view('admin.layanan.service', compact('layanan', 'layan', 'user'));
-    }
-
-    public function tambahUser(Request $request, $id)
-    {
-        $items2 = Feature::all();
-
-        foreach($items2 as $items2)
-        {
-            $supplier = User::findOrFail($id);
-            if($supplier)
-            {
-                $items2->customer = $supplier->nama_user;
-                $items2->save();
-            }
-        }
-        return back();
+        return view('admin.product.produk', compact('barang', 'customer', 'buku'));
     }
 
     /**
@@ -49,29 +33,32 @@ class AdminLayananController extends Controller
      */
     public function create(Request $request, $id)
     {
-    $qtyy = $request->input('qtylayanan');
-    $item = Kelola_layanan::findOrFail($id);
+        $qtyy = $request->input('qtybarang');
+
+    // Ambil stok dari database berdasarkan ID yang diberikan
+    $item = Kelola_barang::findOrFail($id);
 
     if ($item->quantity >= $qtyy && $qtyy > 0) {
-        $items = Feature::where('name', $item->nama_layanan)->first();
+        // Periksa apakah produk sudah ada
+        $items = Kelola_penjualan::where('barang', $item->nama_barang)->first();
 
         if (!$items) {
             // Produk belum ada, buat entri produk baru
-            $items = new Feature();
-            $items->name = $item->nama_layanan;
-            $items->price = $item->harga_layanan;
-            $items->tanggal = now();
-            $items->subtotal = $qtyy * $item->harga_layanan;
-            $items->total = $qtyy;
+            $items = new Kelola_penjualan();
+            $items->barang = $item->nama_barang;
+            $items->harga = $item->harga_barang;
+            $items->jumlah = $qtyy;
+            $items->total = $qtyy * $item->harga_barang;
+            $items->tanggal_transaksi = now();
             $items->save();
         } else {
             // Produk sudah ada, tambahkan qty2 ke quantity
-            $items->total += $qtyy;
-            $items->subtotal = $items->total * $item->harga_layanan;
+            $items->jumlah += $qtyy;
+            $items->total = $items->jumlah * $item->harga_barang;
             $items->save();
         }
 
-        return back()->with('success', 'Stok berhasil diperbarui');
+        return back()->with('success', 'pembukuan berhasil');
     } else {
         return back()->with('error', 'Stok habis');
     }
@@ -83,9 +70,20 @@ class AdminLayananController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $items3 = Kelola_penjualan::all();
+
+        foreach($items3 as $items3)
+        {
+            $customer = User::findOrFail($id);
+            if($customer)
+            {
+                $items3->nama_customer = $customer->nama_user;
+                $items3->save();
+            }
+        }
+        return back();
     }
 
     /**

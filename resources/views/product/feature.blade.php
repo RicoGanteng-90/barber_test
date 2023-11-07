@@ -40,7 +40,7 @@
             <div class="col-lg-3 col-md-3 wow fadeInUp" data-wow-delay="0.3s">
                 <div class="bg-dark text-center p-4 p-xl-5">
                     <img src="{{asset('layanan/'.$service->img_service)}}" alt="Image" style="object-fit: cover; width: 150px"><br><br>
-                    <h4 class="mb-3">{{$service->name}}</h4>
+                    <h4 class="mb-3">{{$service->nama_layanan}}</h4>
                     <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#detailLayanan{{$service->id}}">Lihat</button><br>
                     <form action="{{url('layananAdd/'.$service->id)}}" method="post" enctype="multipart/form-data">
                         @csrf
@@ -63,9 +63,9 @@
                                     <div class="product-details">
                                         <img src="{{asset('layanan/'.$service->img_service)}}" alt="Image" style="object-fit: cover; width: 230px; height: 200px;">
                                         <div class="product-info">
-                                            <p><strong>Nama :</strong> {{$service->name}}</p>
-                                            <p><strong>Status :</strong> {{$service->status}}</p>
-                                            <p><strong>Harga :</strong> Rp. {{number_format($service->price, 2, ',', '.')}}</p>
+                                            <p><strong>Nama :</strong> {{$service->nama_layanan}}</p>
+                                            <p><strong>Status :</strong> {{$service->status_layanan}}</p>
+                                            <p><strong>Harga :</strong> Rp. {{number_format($service->harga_layanan, 2, ',', '.')}}</p>
                                         </div>
                                     </div>
                                 </div>

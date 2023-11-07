@@ -28,19 +28,21 @@ class SessionController extends Controller
     public function create(Request $request)
     {
         $validate = $request->validate([
-            'name'=>'required|string',
+            'nama_user'=>'required|string',
             'email'=>'required|string',
             'password'=>'required',
-            'number'=>'string|required'
+            'no_telp'=>'string|required',
+            'alamat'=>'string|nullable'
         ]);
 
         if($validate){
         $user = new user();
-        $user->name = $request->name;
+        $user->nama_user = $request->nama_user;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->number = $request->number;
-        $user->role = 'customer';
+        $user->no_telp = $request->no_telp;
+        $user->alamat = $request->alamat;
+        $user->role_user = 'customer';
         $user->save();
 
         return redirect()->route('session.index')->with('reg-succ', 'Register succesfull');
@@ -63,9 +65,9 @@ class SessionController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            if (Auth::user()->role == 'admin') {
+            if (Auth::user()->role_user == 'owner') {
                 return redirect()->route('admindashboard.index');
-            } elseif (Auth::user()->role == 'customer') {
+            } elseif (Auth::user()->role_user == 'customer') {
                 return redirect()->route('home.index');
             }
         } else {

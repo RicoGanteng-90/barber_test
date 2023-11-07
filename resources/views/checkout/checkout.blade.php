@@ -25,7 +25,7 @@
 
             <div class="col-md-6 text-center">
                 <label for="nama_barang" class="form-label">Nama customer:</label>
-                <input type="text" class="form-control text-center" id="nama_barang" name="nama_barang" value="{{Auth::user()->name}}" readonly>
+                <input type="text" class="form-control text-center" id="nama_barang" name="nama_barang" value="{{Auth::user()->nama_user}}" readonly>
             </div>
 
             <div class="col-md-6 text-center">
@@ -38,12 +38,7 @@
                 <input type="date" class="form-control text-center" id="event_time" name="event_time">
             </div>
 
-            <div class="col-md-3 text-center">
-                <label for="jumlah" class="form-label">Jumlah:</label>
-                <input type="text" class="form-control text-center" id="jumlah" name="total" readonly value="{{$total}}">
-            </div>
-
-            <div class="col-md-3 text-center">
+            <div class="col-md-6 text-center">
                 <label for="total_harga" class="form-label">Total harga:</label>
                 @php
                     $formattedTotalPrice = "Rp. " . number_format($totalPrice, 2, ',', '.');

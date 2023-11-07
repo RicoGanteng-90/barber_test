@@ -2,24 +2,46 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Models\Stok_supplier;
 use App\Http\Controllers\Controller;
-use App\Models\Kelola_barang;
-use App\Models\Kelola_supplier;
+use App\Models\Jual_barang;
+use App\Models\Kelola_penjualan;
+use Illuminate\Http\Request;
 
-class SupplierController extends Controller
+class PenjualanController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function jualBarang()
     {
-        $suppliers = Kelola_supplier::all();
+        $kelola_penjualan = Kelola_penjualan::all();
 
-        return view('admin.supplier.supplier', compact('suppliers'));
+        $totalPrice = 0;
+        $total = 0;
+        $productNames = [];
+
+        foreach ($kelola_penjualan as $item) {
+            $totalPrice += $item->total;
+            $total += $item->jumlah;
+            $productNames[] = $item->barang . '(' . $item->jumlah . ')';
+            $customer = $item->nama_customer;
+        }
+
+        $productList = implode(', ', $productNames);
+
+        Kelola_penjualan::truncate();
+
+            $notabarang = new Jual_barang();
+            $notabarang->tanggal_transaksi = now();
+            $notabarang->customer = $customer;
+            $notabarang->jumlah = $total;
+            $notabarang->total_harga = $totalPrice;
+            $notabarang->barang = $productList;
+            $notabarang->save();
+
+        return back();
     }
 
     /**
@@ -27,19 +49,9 @@ class SupplierController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $supplier = Kelola_supplier::all();
-
-        if($supplier){
-            $suppliers = new Kelola_supplier();
-            $suppliers->nama_supplier = $request->input('nama_supplier');
-            $suppliers->email = $request->input('email');
-            $suppliers->no_telp = $request->input('no_telp');
-            $suppliers->alamat = $request->input('alamat');
-            $suppliers->save();
-        }
-        return back();
+        //
     }
 
     /**
@@ -48,7 +60,7 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
         //
     }
@@ -84,16 +96,7 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $supplier = Kelola_supplier::findOrFail($id);
-
-        if($supplier){
-            $supplier->nama_supplier = $request->input('nama_supplier');
-            $supplier->email = $request->input('email');
-            $supplier->no_telp = $request->input('no_telp');
-            $supplier->alamat = $request->input('alamat');
-            $supplier->save();
-        }
-        return back();
+        //
     }
 
     /**
@@ -104,10 +107,6 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        $supplier = Kelola_supplier::findOrFail($id);
-
-        $supplier->delete();
-
-        return back();
+        //
     }
 }

@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class Jual_barang extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name', 'price', 'note_service', 'img_service', 'status'
+        'tanggal_transaksi', 'customer', 'jumlah', 'barang', 'total_harga'
     ];
 }
