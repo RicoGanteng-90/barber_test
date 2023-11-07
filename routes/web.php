@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminServiceController;
 use App\Http\Controllers\Admin\AdminSessionController;
 use App\Http\Controllers\Admin\BarangController;
+use App\Http\Controllers\Admin\LayananController;
 use App\Http\Controllers\Admin\PenjualanController;
 use App\Http\Controllers\admin\StockController;
 use App\Http\Controllers\Admin\SupplierController;
@@ -148,4 +149,9 @@ Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
 Route::post('/addBarang', [BarangController::class, 'create'])->name('barang.create');
 Route::post('/updateBarang/{id}', [BarangController::class, 'update'])->name('barang.update');
 Route::delete('/deleteBarang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
+
+Route::get('/layanan2', [LayananController::class, 'index'])->name('layanan.index');
+Route::post('/addLayanan', [LayananController::class, 'create'])->name('layanan.create');
+Route::post('/updateLayanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
+Route::delete('/deleteLayanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
 });

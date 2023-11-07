@@ -107,6 +107,11 @@
                                 Barang
                             </a>
 
+                            <a class="nav-link" href="{{route('layanan.index')}}">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-bell-concierge"></i></div>
+                                Layanan
+                            </a>
+
                         </div>
                     </div>
                 </nav>

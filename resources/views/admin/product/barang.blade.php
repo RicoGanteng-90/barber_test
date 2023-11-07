@@ -77,7 +77,7 @@
                                             <td>{{$barang->information}}</td>
                                             <td>{{$barang->quantity}}</td>
                                             <td>
-                                                <form action="{{url('deleteBarang/'.$barang->id)}}" method="post">
+                                                <form action="{{url('deleteBarang/'.$barang->id)}}" method="post" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Hapus</button>
