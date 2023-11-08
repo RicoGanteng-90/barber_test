@@ -59,7 +59,7 @@
                                             <td>{{$buku->nama_customer}}</td>
                                             <td>{{$buku->tanggal_transaksi}}</td>
                                             <td>
-                                            <form action="{{url('barangDelete2/'.$buku->id)}}" method="post">
+                                            <form action="{{url('barangDelete2/'.$buku->id)}}" method="post" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger">Hapus</button>

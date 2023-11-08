@@ -61,7 +61,7 @@
                                             <td>{{$item->supplier}}</td>
                                             <td>{{$item->tanggal}}</td>
                                             <td>
-                                            <form action="{{url('notaHapus/'.$item->id)}}" method="post">
+                                            <form action="{{url('notaHapus/'.$item->id)}}" method="post" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger">Hapus</button>

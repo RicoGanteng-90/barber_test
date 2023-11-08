@@ -43,12 +43,14 @@
                                             <td>{{$order->status_pemesanan}}</td>
                                             <td>{{$order->status_pembayaran}}</td>
                                             <td>
+                                                <div style="display: inline;">
                                                 <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateStatus{{$order->id}}">Update</button>
                                                 <form action="{{url('order-delete/'.$order->id)}}" method="post" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Hapus</button>
                                                 </form>
+                                                </div>
                                             </td>
                                         </tr>
                                         <!-- Modal -->

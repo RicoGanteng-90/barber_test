@@ -73,7 +73,7 @@
                                             <td>{{$layan->tanggal}}</td>
                                             <td>{{$layan->customer}}</td>
                                             <td>
-                                            <form action="{{url('adminserviceDelete/'.$layan->id)}}" method="post">
+                                            <form action="{{url('adminserviceDelete/'.$layan->id)}}" method="post" style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button class="btn btn-danger">Hapus</button>

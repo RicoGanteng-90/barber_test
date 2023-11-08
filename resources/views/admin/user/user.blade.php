@@ -21,11 +21,12 @@
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Nama supplier</th>
+                                            <th>Nama User</th>
                                             <th>Username</th>
                                             <th>Email</th>
                                             <th>No telepon</th>
                                             <th>Alamat</th>
+                                            <th>Role</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -37,8 +38,9 @@
                                             <td>{{$user->email}}</td>
                                             <td>{{$user->no_telp}}</td>
                                             <td>{{$user->alamat}}</td>
+                                            <td>{{$user->role_user}}</td>
                                             <td>
-                                                <form action="" method="post">
+                                                <form action="" method="post" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Hapus</button>
