@@ -119,7 +119,15 @@ class AdminLayananController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $qty = $request->input('quantity');
+
+        $barang = Feature::findOrFail($id);
+
+        if($barang){
+            $barang->total=$qty;
+            $barang->save();
+        }
+        return back();
     }
 
     /**
@@ -130,6 +138,10 @@ class AdminLayananController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kelola = Feature::findOrFail($id);
+
+        $kelola->delete();
+
+        return back();
     }
 }

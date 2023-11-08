@@ -117,7 +117,15 @@ class AdminBarangJual extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $qty = $request->input('quantity2');
+
+        $barang = Kelola_penjualan::findOrFail($id);
+
+        if($barang){
+            $barang->jumlah=$qty;
+            $barang->save();
+        }
+        return back();
     }
 
     /**
@@ -128,6 +136,10 @@ class AdminBarangJual extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kelola = Kelola_penjualan::findOrFail($id);
+
+        $kelola->delete();
+
+        return back();
     }
 }

@@ -14,45 +14,9 @@
                     </div>
                 </main>
 
-                <div class="container">
-                    <form class="row g-3" action="{{route('layanan.create')}}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="col-6">
-                            <label for="nama_layanan" class="form-label">Nama</label>
-                            <input name="nama_layanan" type="text" class="form-control" id="nama_layanan">
-                            </div>
-                            <div class="col-6">
-                                <label for="quantity" class="form-label">Jenis</label>
-                                <input name="quantity" type="text" class="form-control" id="quantity">
-                            </div>
-                            <div class="col-6">
-                                <label for="harga_layanan" class="form-label">Harga</label>
-                                <input name="harga_layanan" type="text" class="form-control" id="harga_layanan">
-                            </div>
-                            <div class="col-6">
-                                <label for="informasi_layanan" class="form-label">Informasi</label>
-                                <input name="informasi_layanan" type="text" class="form-control" id="informasi_layanan">
-                            </div>
-                            <div class="col-6">
-                                <label for="quantity" class="form-label">Jumlah</label>
-                                <input name="quantity" type="number" class="form-control" id="quantity" min="0">
-                            </div>
-                            <div class="col-12">
-                                <label for="img_service" class="form-label"></label>
-                                <input name="img_service" type="file" class="form-control" id="img_service">
-                            </div>
-
-                            <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                            <button type="reset" class="btn btn-secondary">Reset</button>
-                            </div>
-                        </form><!-- Vertical Form -->
-                    </div>
-
-                        <br><br>
-
                 <div class="card mb-4">
                             <div class="card-body">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inputLayanan">Input layanan</button>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
@@ -60,7 +24,6 @@
                                             <th>Nama layanan</th>
                                             <th>Jumlah</th>
                                             <th>Harga</th>
-                                            <th>Keterangan</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
@@ -71,7 +34,6 @@
                                             <td>{{$layanan->nama_layanan}}</td>
                                             <td>{{$layanan->quantity}}</td>
                                             <td>{{$layanan->harga_layanan}}</td>
-                                            <td>{{$layanan->informasi_layanan}}</td>
                                             <td>
                                                 <form action="{{url('deleteLayanan/'.$layanan->id)}}" method="post" enctype="multipart/form-data">
                                                     @csrf
@@ -79,8 +41,31 @@
                                                 <button type="submit" class="btn btn-danger">Hapus</button>
                                                 </form>
                                                 <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editLayanan{{$layanan->id}}">Edit</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#detailLayanan{{$layanan->id}}">Detail</button>
                                             </td>
                                         </tr>
+
+                                        <div class="modal fade" id="detailLayanan{{ $layanan->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="text-center">
+                                                        <img src="{{ asset('layanan/' . $layanan->img_service) }}" alt="Image" style="object-fit: cover; width: 230px; height: 200px;"><br><br>
+                                                    <p><strong>Nama :</strong> {{ $layanan->nama_layanan }}</p>
+                                                    <p><strong>Keterangan :</strong> {{ $layanan->informasi_layanan }}</p>
+                                                    <p><strong>Harga :</strong> {{ $layanan->harga_layanan }}</p>
+                                                    <p><strong>Jumlah :</strong> {{ $layanan->quantity }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                         <div class="modal fade" id="editLayanan{{$layanan->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-xl">
@@ -134,5 +119,57 @@
                                 </table>
                             </div>
                         </div>
+
+                        <div class="modal fade" id="inputLayanan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-xl">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit supplier</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                            <div class="text-center">
+                                            <form class="row g-3" action="{{route('layanan.create')}}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="col-6">
+                                                    <label for="nama_layanan" class="form-label">Nama</label>
+                                                    <input name="nama_layanan" type="text" class="form-control" id="nama_layanan">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="quantity" class="form-label">Jenis</label>
+                                                        <input name="quantity" type="text" class="form-control" id="quantity">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="harga_layanan" class="form-label">Harga</label>
+                                                        <input name="harga_layanan" type="text" class="form-control" id="harga_layanan">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="informasi_layanan" class="form-label">Informasi</label>
+                                                        <input name="informasi_layanan" type="text" class="form-control" id="informasi_layanan">
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label for="quantity" class="form-label">Jumlah</label>
+                                                        <input name="quantity" type="number" class="form-control" id="quantity" min="0">
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <label for="img_service" class="form-label"></label>
+                                                        <input name="img_service" type="file" class="form-control" id="img_service">
+                                                    </div>
+
+                                                    <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                    <button type="reset" class="btn btn-secondary">Reset</button>
+                                                    </div>
+
+                                                    </div>
+                                                    <br>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        </form><!-- Vertical Form -->
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
 
 @endsection

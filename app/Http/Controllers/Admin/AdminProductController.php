@@ -175,7 +175,15 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $qty = $request->input('quantity');
+
+        $barang = Kelola_pembelian::findOrFail($id);
+
+        if($barang){
+            $barang->quantity=$qty;
+            $barang->save();
+        }
+        return back();
     }
 
     /**
@@ -186,7 +194,11 @@ class AdminProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $kelola = Kelola_pembelian::findOrFail($id);
+
+        $kelola->delete();
+
+        return back();
     }
 
 }

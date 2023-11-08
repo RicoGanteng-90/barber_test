@@ -57,6 +57,7 @@
                                             <th>subTotal</th>
                                             <th>Tanggal</th>
                                             <th>Customer</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -71,7 +72,34 @@
                                             <td>{{$layan->subtotal}}</td>
                                             <td>{{$layan->tanggal}}</td>
                                             <td>{{$layan->customer}}</td>
+                                            <td>
+                                            <form action="{{url('adminserviceDelete/'.$layan->id)}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger">Hapus</button>
+                                            </form>
+                                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ubahLayanan{{$layan->id}}">Ubah</button>
+                                            </td>
                                         </tr>
+                                        <div class="modal fade" id="ubahLayanan{{$layan->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="{{url('adminserviceUpdate/'.$layan->id)}}" method="post">
+                                                @csrf
+                                            <div class="modal-body text-center">
+                                                <strong>Ubah jumlah :</strong><br>
+                                                <input type="number" name="quantity" style="width: 400px;" min="0">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </form>
+                                            </div>
+                                            </div>
+                                        </div>
                                         @endforeach
                                     </tbody>
                                 </table>

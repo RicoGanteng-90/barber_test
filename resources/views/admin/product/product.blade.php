@@ -44,6 +44,7 @@
                                             <th>Subtotal</th>
                                             <th>Supplier</th>
                                             <th>Tanggal</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -58,7 +59,36 @@
                                             <td>{{$item->total_beli}}</td>
                                             <td>{{$item->supplier}}</td>
                                             <td>{{$item->tanggal}}</td>
+                                            <td>
+                                            <form action="{{url('notaHapus/'.$item->id)}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-danger">Hapus</button>
+                                            </form>
+                                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ubahBarang{{$item->id}}">Ubah</button>
+                                            </td>
                                         </tr>
+
+                                        <div class="modal fade" id="ubahBarang{{$item->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="{{url('notaEdit/'.$item->id)}}" method="post">
+                                                @csrf
+                                            <div class="modal-body text-center">
+                                                <strong>Ubah jumlah :</strong><br>
+                                                <input type="number" name="quantity" style="width: 400px;" min="0">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                            </form>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -74,10 +104,10 @@
         <br>
                             <p>Nominal : <input type="text" id="nominal" name="nominal"></p>
                             <p>Kembali : <input type="text" id="kembali" name="kembali" readonly></p>
-                            <button type="button" class="btn btn-warning" onclick="hitungKembali()">Proses</button>
+                            <button type="button" class="btn btn-warning" onclick="hitungKembali()">Hitung</button>
                             <form action="{{route('nota.tambahBarang')}}" method="post">
                                 @csrf
-                            <button type="submit" class="btn btn-success">Buat nota</button>
+                            <button type="submit" class="btn btn-success">Proses</button>
                             </form>
                         </div>
 
