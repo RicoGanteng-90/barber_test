@@ -103,14 +103,14 @@
                                 Barang
                             </a>
 
-                            <a class="nav-link" href="">
-                                <div class="sb-nav-link-icon"><i class="fa-solid fa-money-bill-wheat"></i></div>
-                                Customer
-                            </a>
-
                             <a class="nav-link" href="{{route('layanan.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fa-solid fa-bell-concierge"></i></div>
                                 Layanan
+                            </a>
+
+                            <a class="nav-link" href="{{route('user.index')}}" >
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-person"></i></div>
+                                User
                             </a>
 
                         </div>

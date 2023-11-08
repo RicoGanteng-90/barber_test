@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\LayananController;
 use App\Http\Controllers\Admin\PenjualanController;
 use App\Http\Controllers\admin\StockController;
 use App\Http\Controllers\Admin\SupplierController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\NoteController;
@@ -156,6 +157,8 @@ Route::middleware(['role'])->group(function () {
     Route::post('/addLayanan', [LayananController::class, 'create'])->name('layanan.create');
     Route::post('/updateLayanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
     Route::delete('/deleteLayanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
+
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
     });
 
     Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota')->middleware('owner');
