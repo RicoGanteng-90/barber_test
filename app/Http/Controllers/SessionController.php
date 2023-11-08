@@ -65,10 +65,10 @@ class SessionController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            if (Auth::user()->role_user == 'owner') {
-                return redirect()->route('admindashboard.index');
-            } elseif (Auth::user()->role_user == 'customer') {
+            if (Auth::user()->role_user == 'customer') {
                 return redirect()->route('home.index');
+            } else{
+                return back()->withErrors(['email' => 'Invalid email or password.'])->withInput();
             }
         } else {
             // Jika gagal login, kembali ke page sebelummnya dengan pesan error.
@@ -124,6 +124,6 @@ class SessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('session.index');
     }
 }

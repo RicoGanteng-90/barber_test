@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [SessionController::class,'index'])->name('session.index');
 Route::post('/', [SessionController::class,'store'])->name('session.store');
 Route::post('/register', [SessionController::class,'create'])->name('session.create');
-Route::post('/logout', [SessionController::class,'destroy'])->name('session.destroy');
+Route::post('/customer/logout', [SessionController::class,'destroy'])->name('session.destroy');
 
 Route::middleware(['customer'])->group(function () {
 
@@ -79,12 +79,11 @@ Route::get('/cetakNota/{id}', [NoteController::class,'cetak_pdf'])->name('note.c
 });
 
 
-
 //Route untuk halaman login dan register admin
 Route::get('/adminlogin', [AdminSessionController::class,'index'])->name('adminsession.index');
 Route::post('/adminlogin', [AdminSessionController::class,'store'])->name('adminsession.store');
-Route::get('/adminregister', [AdminSessionController::class,'register'])->name('adminsession.register');
-Route::get('/logout', [AdminSessionController::class,'destroy'])->name('adminsession.destroy');
+Route::post('/adminregister', [AdminSessionController::class,'register'])->name('adminsession.register');
+Route::post('/owner/logout', [AdminSessionController::class,'destroy'])->name('adminsession.destroy');
 
 Route::middleware(['owner'])->group(function () {
 
@@ -94,8 +93,6 @@ Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('admin
 //Route untuk halaman produk admin
 Route::get('/adminproduct', [AdminProductController::class,'index'])->name('adminproduct.index');
 Route::post('/notaBeli', [AdminProductController::class,'tambahBarang'])->name('nota.tambahBarang');
-Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota');
-Route::get('/cetakNota2', [AdminProductController::class,'tampilNota2'])->name('nota.tampilNota2');
 Route::get('/adminlayanan', [AdminProductController::class,'show'])->name('adminproduct.show');
 Route::post('/adminproductcreate/{id}', [AdminProductController::class,'create'])->name('adminproduct.create');
 Route::post('/supplierAdd/{id}', [AdminProductController::class,'tambahSupplier'])->name('supplierAdd.tambahSupplier');
@@ -129,7 +126,6 @@ Route::get('/jualProduct', [NoteController::class,'notaJual'])->name('note.jualB
 Route::get('/jualLayan', [NoteController::class,'tampilNotaLayanan'])->name('jual.layan');
 Route::get('/jualLayanan', [NoteController::class,'notaLayan'])->name('note.jualLayanan');
 
-Route::get('/cetakNota3', [AdminServiceController::class,'index'])->name('layanan2.index');
 Route::post('/jualLayanan', [AdminServiceController::class,'jualLayanan'])->name('layanan2.jualLayanan');
 
 Route::post('/order-update/{id}', [AdminOrderController::class,'update'])->name('order.update');
@@ -154,4 +150,10 @@ Route::get('/layanan2', [LayananController::class, 'index'])->name('layanan.inde
 Route::post('/addLayanan', [LayananController::class, 'create'])->name('layanan.create');
 Route::post('/updateLayanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
 Route::delete('/deleteLayanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
+});
+
+Route::middleware(['admin'])->group(function () {
+Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota');
+Route::get('/cetakNota2', [AdminProductController::class,'tampilNota2'])->name('nota.tampilNota2');
+Route::get('/cetakNota3', [AdminServiceController::class,'index'])->name('layanan2.index');
 });

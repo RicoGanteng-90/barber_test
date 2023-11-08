@@ -48,10 +48,10 @@ class AdminSessionController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // Jika berhasil login, arahkan sesuai dengan peran pengguna.
-            if (Auth::user()->role_user == 'owner') {
+            if (Auth::user()->role_user == 'owner' || Auth::user()->role_user == 'admin') {
                 return redirect()->route('admindashboard.index');
-            } else {
-                return redirect()->route('home.index');
+            }else{
+                return back();
             }
         } else {
             // Jika gagal login, kembalikan dengan pesan error.
@@ -107,6 +107,6 @@ class AdminSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/adminlogin');
+        return redirect()->route('adminsession.index');
     }
 }

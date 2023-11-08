@@ -41,9 +41,9 @@
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <form id="logout-form" action="{{route('adminsession.destroy')}}" method="post" enctype="multipart/form-data">
+                        <form id="logout-admin" action="{{route('adminsession.destroy')}}" method="post" enctype="multipart/form-data">
                             @csrf
-                            <li style="cursor: pointer;"><a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                            <li style="cursor: pointer;"><a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-admin').submit();">Logout</a></li>
                         </form>
                     </ul>
                 </li>
