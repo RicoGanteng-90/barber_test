@@ -85,85 +85,79 @@ Route::post('/adminlogin', [AdminSessionController::class,'store'])->name('admin
 Route::post('/adminregister', [AdminSessionController::class,'register'])->name('adminsession.register');
 Route::post('/owner/logout', [AdminSessionController::class,'destroy'])->name('adminsession.destroy');
 
-Route::middleware(['owner'])->group(function () {
+Route::middleware(['role'])->group(function () {
 
-//Route untuk halaman dashboard admin
-Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('admindashboard.index');
+    //Route untuk halaman dashboard admin
+    Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('admindashboard.index');
 
-//Route untuk halaman produk admin
-Route::get('/adminproduct', [AdminProductController::class,'index'])->name('adminproduct.index');
-Route::post('/notaBeli', [AdminProductController::class,'tambahBarang'])->name('nota.tambahBarang');
-Route::delete('/notaHapus/{id}', [AdminProductController::class,'destroy'])->name('nota.destroy');
-Route::post('/notaEdit/{id}', [AdminProductController::class,'update'])->name('nota.update');
-Route::get('/adminlayanan', [AdminProductController::class,'show'])->name('adminproduct.show');
-Route::post('/adminproductcreate/{id}', [AdminProductController::class,'create'])->name('adminproduct.create');
-Route::post('/supplierAdd/{id}', [AdminProductController::class,'tambahSupplier'])->name('supplierAdd.tambahSupplier');
-Route::post('/customerAdd/{id}', [AdminProductController::class,'tambahCustomer'])->name('customerAdd.tambahCustomer');
+    //Route untuk halaman produk admin
+    Route::get('/adminproduct', [AdminProductController::class,'index'])->name('adminproduct.index');
+    Route::post('/notaBeli', [AdminProductController::class,'tambahBarang'])->name('nota.tambahBarang');
+    Route::delete('/notaHapus/{id}', [AdminProductController::class,'destroy'])->name('nota.destroy');
+    Route::post('/notaEdit/{id}', [AdminProductController::class,'update'])->name('nota.update');
+    Route::get('/adminlayanan', [AdminProductController::class,'show'])->name('adminproduct.show');
+    Route::post('/adminproductcreate/{id}', [AdminProductController::class,'create'])->name('adminproduct.create');
+    Route::post('/supplierAdd/{id}', [AdminProductController::class,'tambahSupplier'])->name('supplierAdd.tambahSupplier');
+    Route::post('/customerAdd/{id}', [AdminProductController::class,'tambahCustomer'])->name('customerAdd.tambahCustomer');
 
-//Route untuk layanan produk admin
-Route::get('/adminservice', [AdminLayananController::class,'index'])->name('adminlayanan.index');
-Route::post('/adminserviceUpdate/{id}', [AdminLayananController::class,'update'])->name('adminlayanan.update');
-Route::delete('/adminserviceDelete/{id}', [AdminLayananController::class,'destroy'])->name('adminlayanan.destroy');
-Route::post('/addService/{id}', [AdminLayananController::class,'create'])->name('addService.create');
-Route::post('/addUser/{id}', [AdminLayananController::class,'tambahUser'])->name('addService.tambahUser');
+    //Route untuk layanan produk admin
+    Route::get('/adminservice', [AdminLayananController::class,'index'])->name('adminlayanan.index');
+    Route::post('/adminserviceUpdate/{id}', [AdminLayananController::class,'update'])->name('adminlayanan.update');
+    Route::delete('/adminserviceDelete/{id}', [AdminLayananController::class,'destroy'])->name('adminlayanan.destroy');
+    Route::post('/addService/{id}', [AdminLayananController::class,'create'])->name('addService.create');
+    Route::post('/addUser/{id}', [AdminLayananController::class,'tambahUser'])->name('addService.tambahUser');
 
-//Route untuk penjualan produk admin
-Route::get('/barang2', [AdminBarangJual::class,'index'])->name('barang2.index');
-Route::post('/barangUpdate2/{id}', [AdminBarangJual::class,'update'])->name('barang2.update');
-Route::delete('/barangDelete2/{id}', [AdminBarangJual::class,'destroy'])->name('barang2.destroy');
-Route::post('/barangAdd/{id}', [AdminBarangJual::class,'create'])->name('barang2.create');
-Route::post('/customerAdd/{id}', [AdminBarangJual::class,'store'])->name('barang2.store');
+    //Route untuk penjualan produk admin
+    Route::get('/barang2', [AdminBarangJual::class,'index'])->name('barang2.index');
+    Route::post('/barangUpdate2/{id}', [AdminBarangJual::class,'update'])->name('barang2.update');
+    Route::delete('/barangDelete2/{id}', [AdminBarangJual::class,'destroy'])->name('barang2.destroy');
+    Route::post('/barangAdd/{id}', [AdminBarangJual::class,'create'])->name('barang2.create');
+    Route::post('/customerAdd/{id}', [AdminBarangJual::class,'store'])->name('barang2.store');
 
-Route::post('/jualBarang', [PenjualanController::class,'jualBarang'])->name('jual.barang');
+    Route::post('/jualBarang', [PenjualanController::class,'jualBarang'])->name('jual.barang');
 
-//Route untuk halaman order admin
-Route::get('/adminorder', [AdminOrderController::class,'index'])->name('adminorder.index');
+    //Route untuk halaman order admin
+    Route::get('/adminorder', [AdminOrderController::class,'index'])->name('adminorder.index');
 
-//Route untuk halaman stock admin
-Route::get('/adminStock', [StockController::class,'index'])->name('stock.index');
-Route::post('/adminStockStore/{id}', [StockController::class,'create'])->name('stock.create');
+    //Route untuk halaman stock admin
+    Route::get('/adminStock', [StockController::class,'index'])->name('stock.index');
+    Route::post('/adminStockStore/{id}', [StockController::class,'create'])->name('stock.create');
 
-Route::get('/showNote', [NoteController::class,'show'])->name('note.show');
-Route::get('/beliBarang', [NoteController::class,'beliBarang'])->name('note.beliBarang');
+    Route::get('/showNote', [NoteController::class,'show'])->name('note.show');
+    Route::get('/beliBarang', [NoteController::class,'beliBarang'])->name('note.beliBarang');
 
-Route::get('/jualShow', [NoteController::class,'tampilNotaBarang'])->name('jual.show');
-Route::get('/jualProduct', [NoteController::class,'notaJual'])->name('note.jualBarang');
+    Route::get('/jualShow', [NoteController::class,'tampilNotaBarang'])->name('jual.show');
+    Route::get('/jualProduct', [NoteController::class,'notaJual'])->name('note.jualBarang');
 
-Route::get('/jualLayan', [NoteController::class,'tampilNotaLayanan'])->name('jual.layan');
-Route::get('/jualLayanan', [NoteController::class,'notaLayan'])->name('note.jualLayanan');
+    Route::get('/jualLayan', [NoteController::class,'tampilNotaLayanan'])->name('jual.layan');
+    Route::get('/jualLayanan', [NoteController::class,'notaLayan'])->name('note.jualLayanan');
 
-Route::post('/jualLayanan', [AdminServiceController::class,'jualLayanan'])->name('layanan2.jualLayanan');
+    Route::post('/jualLayanan', [AdminServiceController::class,'jualLayanan'])->name('layanan2.jualLayanan');
 
-Route::post('/order-update/{id}', [AdminOrderController::class,'update'])->name('order.update');
-Route::delete('/order-delete/{id}', [AdminOrderController::class,'destroy'])->name('order.destroy');
+    Route::post('/order-update/{id}', [AdminOrderController::class,'update'])->name('order.update');
+    Route::delete('/order-delete/{id}', [AdminOrderController::class,'destroy'])->name('order.destroy');
 
-Route::get('/download-image/{order_img}', [AdminOrderController::class, 'download'])->name('image.download');
+    Route::get('/download-image/{order_img}', [AdminOrderController::class, 'download'])->name('image.download');
 
-Route::post('/update-barang/{id}', [StockController::class, 'update'])->name('barang3.update');
-Route::delete('/hapus-barang/{id}', [StockController::class, 'destroy'])->name('barang3.destroy');
+    Route::post('/update-barang/{id}', [StockController::class, 'update'])->name('barang3.update');
+    Route::delete('/hapus-barang/{id}', [StockController::class, 'destroy'])->name('barang3.destroy');
 
-Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
-Route::post('/addSupplier', [SupplierController::class, 'create'])->name('supplier.create');
-Route::post('/updateSupplier/{id}', [SupplierController::class, 'update'])->name('supplier.update');
-Route::delete('/deleteSupplier/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
+    Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
+    Route::post('/addSupplier', [SupplierController::class, 'create'])->name('supplier.create');
+    Route::post('/updateSupplier/{id}', [SupplierController::class, 'update'])->name('supplier.update');
+    Route::delete('/deleteSupplier/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
 
-Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
-Route::post('/addBarang', [BarangController::class, 'create'])->name('barang.create');
-Route::post('/updateBarang/{id}', [BarangController::class, 'update'])->name('barang.update');
-Route::delete('/deleteBarang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
+    Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+    Route::post('/addBarang', [BarangController::class, 'create'])->name('barang.create');
+    Route::post('/updateBarang/{id}', [BarangController::class, 'update'])->name('barang.update');
+    Route::delete('/deleteBarang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
 
-Route::get('/layanan2', [LayananController::class, 'index'])->name('layanan.index');
-Route::post('/addLayanan', [LayananController::class, 'create'])->name('layanan.create');
-Route::post('/updateLayanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
-Route::delete('/deleteLayanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
+    Route::get('/layanan2', [LayananController::class, 'index'])->name('layanan.index');
+    Route::post('/addLayanan', [LayananController::class, 'create'])->name('layanan.create');
+    Route::post('/updateLayanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
+    Route::delete('/deleteLayanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
 
-Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota');
-Route::get('/cetakNota2', [AdminProductController::class,'tampilNota2'])->name('nota.tampilNota2');
-Route::get('/cetakNota3', [AdminServiceController::class,'index'])->name('layanan2.index');
-});
-
-Route::middleware(['admin'])->group(function () {
-Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota');
-Route::get('/cetakNota2', [AdminProductController::class,'tampilNota2'])->name('nota.tampilNota2');
-Route::get('/cetakNota3', [AdminServiceController::class,'index'])->name('layanan2.index');
-});
+    Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota');
+    Route::get('/cetakNota2', [AdminProductController::class,'tampilNota2'])->name('nota.tampilNota2');
+    Route::get('/cetakNota3', [AdminServiceController::class,'index'])->name('layanan2.index');
+    });

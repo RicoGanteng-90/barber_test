@@ -16,7 +16,7 @@ class OwnerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role_user === 'owner') {
+        if (auth()->check() && auth()->user()->role_user === 'owner' || auth()->check() && auth()->user()->role_user === 'admin') {
             return $next($request);
         }
 
