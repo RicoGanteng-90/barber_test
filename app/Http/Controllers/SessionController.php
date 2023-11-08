@@ -38,6 +38,7 @@ class SessionController extends Controller
         if($validate){
         $user = new user();
         $user->nama_user = $request->nama_user;
+        $user->username = $request->username;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->no_telp = $request->no_telp;

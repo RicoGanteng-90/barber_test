@@ -59,6 +59,10 @@
                         <input name="nama_user" type="text" required/>
                     </label>
                     <label>
+                        <span>UserName</span>
+                        <input name="username" type="text" required/>
+                    </label>
+                    <label>
                         <span>Email</span>
                         <input name="email" type="email" required/>
                     </label>
