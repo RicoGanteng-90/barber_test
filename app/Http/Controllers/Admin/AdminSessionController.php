@@ -47,15 +47,11 @@ class AdminSessionController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Jika berhasil login, arahkan sesuai dengan peran pengguna.
             if (Auth::user()->role_user == 'owner' || Auth::user()->role_user == 'admin') {
                 return redirect()->route('admindashboard.index');
-            }else{
-                return back();
             }
         } else {
-            // Jika gagal login, kembalikan dengan pesan error.
-            return back()->withErrors(['email' => 'Invalid email or password.'])->withInput();
+            return back()->withErrors(['email' => 'Email atau password salah'])->withInput();
         }
     }
 
