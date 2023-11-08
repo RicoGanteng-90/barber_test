@@ -68,12 +68,10 @@ class SessionController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             if (Auth::user()->role_user == 'customer') {
                 return redirect()->route('home.index');
-            } else{
-                return back()->withErrors(['email' => 'Invalid email or password.'])->withInput();
             }
         } else {
             // Jika gagal login, kembali ke page sebelummnya dengan pesan error.
-            return back()->withErrors(['email' => 'Invalid email or password.'])->withInput();
+            return back()->withErrors(['email' => 'Email atau Password salah.'])->withInput();
         }
     }
 

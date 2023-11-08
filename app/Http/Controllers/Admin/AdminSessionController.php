@@ -51,7 +51,7 @@ class AdminSessionController extends Controller
                 return redirect()->route('admindashboard.index');
             }
         } else {
-            return back()->withErrors(['email' => 'Email atau password salah'])->withInput();
+            return back()->withErrors(['email' => 'Email atau Password salah'])->withInput();
         }
     }
 

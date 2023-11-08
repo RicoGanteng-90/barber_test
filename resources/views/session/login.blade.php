@@ -15,10 +15,6 @@
             <div class="form sign-in">
                 <h2>Welcome</h2><br>
 
-                @if(session('reg-succ'))
-                    <div style="text-align: center" class="alert alert-success">{{session('reg-succ')}}</div>
-                @endif
-
                 @error('email')
                     <div class="alert alert-error"><div style="text-align: center">{{ $message }}</div></div>
                 @enderror
