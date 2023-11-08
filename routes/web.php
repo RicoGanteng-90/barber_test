@@ -156,8 +156,8 @@ Route::middleware(['role'])->group(function () {
     Route::post('/addLayanan', [LayananController::class, 'create'])->name('layanan.create');
     Route::post('/updateLayanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
     Route::delete('/deleteLayanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
-
-    Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota');
-    Route::get('/cetakNota2', [AdminProductController::class,'tampilNota2'])->name('nota.tampilNota2');
-    Route::get('/cetakNota3', [AdminServiceController::class,'index'])->name('layanan2.index');
     });
+
+    Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota')->middleware('owner');
+    Route::get('/cetakNota2', [AdminProductController::class,'tampilNota2'])->name('nota.tampilNota2')->middleware('owner');
+    Route::get('/cetakNota3', [AdminServiceController::class,'index'])->name('layanan2.index')->middleware('owner');
