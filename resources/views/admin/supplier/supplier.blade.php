@@ -38,7 +38,7 @@
                                             <td>{{$supplier->no_telp}}</td>
                                             <td>{{$supplier->alamat}}</td>
                                             <td>
-                                                <form action="{{url('deleteSupplier/'.$supplier->id)}}" method="post">
+                                                <form action="{{url('deleteSupplier/'.$supplier->id)}}" method="post" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Hapus</button>
