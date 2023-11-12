@@ -159,6 +159,9 @@ Route::middleware(['role'])->group(function () {
     Route::delete('/deleteLayanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
 
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
+    Route::post('/addUser', [UserController::class, 'create'])->name('user.create');
+    Route::post('/updateUser/{id}', [UserController::class, 'update'])->name('user.update');
+    Route::delete('/deleteUser/{id}', [UserController::class, 'destroy'])->name('user.destroy');
     });
 
     Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota')->middleware('owner');

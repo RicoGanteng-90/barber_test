@@ -18,6 +18,14 @@
 
                         <br><br>
 
+                        @if(session('error'))
+                            <div style="text-align: center" class="alert alert-danger"><strong>{{session('error')}}</strong></div>
+                        @endif
+
+                        @if(session('success'))
+                            <div style="text-align: center" class="alert alert-success"><strong>{{session('success')}}</strong></div>
+                        @endif
+
                 <div class="card mb-4">
                             <div class="card-body">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inputBarang">Input barang</button>
@@ -89,27 +97,27 @@
                                                         <div class="row g-3">
                                                         <div class="col-6">
                                                         <label for="nama_barang" class="form-label">Nama barang</label>
-                                                        <input name="nama_barang" type="text" class="form-control" id="nama_barang" value="{{$barang->nama_barang}}">
+                                                        <input name="nama_barang" type="text" class="form-control" id="nama_barang" value="{{$barang->nama_barang}}" required="" oninvalid="this.setCustomValidity('Tolong isi Nama terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-6">
                                                         <label for="jenis_barang" class="form-label">Jenis</label>
-                                                        <input name="jenis_barang" type="text" class="form-control" id="jenis_barang" value="{{$barang->jenis_barang}}">
+                                                        <input name="jenis_barang" type="text" class="form-control" id="jenis_barang" value="{{$barang->jenis_barang}}" required="" oninvalid="this.setCustomValidity('Tolong isi Jenis terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-6">
                                                         <label for="harga_barang" class="form-label">Harga</label>
-                                                        <input name="harga_barang" type="text" class="form-control" id="harga_barang" value="{{$barang->harga_barang}}">
+                                                        <input name="harga_barang" type="text" class="form-control" id="harga_barang" value="{{$barang->harga_barang}}" required="" oninvalid="this.setCustomValidity('Tolong isi Harga terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-6">
                                                         <label for="information" class="form-label">Keterangan</label>
-                                                        <input name="information" type="text" class="form-control" id="information" value="{{$barang->information}}">
+                                                        <input name="information" type="text" class="form-control" id="information" value="{{$barang->information}}" required="" oninvalid="this.setCustomValidity('Tolong isi Kterangan terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-6">
                                                         <label for="quantity" class="form-label">Jumlah</label>
-                                                        <input name="quantity" type="text" class="form-control" id="quantity" value="{{$barang->quantity}}">
+                                                        <input name="quantity" type="text" class="form-control" id="quantity" value="{{$barang->quantity}}" required="" oninvalid="this.setCustomValidity('Tolong isi Jumlah terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-12">
@@ -131,7 +139,7 @@
                             </div>
                         </div>
 
-                        <div class="modal fade" id="inputBarang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="inputBarang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-xl">
                                             <div class="modal-content">
                                             <div class="modal-header">
@@ -144,27 +152,27 @@
                                                         @csrf
                                                         <div class="col-6">
                                                         <label for="nama_barang" class="form-label">Nama</label>
-                                                        <input name="nama_barang" type="text" class="form-control" id="nama_barang">
+                                                        <input name="nama_barang" type="text" class="form-control" id="nama_barang" required="" oninvalid="this.setCustomValidity('Tolong isi Nama terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
                                                         <div class="col-6">
                                                             <label for="jenis_barang" class="form-label">Jenis</label>
-                                                            <input name="jenis_barang" type="text" class="form-control" id="jenis_barang">
+                                                            <input name="jenis_barang" type="text" class="form-control" id="jenis_barang" required="" oninvalid="this.setCustomValidity('Tolong isi Jenis terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
                                                         <div class="col-6">
                                                             <label for="harga_barang" class="form-label">Harga</label>
-                                                            <input name="harga_barang" type="text" class="form-control" id="harga_barang">
+                                                            <input name="harga_barang" type="text" class="form-control" id="harga_barang" required="" oninvalid="this.setCustomValidity('Tolong isi Harga terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
                                                         <div class="col-6">
-                                                            <label for="information" class="form-label">information</label>
-                                                            <input name="information" type="text" class="form-control" id="information">
+                                                            <label for="information" class="form-label">Keterangan</label>
+                                                            <input name="information" type="text" class="form-control" id="information" required="" oninvalid="this.setCustomValidity('Tolong isi Keterangan terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
                                                         <div class="col-6">
                                                             <label for="quantity" class="form-label">Jumlah</label>
-                                                            <input name="quantity" type="number" class="form-control" id="quantity" min="0">
+                                                            <input name="quantity" type="number" class="form-control" id="quantity" min="0" required="" oninvalid="this.setCustomValidity('Tolong isi Jumlah terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
                                                         <div class="col-12">
                                                             <label for="product_img" class="form-label"></label>
-                                                            <input name="product_img" type="file" class="form-control" id="product_img">
+                                                            <input name="product_img" type="file" class="form-control" id="product_img" required="" oninvalid="this.setCustomValidity('Tolong isi Gambar terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="text-center">

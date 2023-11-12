@@ -58,9 +58,9 @@ class AdminBarangJual extends Controller
             $items->save();
         }
 
-        return back()->with('success', 'pembukuan berhasil');
+        return back()->with('success', 'Barang ditambahkan');
     } else {
-        return back()->with('error', 'Stok habis');
+        return back()->with('error', 'Silahkan pilih barang terlebih dahulu');
     }
     }
 
@@ -83,7 +83,7 @@ class AdminBarangJual extends Controller
                 $items3->save();
             }
         }
-        return back();
+        return back()->with('success', 'Customer berhasil ditambahkan');
     }
 
     /**
@@ -125,7 +125,7 @@ class AdminBarangJual extends Controller
             $barang->jumlah=$qty;
             $barang->save();
         }
-        return back();
+        return back()->with('success', 'Jumlah diubah.');
     }
 
     /**
@@ -140,6 +140,6 @@ class AdminBarangJual extends Controller
 
         $kelola->delete();
 
-        return back();
+        return back()->with('success', 'Data dihapus.');
     }
 }

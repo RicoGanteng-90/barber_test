@@ -94,7 +94,7 @@ class AdminOrderController extends Controller
         $order->status_pembayaran = $paymentStatus;
         $order->save();
 
-        return back();
+        return back()->with('success', 'Status berhasil diupdate');
 
     }
 
@@ -117,6 +117,6 @@ class AdminOrderController extends Controller
 
         $order->delete();
 
-        return back();
+        return back()->with('success', 'Pemesanan berhasil dihapus');
     }
 }

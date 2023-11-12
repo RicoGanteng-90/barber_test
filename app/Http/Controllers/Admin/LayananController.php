@@ -46,7 +46,7 @@ class LayananController extends Controller
 
             $layanan->save();
         }
-        return back();
+        return back()->with('success', 'Berhasil input layanan');
     }
 
     /**
@@ -112,7 +112,7 @@ class LayananController extends Controller
 
         $layanan->save();
 
-        return back()->with('success', 'Product berhasil diupdate');
+        return back()->with('success', 'layanan berhasil diupdate');
     }}
 
     /**
@@ -134,6 +134,6 @@ class LayananController extends Controller
 
         $layanan->delete();
 
-        return back();
+        return back()->with('success', 'Layanan berhasil dihapus');
     }
 }

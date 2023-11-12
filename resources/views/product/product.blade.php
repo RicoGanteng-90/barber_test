@@ -32,9 +32,16 @@
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane fade show p-0 active">
                     <div class="row g-4">
+
+                @if(session('error'))
+                    <div style="text-align: center" class="alert alert-danger"><strong>{{session('error')}}</strong></div>
+                @endif
+
+                @if(session('success'))
+                    <div style="text-align: center" class="alert alert-success"><strong>{{session('success')}}</strong></div>
+                @endif
+
                     @foreach($product2 as $product2)
-
-
                     <div class="modal fade" id="detailBarang{{$product2->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" style="width: 600px;">
                             <div class="modal-content">

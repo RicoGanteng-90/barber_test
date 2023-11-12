@@ -16,7 +16,7 @@ class CustomerMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role_user === 'customer') {
+        if (auth()->check() && auth()->user()->role_user === 'customer' || auth()->check() && auth()->user()->role_user === 'owner') {
             return $next($request);
         }
 

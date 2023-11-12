@@ -34,9 +34,17 @@ class CartController extends Controller
     {
         $qty3 = $request->input('jumlah');
 
+        if ($qty3 == '0') {
+            return back()->with('error', 'Pilih produk terlebih dahulu');
+        }
+
     $prod = Kelola_barang::findOrFail($id);
 
     $id_customer = Auth::id();
+
+    if ($prod->quantity < $qty3) {
+        return back()->with('error', 'Stok produk habis');
+    }
 
     if ($prod->quantity >= $qty3 && $qty3 > 0) {
         $cart = Cart::where('name', $prod->nama_barang)->first();
@@ -72,9 +80,9 @@ class CartController extends Controller
             $cart->save();
         }
 
-        return back()->with('success', 'Stok dan quantity produk telah berhasil diperbarui');
+        return back()->with('success', 'Produk telah ditambahkan');
     } else {
-        return back()->with('error', 'Stok habis atau qty2 tidak valid');
+        return back()->with('error', 'Produk gagal ditambahkan');
     }
     }
 
@@ -101,13 +109,17 @@ public function tambahLayanan(Request $request, $id)
 {
     $lay = $request->input('lay');
 
+    if (empty($lay)) {
+        return back()->with('error', 'Silahkan input layanan terlebih dahulu');
+    }
+
     $layanan = Kelola_layanan::findOrFail($id);
 
-    // Pastikan ada cukup stok sebelum menambahkan ke keranjang
     if ($layanan->quantity < $lay) {
         return back()->with('error', 'Stok tidak mencukupi');
     }
 
+    if ($layanan->quantity >= $lay && $lay > 0) {
     $cart = Cart::where('name', $layanan->nama_layanan)->first();
 
     $id_customer = Auth::id();
@@ -149,6 +161,10 @@ public function tambahLayanan(Request $request, $id)
 
         $cart->save();
     }
+    return back()->with('success', 'Layanan telah ditambahkan');
+    }else{
+        return back()->with('success', 'Layanan gagal ditambahkan');
+    }
 
     return back()->with('success', 'Layanan telah ditambahkan');
 }
@@ -177,7 +193,6 @@ public function tambahLayanan(Request $request, $id)
 
         $product = Kelola_barang::where('nama_barang', $cart->nama_barang)->first();
         if ($product) {
-            // Pengecekan stok produk
             if ($product->quantity >= ($originalQuantity - $min)) {
                 $product->quantity += ($originalQuantity - $min);
                 $product->save();
@@ -188,7 +203,6 @@ public function tambahLayanan(Request $request, $id)
 
         $service = Kelola_layanan::where('nama_layanan', $cart->name)->first();
         if ($service) {
-            // Pengecekan stok layanan
             if ($service->quantity >= ($originalQuantity - $min)) {
                 $service->quantity += ($originalQuantity - $min);
                 $service->save();
@@ -198,7 +212,7 @@ public function tambahLayanan(Request $request, $id)
         }
     }
 
-    return back();
+    return back()->with('success', 'Jumlah produk/layanan');
 }
 
 
@@ -245,7 +259,7 @@ public function tambahLayanan(Request $request, $id)
             $service->save();
         }
 
-        return back()->with('success', 'Item dihapus dan quantity ditambahkan');
+        return back()->with('success', 'Item dihapus');
     } else {
         return back()->with('error', 'Gagal menghapus.');
     }

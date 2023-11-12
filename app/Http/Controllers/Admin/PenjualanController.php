@@ -18,11 +18,20 @@ class PenjualanController extends Controller
     {
         $kelola_penjualan = Kelola_penjualan::all();
 
+        if($kelola_penjualan->isEmpty()) {
+            return back()->with('error', 'Tidak ada barang untuk diproses');
+        }
+
         $totalPrice = 0;
         $total = 0;
         $productNames = [];
 
         foreach ($kelola_penjualan as $item) {
+
+            if (empty($item->nama_customer)) {
+                return back()->with('error', 'Silahkan isi customer');
+            }
+
             $totalPrice += $item->total;
             $total += $item->jumlah;
             $productNames[] = $item->barang . '(' . $item->jumlah . ')';
@@ -41,7 +50,7 @@ class PenjualanController extends Controller
             $notabarang->barang = $productList;
             $notabarang->save();
 
-        return back();
+        return back()->with('success', 'Data berhasil diproses');
     }
 
     /**

@@ -30,6 +30,16 @@
                 </div>
                 <!-- Customer's Product End -->
 
+                <br>
+
+                @if(session('error'))
+                    <div style="text-align: center" class="alert alert-danger"><strong>{{session('error')}}</strong></div>
+                @endif
+
+                @if(session('success'))
+                    <div style="text-align: center" class="alert alert-success"><strong>{{session('success')}}</strong></div>
+                @endif
+
                         @php
                             $totalPrice = 0;
                         @endphp
@@ -80,7 +90,7 @@
                                                 @csrf
                                             <div class="modal-body text-center">
                                                 <strong>Ubah jumlah :</strong><br>
-                                                <input type="number" name="quantity" style="width: 400px;" min="0">
+                                                <input type="number" name="quantity" style="width: 400px;" min="0" required="" oninvalid="this.setCustomValidity('Tolong isi jumlahnya')" oninput="setCustomValidity('')">
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -66,7 +66,7 @@ class SessionController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            if (Auth::user()->role_user == 'customer') {
+            if (Auth::user()->role_user == 'customer' || Auth::user()->role_user == 'owner') {
                 return redirect()->route('home.index');
             }
         } else {

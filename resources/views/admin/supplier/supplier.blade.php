@@ -15,7 +15,13 @@
                     </div>
                 </main>
 
+                @if(session('error'))
+                    <div style="text-align: center" class="alert alert-danger"><strong>{{session('error')}}</strong></div>
+                @endif
 
+                @if(session('success'))
+                    <div style="text-align: center" class="alert alert-success"><strong>{{session('success')}}</strong></div>
+                @endif
 
                 <div class="card mb-4">
                             <div class="card-body">
@@ -64,7 +70,6 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="button" class="btn btn-primary">Save changes</button>
                                                     </div>
                                                     </div>
                                                 </div>
@@ -84,22 +89,22 @@
                                                         <div class="row g-3">
                                                         <div class="col-6">
                                                         <label for="nama_supplier" class="form-label">Nama supplier</label>
-                                                        <input name="nama_supplier" type="text" class="form-control" id="nama_supplier" value="{{$supplier->nama_supplier}}">
+                                                        <input name="nama_supplier" type="text" class="form-control" id="nama_supplier" value="{{$supplier->nama_supplier}}" required="" oninvalid="this.setCustomValidity('Tolong isi Nama terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-6">
                                                         <label for="email" class="form-label">Email</label>
-                                                        <input name="email" type="text" class="form-control" id="email" value="{{$supplier->email}}">
+                                                        <input name="email" type="text" class="form-control" id="email" value="{{$supplier->email}}" required="" oninvalid="this.setCustomValidity('Tolong isi Email terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-6">
                                                         <label for="no_telp" class="form-label">Nomor telepon</label>
-                                                        <input name="no_telp" type="text" class="form-control" id="no_telp" value="{{$supplier->no_telp}}">
+                                                        <input name="no_telp" type="text" class="form-control" id="no_telp" value="{{$supplier->no_telp}}" required="" oninvalid="this.setCustomValidity('Tolong isi no telp terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-6">
                                                         <label for="alamat" class="form-label">Alamat</label>
-                                                        <input name="alamat" type="text" class="form-control" id="alamat" value="{{$supplier->alamat}}">
+                                                        <input name="alamat" type="text" class="form-control" id="alamat" value="{{$supplier->alamat}}" required="" oninvalid="this.setCustomValidity('Tolong isi Alamat terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
@@ -130,19 +135,21 @@
                                             @csrf
                                             <div class="col-6">
                                             <label for="nama_supplier" class="form-label">Nama</label>
-                                            <input name="nama_supplier" type="text" class="form-control" id="nama_supplier">
+                                            <input name="nama_supplier" type="text" class="form-control" id="nama_supplier" required="" oninvalid="this.setCustomValidity('Tolong isi nama terlebih dahulu')" oninput="setCustomValidity('')">
                                             </div>
+
                                             <div class="col-6">
                                                 <label for="email" class="form-label">Email</label>
-                                                <input name="email" type="email" class="form-control" id="email">
+                                                <input name="email" type="email" class="form-control" id="email" required="" oninvalid="this.setCustomValidity('Tolong isi email terlebih dahulu')" oninput="setCustomValidity('')">
                                             </div>
+
                                             <div class="col-6">
                                                 <label for="no_telp" class="form-label">No telepon</label>
-                                                <input name="no_telp" type="text" class="form-control" id="no_telp">
+                                                <input name="no_telp" type="text" class="form-control" id="no_telp" required="" oninvalid="this.setCustomValidity('Tolong isi no telp terlebih dahulu')" oninput="setCustomValidity('')">
                                             </div>
                                             <div class="col-6">
                                                 <label for="alamat" class="form-label">Alamat</label>
-                                                <input name="alamat" type="text" class="form-control" id="alamat">
+                                                <input name="alamat" type="text" class="form-control" id="alamat" required="" oninvalid="this.setCustomValidity('Tolong isi Alamat terlebih dahulu')" oninput="setCustomValidity('')">
                                             </div>
                                             <div class="text-center">
                                             <button type="submit" class="btn btn-primary">Submit</button>

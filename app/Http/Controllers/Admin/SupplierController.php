@@ -39,7 +39,7 @@ class SupplierController extends Controller
             $suppliers->alamat = $request->input('alamat');
             $suppliers->save();
         }
-        return back();
+        return back()->with('success', 'Supplier berhasil ditambahkan');
     }
 
     /**
@@ -93,7 +93,7 @@ class SupplierController extends Controller
             $supplier->alamat = $request->input('alamat');
             $supplier->save();
         }
-        return back();
+        return back()->with('success', 'Data berhasil diupdate');
     }
 
     /**
@@ -108,6 +108,6 @@ class SupplierController extends Controller
 
         $supplier->delete();
 
-        return back();
+        return back()->with('success', 'Data berhasil dihapus');
     }
 }

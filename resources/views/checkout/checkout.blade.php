@@ -35,7 +35,7 @@
 
             <div class="col-6 text-center">
                 <label for="event_time" class="form-label">Tanggal acara:</label>
-                <input type="date" class="form-control text-center" id="event_time" name="event_time">
+                <input type="date" class="form-control text-center" id="event_time" name="event_time" required="" oninvalid="this.setCustomValidity('Tolong isi Tanggal transaksinya')" oninput="setCustomValidity('')">
             </div>
 
             <div class="col-md-6 text-center">
@@ -48,7 +48,7 @@
 
             <div class="col-md-6 offset-md-3 text-center" style="justify-items: center;">
                 <label for="payment_method" class="form-label">Metode pembayaran:</label>
-                <select class="form-control text-center" id="payment_method" name="payment_method">
+                <select class="form-control text-center" id="payment_method" name="payment_method" required="" oninvalid="this.setCustomValidity('Tolong isi metode pembayarannya')" oninput="setCustomValidity('')">
                     <option value=""></option>
                     <option value="BRI">BRI</option>
                 </select>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -25,9 +26,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $user = User::all();
+
+        if($user){
+            $user = new User();
+            $user->username = $request->input('username');
+            $user->nama_user = $request->input('nama_user');
+            $user->email = $request->input('email');
+            $user->role_user = $request->input('role_user');
+            $user->no_telp = $request->input('no_telp');
+            $user->alamat = $request->input('alamat');
+            $user->password = Hash::make($request->input('password'));
+
+            $user->save();
+        }
+        return back()->with('success', 'Berhasil input layanan');
     }
 
     /**
@@ -72,7 +87,22 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+    if ($user) {
+        $user->username = $request->input('username');
+            $user->nama_user = $request->input('nama_user');
+            $user->email = $request->input('email');
+            $user->role_user = $request->input('role_user');
+            $user->no_telp = $request->input('no_telp');
+            $user->alamat = $request->input('alamat');
+            $user->role_user = $request->input('role');
+            $user->password = Hash::make($request->input('password'));
+
+        $user->save();
+
+        return back()->with('success', 'user berhasil diupdate');
+    }
     }
 
     /**
@@ -83,6 +113,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $user->delete();
+
+        return back()->with('success', 'User telah dihapus');
     }
 }

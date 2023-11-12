@@ -33,17 +33,17 @@
         <b>
             <h3>Edit profile</h2><br>
         <label for="nama" style="color: black;">Nama : </label>
-        <input type="text" name="nama" id="nama" value="{{ Auth::user()->nama_user }}">
+        <input type="text" name="nama" id="nama" value="{{ Auth::user()->nama_user }}" required="" oninvalid="this.setCustomValidity('Tolong isi namanya')" oninput="setCustomValidity('')">
 
         <br><br>
 
         <label for="email" style="color: black;">Email : </label>
-        <input type="email" name="email" id="email" value="{{ Auth::user()->email }}">
+        <input type="email" name="email" id="email" value="{{ Auth::user()->email }}" required="" oninvalid="this.setCustomValidity('Tolong isi emailnya')" oninput="setCustomValidity('')">
 
         <br><br>
 
         <label for="not_telp" style="color: black;">No telp : </label>
-        <input type="text" name="not_telp" id="not_telp" value="{{ Auth::user()->no_telp }}">
+        <input type="text" name="not_telp" id="not_telp" value="{{ Auth::user()->no_telp }}" required="" oninvalid="this.setCustomValidity('Tolong isi no telpnya')" oninput="setCustomValidity('')">
         </b>
 
         <br><br>
@@ -68,17 +68,17 @@
         <b>
             <h3>Ubah password</h2><br>
         <label for="oldPassword" style="color: black;">Password saat ini : </label>
-        <input type="password" name="oldPassword" id="oldPassword">
+        <input type="password" name="oldPassword" id="oldPassword" required="" oninvalid="this.setCustomValidity('Tolong isi password saat ini')" oninput="setCustomValidity('')">
 
         <br><br>
 
         <label for="newPassword" style="color: black;">Password baru : </label>
-        <input type="password" name="newPassword" id="newPassword">
+        <input type="password" name="newPassword" id="newPassword" required="" oninvalid="this.setCustomValidity('Tolong isi password barunya')" oninput="setCustomValidity('')">
 
         <br><br>
 
         <label for="repeatPassword" style="color: black;">Ulangi password baru: </label>
-        <input type="password" name="repeatPassword" id="repeatPassword">
+        <input type="password" name="repeatPassword" id="repeatPassword" required="" oninvalid="this.setCustomValidity('Tolong ulangi password barunya')" oninput="setCustomValidity('')">
         </b>
 
         <br><br>

@@ -29,11 +29,11 @@
             <div class="row g-3">
 
                 @if(session('error'))
-                    <div style="text-align: center" class="alert alert-danger">{{session('error')}}</div>
+                    <div style="text-align: center" class="alert alert-danger"><strong>{{session('error')}}</strong></div>
                 @endif
 
                 @if(session('success'))
-                    <div style="text-align: center" class="alert alert-success">{{session('success')}}</div>
+                    <div style="text-align: center" class="alert alert-success"><strong>{{session('success')}}</strong></div>
                 @endif
 
             @foreach($service as $service)

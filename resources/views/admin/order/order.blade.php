@@ -11,6 +11,15 @@
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
                             <li class="breadcrumb-item active">Orders</li>
                         </ol>
+
+                        @if(session('error'))
+                            <div style="text-align: center" class="alert alert-danger"><strong>{{session('error')}}</strong></div>
+                        @endif
+
+                        @if(session('success'))
+                            <div style="text-align: center" class="alert alert-success"><strong>{{session('success')}}</strong></div>
+                        @endif
+
                         <div class="card mb-4">
                             <div class="card-body">
                                 <table id="datatablesSimple">

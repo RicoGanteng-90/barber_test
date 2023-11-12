@@ -43,11 +43,20 @@ class AdminServiceController extends Controller
     public function jualLayanan(){
         $feature = Feature::all();
 
+        if($feature->isEmpty()) {
+            return back()->with('error', 'Tidak ada barang untuk diproses');
+        }
+
         $totalPrice = 0;
         $total = 0;
         $productNames = [];
 
         foreach ($feature as $item) {
+
+            if (empty($item->customer)) {
+                return back()->with('error', 'Silahkan isi customer');
+            }
+
             $totalPrice += $item->subtotal;
             $total += $item->total;
             $productNames[] = $item->name . '(' . $item->total . ')';
@@ -66,7 +75,7 @@ class AdminServiceController extends Controller
             $notabarang->layanan = $productList;
             $notabarang->save();
 
-        return back();
+        return back()->with('success', 'Data berhasil diproses');
     }
 
     /**

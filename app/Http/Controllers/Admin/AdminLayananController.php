@@ -39,7 +39,7 @@ class AdminLayananController extends Controller
                 $items2->save();
             }
         }
-        return back();
+        return back()->with('success', 'Customer berhasil ditambahkan');
     }
 
     /**
@@ -71,9 +71,9 @@ class AdminLayananController extends Controller
             $items->save();
         }
 
-        return back()->with('success', 'Stok berhasil diperbarui');
+        return back()->with('success', 'Layanan berhasil ditambahkan');
     } else {
-        return back()->with('error', 'Stok habis');
+        return back()->with('error', 'Silahkan pilih layanan terlebih dahulu');
     }
     }
 
@@ -127,7 +127,7 @@ class AdminLayananController extends Controller
             $barang->total=$qty;
             $barang->save();
         }
-        return back();
+        return back()->with('success', 'Jumlah berhasil diupdate');
     }
 
     /**
@@ -142,6 +142,6 @@ class AdminLayananController extends Controller
 
         $kelola->delete();
 
-        return back();
+        return back()->with('success', 'Data berhasil dihapus');
     }
 }

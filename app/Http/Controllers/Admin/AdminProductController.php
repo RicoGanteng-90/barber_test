@@ -51,17 +51,26 @@ class AdminProductController extends Controller
                 $items2->save();
             }
         }
-        return back();
+        return back()->with('success', 'Supplier berhasil ditambahkan');
     }
 
     public function tambahBarang(){
         $kelola_pembelian = Kelola_pembelian::all();
+
+        if($kelola_pembelian->isEmpty()) {
+            return back()->with('error', 'Tidak ada barang untuk diproses');
+        }
 
         $totalPrice = 0;
         $total = 0;
         $productNames = [];
 
         foreach ($kelola_pembelian as $item) {
+
+            if (empty($item->supplier)) {
+                return back()->with('error', 'Silahkan isi supplier');
+            }
+
             $totalPrice += $item->total_beli;
             $total += $item->quantity;
             $productNames[] = $item->name . '(' . $item->quantity . ')';
@@ -80,7 +89,7 @@ class AdminProductController extends Controller
             $notabarang->barang = $productList;
             $notabarang->save();
 
-        return back();
+        return back()->with('success', 'Data berhasil diproses');
     }
 
 
@@ -117,9 +126,9 @@ class AdminProductController extends Controller
             $items->save();
         }
 
-        return back()->with('success', 'Stok berhasil diperbarui');
+        return back()->with('success', ' Barang berhasil ditambahkan');
     } else {
-        return back()->with('error', 'Stok habis');
+        return back()->with('error', 'Silahkan isi jumlahnya');
     }
     }
 
@@ -183,7 +192,7 @@ class AdminProductController extends Controller
             $barang->quantity=$qty;
             $barang->save();
         }
-        return back();
+        return back()->with('success', 'Jumlah diubah.');
     }
 
     /**
@@ -198,7 +207,7 @@ class AdminProductController extends Controller
 
         $kelola->delete();
 
-        return back();
+        return back()->with('success', 'Data dihapus.');
     }
 
 }

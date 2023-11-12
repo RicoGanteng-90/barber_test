@@ -47,7 +47,7 @@ class BarangController extends Controller
 
             $barang->save();
         }
-        return back();
+        return back()->with('suceess', 'Berhasil input barang');
     }
 
     /**
@@ -136,6 +136,6 @@ class BarangController extends Controller
 
         $barang->delete();
 
-        return back();
+        return back()->with('success', 'Product berhasil dihapus');
     }
 }

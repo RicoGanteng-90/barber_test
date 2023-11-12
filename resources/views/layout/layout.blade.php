@@ -104,7 +104,7 @@
                     <div class="dropdown">
                         <small class="fa fa-user text-body btn-sm-square bg-dark rounded-circle ms-3" data-bs-toggle="dropdown" aria-expanded="false" style="cursor:pointer;"></small>
                     <ul class="dropdown-menu" style="left: -105%;" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="{{route('profile.index')}}">Ganti password</a></li>
+                        <li><a class="dropdown-item" href="{{route('profile.index')}}">Ganti data diri</a></li>
                         <form id="logout-form" action="{{route('session.destroy')}}" method="post" enctype="multipart/form-data">
                             @csrf
                         <li style="cursor: pointer;"><a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>

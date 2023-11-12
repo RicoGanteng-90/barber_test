@@ -31,11 +31,11 @@
 <br>
 
                 @if(session('error'))
-                    <div style="text-align: center" class="alert alert-warning">{{session('error')}}</div>
+                    <div style="text-align: center" class="alert alert-warning"><strong>{{session('error')}}</strong></div>
                 @endif
 
                 @if(session('success'))
-                    <div style="text-align: center" class="alert alert-success">{{session('success')}}</div>
+                    <div style="text-align: center" class="alert alert-success"><strong>{{session('success')}}</strong></div>
                 @endif
 
                 @php
@@ -91,7 +91,7 @@
                                                 @csrf
                                             <div class="modal-body text-center">
                                                 <strong>Ubah jumlah :</strong><br>
-                                                <input type="number" name="quantity" style="width: 400px;" min="0">
+                                                <input type="number" name="quantity" style="width: 400px;" min="0" required="" oninvalid="this.setCustomValidity('Tolong isi jumlahnya')" oninput="setCustomValidity('')">
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -123,23 +123,23 @@
                         </div>
 
                         <script>
-    function hitungKembali() {
-        var totalPrice = <?php echo $totalPrice; ?>;
-        var nominal = parseFloat(document.getElementById('nominal').value);
+                            function hitungKembali() {
+                                var totalPrice = <?php echo $totalPrice; ?>;
+                                var nominal = parseFloat(document.getElementById('nominal').value);
 
-        if (!isNaN(nominal)) {
-            var kembali = nominal - totalPrice;
-            if (kembali >= 0) {
-                var formattedKembali = "Rp. " + kembali.toLocaleString('id-ID') + ",00";
-                document.getElementById('kembali').value = formattedKembali;
-            } else {
-                alert("Nominal tidak mencukupi!");
-            }
-        } else {
-            alert("Masukkan nominal yang valid.");
-        }
-    }
-</script>
+                                if (!isNaN(nominal)) {
+                                    var kembali = nominal - totalPrice;
+                                    if (kembali >= 0) {
+                                        var formattedKembali = "Rp. " + kembali.toLocaleString('id-ID') + ",00";
+                                        document.getElementById('kembali').value = formattedKembali;
+                                    } else {
+                                        alert("Nominal tidak mencukupi!");
+                                    }
+                                } else {
+                                    alert("Masukkan nominal yang valid.");
+                                }
+                            }
+                        </script>
 
                 <!--Product's modal-->
                 <div class="modal fade" id="cariBarang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
