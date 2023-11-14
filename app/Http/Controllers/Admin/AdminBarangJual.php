@@ -123,6 +123,7 @@ class AdminBarangJual extends Controller
 
         if($barang){
             $barang->jumlah=$qty;
+            $barang->total=$qty*$barang->harga;
             $barang->save();
         }
         return back()->with('success', 'Jumlah diubah.');

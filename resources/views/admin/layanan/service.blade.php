@@ -69,7 +69,7 @@
                                             <td>{{$layan->name}}</td>
                                             <td>{{$layan->price}}</td>
                                             <td>{{$layan->total}}</td>
-                                            <td>{{$layan->subtotal}}</td>
+                                            <td>{{$totalPrice}}</td>
                                             <td>{{$layan->tanggal}}</td>
                                             <td>{{$layan->customer}}</td>
                                             <td>

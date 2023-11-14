@@ -125,6 +125,7 @@ class AdminLayananController extends Controller
 
         if($barang){
             $barang->total=$qty;
+            $barang->subtotal=$qty*$barang->price;
             $barang->save();
         }
         return back()->with('success', 'Jumlah berhasil diupdate');
