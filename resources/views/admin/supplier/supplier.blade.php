@@ -95,12 +95,12 @@
 
                                                         <div class="col-6">
                                                         <label for="email" class="form-label">Email</label>
-                                                        <input name="email" type="text" class="form-control" id="email" value="{{$supplier->email}}" required="" oninvalid="this.setCustomValidity('Tolong isi Email terlebih dahulu')" oninput="setCustomValidity('')">
+                                                        <input name="email" type="email" class="form-control" id="email" value="{{$supplier->email}}" required="" oninvalid="this.setCustomValidity('Tolong isi Email terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-6">
                                                         <label for="no_telp" class="form-label">Nomor telepon</label>
-                                                        <input name="no_telp" type="text" class="form-control" id="no_telp" value="{{$supplier->no_telp}}" required="" oninvalid="this.setCustomValidity('Tolong isi no telp terlebih dahulu')" oninput="setCustomValidity('')">
+                                                        <input name="no_telp" type="text" class="form-control" id="no_telp" value="{{$supplier->no_telp}}" required="" oninvalid="this.setCustomValidity('Tolong isi no telepon terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-6">
