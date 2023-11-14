@@ -190,6 +190,7 @@ class AdminProductController extends Controller
 
         if($barang){
             $barang->quantity=$qty;
+            $barang->total_beli=$qty*$barang->price;
             $barang->save();
         }
         return back()->with('success', 'Jumlah diubah.');
