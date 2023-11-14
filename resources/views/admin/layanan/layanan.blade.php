@@ -24,8 +24,8 @@
 
                 <div class="card mb-4">
                             <div class="card-body">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inputLayanan">Input layanan</button>
-                            <a href="/layanan3" type="submit" class="btn btn-primary">Deleted layanan</a>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inputLayanan">Tambah layanan</button>
+                            <a href="/layanan3" type="submit" class="btn btn-primary">Layanan terhapus</a>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>

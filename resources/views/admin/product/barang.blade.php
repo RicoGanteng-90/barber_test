@@ -16,7 +16,6 @@
                     </div>
                 </main>
 
-                        <br><br>
 
                         @if(session('error'))
                             <div style="text-align: center" class="alert alert-danger"><strong>{{session('error')}}</strong></div>
@@ -28,8 +27,8 @@
 
                     <div class="card mb-4">
                             <div class="card-body">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inputBarang">Input barang</button>
-                            <a href="/barang3" type="submit" class="btn btn-primary">Deleted barang</a>
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inputBarang">Tambah barang</button>
+                            <a href="/barang3" type="submit" class="btn btn-primary">Barang terhapus</a>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>

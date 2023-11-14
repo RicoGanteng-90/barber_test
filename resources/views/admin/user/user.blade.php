@@ -25,8 +25,8 @@
 
                 <div class="card mb-4">
                             <div class="card-body">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inputUser">Tambah User</button>
-                                <a href="/user2" class="btn btn-primary">Deleted user</a>
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#inputUser">Tambah User</button>
+                                <a href="/user2" class="btn btn-primary">User terhapus</a>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
