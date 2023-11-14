@@ -21,6 +21,66 @@ class LayananController extends Controller
         return view('admin.layanan.layanan', compact('layanan'));
     }
 
+
+    public function layanan3()
+    {
+        $layanan = Kelola_layanan::onlyTrashed()->get();
+
+        return view('admin.layanan.restorelay', compact('layanan'));
+    }
+
+    public function kembalikan($id)
+    {
+    	$layanan = Kelola_layanan::onlyTrashed()->where('id', $id);
+    	$layanan->restore();
+    	return back()->with('success', 'Layanan berhasil di restore');
+    }
+
+    public function kembalikan2()
+    {
+    	$layanan = Kelola_layanan::onlyTrashed();
+    	$layanan->restore();
+    	return back()->with('success', 'Layanan berhasil di restore');
+    }
+
+    public function hapus_permanen($id)
+    {
+    	$layanan = Kelola_layanan::onlyTrashed()->where('id', $id)->first();
+
+        if ($layanan) {
+            if ($layanan->img_service) {
+                $oldFilePath = public_path('layanan/' . $layanan->img_service);
+
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
+            }
+        }
+
+    	$layanan->forceDelete();
+
+    	return back()->with('success', 'Layanan berhasil di hapus');
+    }
+
+    public function hapus_permanen2()
+    {
+    	$layanan = Kelola_layanan::onlyTrashed()->get();
+
+        foreach ($layanan as $layanan) {
+            if ($layanan) {
+                if ($layanan->img_service) {
+                    $oldFilePath = public_path('layanan/' . $layanan->img_service);
+
+                    if (file_exists($oldFilePath)) {
+                        unlink($oldFilePath);
+                    }
+                }
+            }
+    	$layanan->forceDelete();
+        }
+
+    	return back()->with('success', 'Layanan berhasil di hapus');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -124,13 +184,6 @@ class LayananController extends Controller
     public function destroy($id)
     {
         $layanan = Kelola_layanan::findOrFail($id);
-
-        if ($layanan->product_img) {
-            $oldFilePath = public_path('product/'.$layanan->img_service);
-            if (file_exists($oldFilePath)) {
-                unlink($oldFilePath);
-            }
-        }
 
         $layanan->delete();
 

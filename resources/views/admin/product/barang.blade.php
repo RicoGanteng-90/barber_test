@@ -26,9 +26,10 @@
                             <div style="text-align: center" class="alert alert-success"><strong>{{session('success')}}</strong></div>
                         @endif
 
-                <div class="card mb-4">
+                    <div class="card mb-4">
                             <div class="card-body">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inputBarang">Input barang</button>
+                            <a href="/barang3" type="submit" class="btn btn-primary">Deleted barang</a>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
@@ -143,7 +144,7 @@
                                         <div class="modal-dialog modal-xl">
                                             <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit supplier</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit barang</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">

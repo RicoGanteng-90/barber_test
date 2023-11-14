@@ -26,6 +26,7 @@
                 <div class="card mb-4">
                             <div class="card-body">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inputUser">Tambah User</button>
+                                <a href="/user2" class="btn btn-primary">Deleted user</a>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
@@ -48,12 +49,16 @@
                                             <td>{{$user->alamat}}</td>
                                             <td>{{$user->role_user}}</td>
                                             <td>
+                                                @if (Auth::user()->role_user === 'admin' && $user->role_user === 'customer' || Auth::user()->role_user === 'owner')
                                                 <form action="{{url('deleteUser/'.$user->id)}}" method="post" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Hapus</button>
                                                 </form>
+                                                @endif
+                                                @if (Auth::user()->role_user === 'admin' && $user->role_user === 'customer' || Auth::user()->role_user === 'owner')
                                                 <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateUser{{$user->id}}">Update</button>
+                                                @endif
                                             </td>
                                         </tr>
 
@@ -100,8 +105,10 @@
                                                     <input type="radio" id="admin" name="role" value="admin" required>
                                                     <label style="margin-right:30px;" for="admin">Admin</label>
 
+                                                    @if(Auth::user() === 'owner')
                                                     <input type="radio" id="owner" name="role" value="owner" required>
-                                                    <label style="margin-right:29px;" for="owner">Owner</label>
+                                                    <label style="margin-right:30px;" for="owner">Owner</label>
+                                                    @endif
                                                 </div>
 
                                             </div>
@@ -170,8 +177,10 @@
                                                     <input type="radio" id="admin" name="role_user" value="admin" required>
                                                     <label style="margin-right:30px;" for="admin">Admin</label><br>
 
+                                                    @if(Auth::user() === 'owner')
                                                     <input type="radio" id="owner" name="role_user" value="owner" required>
                                                     <label style="margin-right:29px;" for="owner">Owner</label>
+                                                    @endif
                                                 </div>
 
                                             </div>

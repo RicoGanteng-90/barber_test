@@ -180,6 +180,8 @@
         <script src="assets/lib/easing/easing.min.js"></script>
         <script src="assets/lib/waypoints/waypoints.min.js"></script>
         <script src="assets/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.js" integrity="sha512-6LKCH7i2+zMNczKuCT9ciXgFCKFp3MevWTZUXDlk7azIYZ2wF5LRsrwZqO7Flt00enUI+HwzzT5uhOvy6MNPiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
         <!-- Template Javascript -->
         <script src="assets/js/main.js"></script>

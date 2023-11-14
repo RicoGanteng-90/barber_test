@@ -21,6 +21,66 @@ class BarangController extends Controller
         return view('admin.product.barang', compact('barang'));
     }
 
+    public function barang()
+    {
+        $barang = Kelola_barang::onlyTrashed()->get();
+
+        return view('admin.product.restorebar', compact('barang'));
+    }
+
+    public function kembalikan($id)
+    {
+    	$barang = Kelola_barang::onlyTrashed()->where('id', $id);
+    	$barang->restore();
+    	return back();
+    }
+
+    public function kembalikan2()
+    {
+    	$barang = Kelola_barang::onlyTrashed();
+    	$barang->restore();
+    	return back();
+    }
+
+    public function hapus_permanen($id)
+    {
+    	$barang = Kelola_barang::onlyTrashed()->where('id', $id)->first();
+
+        if ($barang) {
+            if ($barang->product_img) {
+                $oldFilePath = public_path('product/' . $barang->product_img);
+
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath);
+                }
+            }
+        }
+
+    	$barang->forceDelete();
+
+    	return back();
+    }
+
+    public function hapus_permanen2()
+    {
+    	$barang = Kelola_barang::onlyTrashed()->get();
+
+        foreach ($barang as $barang) {
+            if ($barang) {
+                if ($barang->product_img) {
+                    $oldFilePath = public_path('product/' . $barang->product_img);
+
+                    if (file_exists($oldFilePath)) {
+                        unlink($oldFilePath);
+                    }
+                }
+            }
+    	$barang->forceDelete();
+        }
+
+    	return back();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -126,13 +186,6 @@ class BarangController extends Controller
     public function destroy($id)
     {
         $barang = Kelola_barang::findOrFail($id);
-
-        if ($barang->product_img) {
-            $oldFilePath = public_path('product/'.$barang->product_img);
-            if (file_exists($oldFilePath)) {
-                unlink($oldFilePath);
-            }
-        }
 
         $barang->delete();
 

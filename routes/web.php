@@ -144,11 +144,21 @@ Route::middleware(['role'])->group(function () {
     Route::delete('/hapus-barang/{id}', [StockController::class, 'destroy'])->name('barang3.destroy');
 
     Route::get('/supplier', [SupplierController::class, 'index'])->name('supplier.index');
+    Route::get('/supplier2', [SupplierController::class, 'supplier'])->name('supplier.supplier');
+    Route::get('/supplierKembali/{id}', [SupplierController::class, 'kembalikan'])->name('supplier.kembalikan');
+    Route::get('/supplierKembali2', [SupplierController::class, 'kembalikan2'])->name('supplier.kembalikan2');
+    Route::get('/supplierHapus/{id}', [SupplierController::class, 'hapus_permanen'])->name('supplier.hapus');
+    Route::get('/supplierHapus2', [SupplierController::class, 'hapus_permanen2'])->name('supplier.hapus2');
     Route::post('/addSupplier', [SupplierController::class, 'create'])->name('supplier.create');
     Route::post('/updateSupplier/{id}', [SupplierController::class, 'update'])->name('supplier.update');
     Route::delete('/deleteSupplier/{id}', [SupplierController::class, 'destroy'])->name('supplier.destroy');
 
     Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+    Route::get('/barang3', [BarangController::class, 'barang'])->name('barang.barang');
+    Route::get('/barangKembali/{id}', [BarangController::class, 'kembalikan'])->name('barang.kembalikan');
+    Route::get('/barangKembali2', [BarangController::class, 'kembalikan2'])->name('barang.kembalikan2');
+    Route::get('/barangHapus/{id}', [BarangController::class, 'hapus_permanen'])->name('barang.hapus');
+    Route::get('/barangHapus2', [BarangController::class, 'hapus_permanen2'])->name('barang.hapus2');
     Route::post('/addBarang', [BarangController::class, 'create'])->name('barang.create');
     Route::post('/updateBarang/{id}', [BarangController::class, 'update'])->name('barang.update');
     Route::delete('/deleteBarang/{id}', [BarangController::class, 'destroy'])->name('barang.destroy');
@@ -157,11 +167,21 @@ Route::middleware(['role'])->group(function () {
     Route::post('/addLayanan', [LayananController::class, 'create'])->name('layanan.create');
     Route::post('/updateLayanan/{id}', [LayananController::class, 'update'])->name('layanan.update');
     Route::delete('/deleteLayanan/{id}', [LayananController::class, 'destroy'])->name('layanan.destroy');
+    Route::get('/layanan3', [LayananController::class, 'layanan3'])->name('layanan.layanan');
+    Route::get('/layananKembali/{id}', [LayananController::class, 'kembalikan'])->name('layanan.kembalikan');
+    Route::get('/layananKembali2', [LayananController::class, 'kembalikan2'])->name('layanan.kembalikan2');
+    Route::get('/layananHapus/{id}', [LayananController::class, 'hapus_permanen'])->name('layanan.hapus');
+    Route::get('/layananHapus2', [LayananController::class, 'hapus_permanen2'])->name('layanan.hapus2');
 
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
     Route::post('/addUser', [UserController::class, 'create'])->name('user.create');
     Route::post('/updateUser/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/deleteUser/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('/user2', [UserController::class, 'user2'])->name('user.user');
+    Route::get('/userKembali/{id}', [UserController::class, 'kembalikan'])->name('user.kembalikan');
+    Route::get('/userKembali2', [UserController::class, 'kembalikan2'])->name('user.kembalikan2');
+    Route::get('/userHapus/{id}', [UserController::class, 'hapus_permanen'])->name('user.hapus');
+    Route::get('/userHapus2', [UserController::class, 'hapus_permanen2'])->name('user.hapus2');
     });
 
     Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota')->middleware('owner');

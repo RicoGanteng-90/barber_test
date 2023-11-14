@@ -21,6 +21,43 @@ class UserController extends Controller
         return view('admin.user.user', compact('user'));
     }
 
+    public function user2()
+    {
+        $users = User::onlyTrashed()->get();
+
+        return view('admin.user.restoreuser', compact('users'));
+    }
+
+    public function kembalikan($id)
+    {
+    	$user = User::onlyTrashed()->where('id', $id);
+    	$user->restore();
+    	return back();
+    }
+
+    public function kembalikan2()
+    {
+    	$user = User::onlyTrashed();
+    	$user->restore();
+    	return back();
+    }
+
+    public function hapus_permanen($id)
+    {
+    	$user = User::onlyTrashed()->where('id', $id);
+    	$user->forceDelete();
+
+    	return back();
+    }
+
+    public function hapus_permanen2()
+    {
+    	$user = User::onlyTrashed();
+    	$user->forceDelete();
+
+    	return back();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -42,7 +79,7 @@ class UserController extends Controller
 
             $user->save();
         }
-        return back()->with('success', 'Berhasil input layanan');
+        return back()->with('success', 'User berhasil ditambahkan');
     }
 
     /**
@@ -97,7 +134,6 @@ class UserController extends Controller
             $user->no_telp = $request->input('no_telp');
             $user->alamat = $request->input('alamat');
             $user->role_user = $request->input('role');
-            $user->password = Hash::make($request->input('password'));
 
         $user->save();
 

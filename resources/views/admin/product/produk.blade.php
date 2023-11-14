@@ -110,10 +110,10 @@
         <br>
                             <p>Nominal : <input type="text" id="nominal" name="nominal"></p>
                             <p>Kembali : <input type="text" id="kembali" name="kembali" readonly></p>
-                            <button type="button" class="btn btn-warning" onclick="hitungKembali()">Proses</button>
+                            <button type="button" class="btn btn-warning" onclick="hitungKembali()">Hitung</button>
                             <form action="{{route('jual.barang')}}" method="post">
                                 @csrf
-                            <button type="submit" class="btn btn-success">Siapkan</button>
+                            <button type="submit" class="btn btn-success">Proses</button>
                             </form>
                         </div>
 

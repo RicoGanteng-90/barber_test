@@ -22,6 +22,43 @@ class SupplierController extends Controller
         return view('admin.supplier.supplier', compact('suppliers'));
     }
 
+    public function supplier()
+    {
+        $suppliers = Kelola_supplier::onlyTrashed()->get();
+
+        return view('admin.supplier.restoresup', compact('suppliers'));
+    }
+
+    public function kembalikan($id)
+    {
+    	$supplier = Kelola_supplier::onlyTrashed()->where('id', $id);
+    	$supplier->restore();
+    	return back();
+    }
+
+    public function kembalikan2()
+    {
+    	$supplier = Kelola_supplier::onlyTrashed();
+    	$supplier->restore();
+    	return back();
+    }
+
+    public function hapus_permanen($id)
+    {
+    	$supplier = Kelola_supplier::onlyTrashed()->where('id', $id);
+    	$supplier->forceDelete();
+
+    	return back();
+    }
+
+    public function hapus_permanen2()
+    {
+    	$supplier = Kelola_supplier::onlyTrashed();
+    	$supplier->forceDelete();
+
+    	return back();
+    }
+
     /**
      * Show the form for creating a new resource.
      *

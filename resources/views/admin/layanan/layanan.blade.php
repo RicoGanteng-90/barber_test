@@ -25,6 +25,7 @@
                 <div class="card mb-4">
                             <div class="card-body">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inputLayanan">Input layanan</button>
+                            <a href="/layanan3" type="submit" class="btn btn-primary">Deleted layanan</a>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
@@ -132,7 +133,7 @@
                                         <div class="modal-dialog modal-xl">
                                             <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Edit supplier</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit layanan</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
@@ -157,7 +158,7 @@
                                                     </div>
                                                     <div class="col-12">
                                                         <label for="img_service" class="form-label"></label>
-                                                        <input name="img_service" type="file" class="form-control" id="img_service">
+                                                        <input name="img_service" type="file" class="form-control" id="img_service" required="" oninvalid="this.setCustomValidity('Tolong isi Gambar terlebih dahulu')" oninput="setCustomValidity('')">
                                                     </div>
 
                                                     <div class="text-center">

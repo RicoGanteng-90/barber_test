@@ -26,6 +26,7 @@
                 <div class="card mb-4">
                             <div class="card-body">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inputSupplier">Input supplier</button>
+                                <a href="/supplier2" class="btn btn-primary">Deleted supplier</a>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
