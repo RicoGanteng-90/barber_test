@@ -32,14 +32,14 @@ class UserController extends Controller
     {
     	$user = User::onlyTrashed()->where('id', $id);
     	$user->restore();
-    	return back();
+    	return back()->with('success', 'User berhasil di restore');
     }
 
     public function kembalikan2()
     {
     	$user = User::onlyTrashed();
     	$user->restore();
-    	return back();
+    	return back()->with('success', 'User berhasil di restore');
     }
 
     public function hapus_permanen($id)
@@ -47,7 +47,7 @@ class UserController extends Controller
     	$user = User::onlyTrashed()->where('id', $id);
     	$user->forceDelete();
 
-    	return back();
+    	return back()->with('success', 'User berhasil di hapus');
     }
 
     public function hapus_permanen2()
@@ -55,7 +55,7 @@ class UserController extends Controller
     	$user = User::onlyTrashed();
     	$user->forceDelete();
 
-    	return back();
+    	return back()->with('success', 'User berhasil di hapus');
     }
 
     /**

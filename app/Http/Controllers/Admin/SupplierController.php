@@ -33,14 +33,14 @@ class SupplierController extends Controller
     {
     	$supplier = Kelola_supplier::onlyTrashed()->where('id', $id);
     	$supplier->restore();
-    	return back();
+    	return back()->with('success', 'Supplier berhasil di restore');
     }
 
     public function kembalikan2()
     {
     	$supplier = Kelola_supplier::onlyTrashed();
     	$supplier->restore();
-    	return back();
+    	return back()->with('success', 'Supplier berhasil di restore');
     }
 
     public function hapus_permanen($id)
@@ -48,7 +48,7 @@ class SupplierController extends Controller
     	$supplier = Kelola_supplier::onlyTrashed()->where('id', $id);
     	$supplier->forceDelete();
 
-    	return back();
+    	return back()->with('success', 'Supplier berhasil di hapus');
     }
 
     public function hapus_permanen2()
@@ -56,7 +56,7 @@ class SupplierController extends Controller
     	$supplier = Kelola_supplier::onlyTrashed();
     	$supplier->forceDelete();
 
-    	return back();
+    	return back()->with('success', 'Supplier berhasil di hapus');
     }
 
     /**

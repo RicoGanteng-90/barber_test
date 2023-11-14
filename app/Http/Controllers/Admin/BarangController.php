@@ -32,14 +32,14 @@ class BarangController extends Controller
     {
     	$barang = Kelola_barang::onlyTrashed()->where('id', $id);
     	$barang->restore();
-    	return back();
+    	return back()->with('success', 'Barang berhasil di restore');
     }
 
     public function kembalikan2()
     {
     	$barang = Kelola_barang::onlyTrashed();
     	$barang->restore();
-    	return back();
+    	return back()->with('success', 'Barang berhasil di restore');
     }
 
     public function hapus_permanen($id)
@@ -58,7 +58,7 @@ class BarangController extends Controller
 
     	$barang->forceDelete();
 
-    	return back();
+    	return back()->with('success', 'Layanan berhasil di hapus');
     }
 
     public function hapus_permanen2()
@@ -78,7 +78,7 @@ class BarangController extends Controller
     	$barang->forceDelete();
         }
 
-    	return back();
+    	return back()->with('success', 'Layanan berhasil di hapus');
     }
 
     /**
