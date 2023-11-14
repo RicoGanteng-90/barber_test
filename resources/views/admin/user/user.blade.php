@@ -74,7 +74,7 @@
 
                                                 <div class="col-6">
                                                     <label for="username" class="form-label">Username</label>
-                                                    <input name="username" type="text" class="form-control" id="username" value="{{ $user->username }}" required="" oninvalid="this.setCustomValidity('Tolong isi Nama terlebih dahulu')" oninput="setCustomValidity('')">
+                                                    <input name="username" type="text" class="form-control" id="username" value="{{ $user->username }}" required="" oninvalid="this.setCustomValidity('Tolong isi Username terlebih dahulu')" oninput="setCustomValidity('')">
                                                 </div>
 
                                                 <div class="col-6">
@@ -84,12 +84,12 @@
 
                                                 <div class="col-6">
                                                     <label for="email" class="form-label">Email</label>
-                                                    <input name="email" type="text" class="form-control" id="email" value="{{ $user->email }}" required="" oninvalid="this.setCustomValidity('Tolong isi Harga terlebih dahulu')" oninput="setCustomValidity('')">
+                                                    <input name="email" type="email" class="form-control" id="email" value="{{ $user->email }}" required="" oninvalid="this.setCustomValidity('Tolong isi Email terlebih dahulu')" oninput="setCustomValidity('')">
                                                 </div>
 
                                                 <div class="col-6">
                                                     <label for="no_telp" class="form-label">No Telepon</label>
-                                                    <input name="no_telp" type="text" class="form-control" id="no_telp" value="{{ $user->no_telp }}" required="" oninvalid="this.setCustomValidity('Tolong isi Keterangan terlebih dahulu')" oninput="setCustomValidity('')">
+                                                    <input name="no_telp" type="text" class="form-control" id="no_telp" value="{{ $user->no_telp }}" required="" oninvalid="this.setCustomValidity('Tolong isi No telepon terlebih dahulu')" oninput="setCustomValidity('')">
                                                 </div>
 
                                                 <div class="col-6">
@@ -141,17 +141,17 @@
 
                                                 <div class="col-6">
                                                 <label for="username" class="form-label">Username</label>
-                                                <input name="username" type="text" class="form-control" id="username" required="" oninvalid="this.setCustomValidity('Tolong isi Nama terlebih dahulu')" oninput="setCustomValidity('')">
+                                                <input name="username" type="text" class="form-control" id="username" required="" oninvalid="this.setCustomValidity('Tolong isi Username terlebih dahulu')" oninput="setCustomValidity('')">
                                                 </div>
 
                                                 <div class="col-6">
                                                 <label for="nama_user" class="form-label">Nama</label>
-                                                <input name="nama_user" type="text" class="form-control" id="nama_user" required="" oninvalid="this.setCustomValidity('Tolong isi Jumlah terlebih dahulu')" oninput="setCustomValidity('')">
+                                                <input name="nama_user" type="text" class="form-control" id="nama_user" required="" oninvalid="this.setCustomValidity('Tolong isi Nama terlebih dahulu')" oninput="setCustomValidity('')">
                                                 </div>
 
                                                 <div class="col-6">
                                                 <label for="email" class="form-label">Email</label>
-                                                <input name="email" type="text" class="form-control" id="email"  required="" oninvalid="this.setCustomValidity('Tolong isi Harga terlebih dahulu')" oninput="setCustomValidity('')">
+                                                <input name="email" type="email" class="form-control" id="email"  required="" oninvalid="this.setCustomValidity('Tolong isi email terlebih dahulu')" oninput="setCustomValidity('')">
                                                 </div>
 
                                                 <div class="col-6">
@@ -161,7 +161,7 @@
 
                                                 <div class="col-6">
                                                     <label for="no_telp" class="form-label">No Telepon</label>
-                                                    <input name="no_telp" type="text" class="form-control" id="no_telp" required="" oninvalid="this.setCustomValidity('Tolong isi Keterangan terlebih dahulu')" oninput="setCustomValidity('')">
+                                                    <input name="no_telp" type="text" class="form-control" id="no_telp" required="" oninvalid="this.setCustomValidity('Tolong isi No telepon terlebih dahulu')" oninput="setCustomValidity('')">
                                                 </div>
 
                                                 <div class="col-6">

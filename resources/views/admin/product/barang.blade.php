@@ -112,7 +112,7 @@
 
                                                         <div class="col-6">
                                                         <label for="information" class="form-label">Keterangan</label>
-                                                        <input name="information" type="text" class="form-control" id="information" value="{{$barang->information}}" required="" oninvalid="this.setCustomValidity('Tolong isi Kterangan terlebih dahulu')" oninput="setCustomValidity('')">
+                                                        <input name="information" type="text" class="form-control" id="information" value="{{$barang->information}}" required="" oninvalid="this.setCustomValidity('Tolong isi Keterangan terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
 
                                                         <div class="col-6">
