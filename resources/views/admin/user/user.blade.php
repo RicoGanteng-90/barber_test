@@ -105,7 +105,7 @@
                                                     <input type="radio" id="admin" name="role" value="admin" required>
                                                     <label style="margin-right:30px;" for="admin">Admin</label>
 
-                                                    @if(Auth::user() === 'owner')
+                                                    @if(Auth::user()->role_user === 'owner')
                                                     <input type="radio" id="owner" name="role" value="owner" required>
                                                     <label style="margin-right:30px;" for="owner">Owner</label>
                                                     @endif
@@ -177,7 +177,7 @@
                                                     <input type="radio" id="admin" name="role_user" value="admin" required>
                                                     <label style="margin-right:30px;" for="admin">Admin</label><br>
 
-                                                    @if(Auth::user() === 'owner')
+                                                    @if(Auth::user()->role_user === 'owner')
                                                     <input type="radio" id="owner" name="role_user" value="owner" required>
                                                     <label style="margin-right:29px;" for="owner">Owner</label>
                                                     @endif
