@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Kelola_pembelian;
+use App\Models\Nota_barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminDashboardController extends Controller
 {
@@ -14,7 +17,9 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard.index');
+        $beli = Nota_barang::all();
+
+        return view('admin.dashboard.index', compact('beli'));
     }
 
     /**
