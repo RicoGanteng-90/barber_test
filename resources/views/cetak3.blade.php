@@ -33,7 +33,7 @@
     <th>Total</th>
     <th>Customer</th>
   </tr>
-  @foreach($layan as $note)
+  @foreach($jual as $note)
   <tr>
     <td>{{$note->tanggal_transaksi}}</td>
     <td>{{$note->layanan}}</td>
