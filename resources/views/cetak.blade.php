@@ -124,13 +124,13 @@
 						<table>
 							<tr>
 								<td>
-									Sparksuite, Inc.<br />
-									12345 Sunny Road<br />
-									Sunnyville, CA 12345
+									{{$note->nama_customer}}<br>
+                                    {{$note->email_customer}}<br>
+                                    {{$note->no_telp}}
 								</td>
 
 								<td>
-									{{$note->nama_customer}}
+
 								</td>
 							</tr>
 						</table>

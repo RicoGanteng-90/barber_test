@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\Items;
-use Illuminate\Http\Request;
-use App\Models\Stok_supplier;
-use App\Http\Controllers\Controller;
-use App\Models\Jual_barang;
-use App\Models\Kelola_barang;
-use App\Models\Kelola_layanan;
-use App\Models\Kelola_pembelian;
-use App\Models\Kelola_supplier;
-use App\Models\Nota_barang;
 use App\Models\User;
+use App\Models\Items;
+use App\Models\Jual_barang;
+use App\Models\Nota_barang;
+use Illuminate\Http\Request;
+use App\Models\Kelola_barang;
+use App\Models\Stok_supplier;
+use App\Models\Kelola_layanan;
+use App\Models\Kelola_supplier;
+use App\Models\Kelola_pembelian;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Date;
 
 class AdminProductController extends Controller
@@ -150,20 +151,7 @@ class AdminProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function tampilNota()
-    {
-        $nota = Nota_barang::all();
 
-        return view('admin.product.laporan', compact('nota'));
-    }
-
-
-    public function tampilNota2()
-    {
-        $jual = Jual_barang::all();
-
-        return view('admin.product.laporan2', compact('jual'));
-    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -209,6 +197,48 @@ class AdminProductController extends Controller
         $kelola->delete();
 
         return back()->with('success', 'Data dihapus.');
+    }
+
+    public function filterByDate(Request $request)
+    {
+        $minDate = Nota_barang::min('tanggal_transaksi');
+        $maxDate = Nota_barang::max('tanggal_transaksi');
+
+        $start_date = $minDate ?? now()->toDateString();
+        $end_date = $maxDate ?? now()->toDateString();
+
+        if ($request->has('start_date')) {
+            $start_date = $request->input('start_date');
+        }
+
+        if ($request->has('end_date')) {
+            $end_date = $request->input('end_date');
+        }
+
+        $nota = Nota_barang::whereBetween('tanggal_transaksi', [$start_date, $end_date])->get();
+
+        return view('admin.product.laporan', compact('nota', 'start_date', 'end_date'));
+    }
+
+    public function filterByDate2(Request $request)
+    {
+        $minDate = Jual_barang::min('tanggal_transaksi');
+        $maxDate = Jual_barang::max('tanggal_transaksi');
+
+        $start_date = $minDate ?? now()->toDateString();
+        $end_date = $maxDate ?? now()->toDateString();
+
+        if ($request->has('start_date')) {
+            $start_date = $request->input('start_date');
+        }
+
+        if ($request->has('end_date')) {
+            $end_date = $request->input('end_date');
+        }
+
+        $jual = Jual_barang::whereBetween('tanggal_transaksi', [$start_date, $end_date])->get();
+
+        return view('admin.product.laporan2', compact('jual', 'start_date', 'end_date'));
     }
 
 }

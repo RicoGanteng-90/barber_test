@@ -28,15 +28,15 @@
 <table>
   <tr>
     <th>Tanggal transaksi</th>
-    <th>Barang</th>
+    <th>Layanan</th>
     <th>Jumlah</th>
     <th>Total</th>
     <th>Customer</th>
   </tr>
-  @foreach($jual as $note)
+  @foreach($layan as $note)
   <tr>
     <td>{{$note->tanggal_transaksi}}</td>
-    <td>{{$note->barang}}</td>
+    <td>{{$note->layanan}}</td>
     <td>{{$note->jumlah}}</td>
     <td>{{$note->total_harga}}</td>
     <td>{{$note->customer}}</td>

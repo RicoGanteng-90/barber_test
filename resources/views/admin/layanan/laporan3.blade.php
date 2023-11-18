@@ -19,6 +19,24 @@
                 <div class="container">
                 <div class="card bg-light">
                         <div class="card-body">
+                        <form action="{{ route('nota.filter3') }}">
+                            @csrf
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="start_date">Start Date:</label>
+                                    <input type="date" name="start_date" class="form-control" value="{{$start_date}}">
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="end_date">End Date:</label>
+                                    <input type="date" name="end_date" class="form-control" value="{{$end_date}}">
+                                </div>
+                                <div class="col-md-3">
+                                    <br>
+                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                </div>
+                            </div>
+                        </form>
+                        <br>
                         <a href="{{route('note.jualLayanan')}}" class="btn btn-primary">PDF</a>
                         </div>
                     </div>

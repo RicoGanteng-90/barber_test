@@ -83,10 +83,12 @@
 
     <br>
 
+    @if(count($cartt) > 0)
     <div style="display: flex; justify-content: center;">
     <form action="{{route('cart.check')}}" method="get" enctype="multipart/form-data">
         <button type="submit" class="btn btn-info">Checkout</button>
     </form>
     </div>
+    @endif
 
 @endsection

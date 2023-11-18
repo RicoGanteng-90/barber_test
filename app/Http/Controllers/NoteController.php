@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jual_barang;
-use App\Models\Jual_layanan;
-use App\Models\Kelola_pemesanan;
-use App\Models\Nota_barang;
 use Mpdf\Mpdf;
 use Barryvdh\DomPDF\PDF;
+use App\Models\Jual_barang;
+use App\Models\Nota_barang;
+use Illuminate\Support\Str;
+use App\Models\Jual_layanan;
 use Illuminate\Http\Request;
+use App\Models\Kelola_pemesanan;
 use Illuminate\Support\Facades\Auth;
 
 class NoteController extends Controller
@@ -36,9 +37,13 @@ class NoteController extends Controller
 
         $note = Kelola_pemesanan::findOrFail($id);
         $pdf = app()->make('dompdf.wrapper');
+
+        $filename = 'Nota_' . Str::random(40) . '.pdf';
+
         $pdf->loadView('cetak', compact('note'));
         $pdf->setPaper('A4', 'portrait');
-        return $pdf->stream('Order-Dari-'.$user->name.'-'.$note->id);
+
+        return $pdf->stream($filename);
 
     }
 
@@ -55,7 +60,7 @@ class NoteController extends Controller
         $barang = Nota_barang::all();
         $pdf = app()->make('dompdf.wrapper');
 
-        $filename = 'Nota_' . now()->timestamp . '.pdf';
+        $filename = 'Nota_' . Str::random(30) . '.pdf';
 
         $pdf->loadView('cetak2', compact('barang'));
         $pdf->setPaper('A4', 'portrait');
@@ -96,7 +101,7 @@ class NoteController extends Controller
         $jual = Jual_barang::all();
         $pdf = app()->make('dompdf.wrapper');
 
-        $filename = 'Nota_' . now()->timestamp . '.pdf';
+        $filename = 'Nota_' . str::random(30) . '.pdf';
 
         $pdf->loadView('cetak3', compact('jual'));
         $pdf->setPaper('A4', 'portrait');
@@ -126,9 +131,9 @@ class NoteController extends Controller
         $layan = Jual_layanan::all();
         $pdf = app()->make('dompdf.wrapper');
 
-        $filename = 'Nota_' . now()->timestamp . '.pdf';
+        $filename = 'Nota_' . str::random(30) . '.pdf';
 
-        $pdf->loadView('cetak3', compact('layan'));
+        $pdf->loadView('cetak4', compact('layan'));
         $pdf->setPaper('A4', 'portrait');
 
         return $pdf->stream($filename);

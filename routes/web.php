@@ -184,6 +184,6 @@ Route::middleware(['role'])->group(function () {
     Route::get('/userHapus2', [UserController::class, 'hapus_permanen2'])->name('user.hapus2');
     });
 
-    Route::get('/cetakNota', [AdminProductController::class,'tampilNota'])->name('nota.tampilNota')->middleware('owner');
-    Route::get('/cetakNota2', [AdminProductController::class,'tampilNota2'])->name('nota.tampilNota2')->middleware('owner');
-    Route::get('/cetakNota3', [AdminServiceController::class,'index'])->name('layanan2.index')->middleware('owner');
+    Route::get('/filterByDate', [AdminProductController::class,'filterByDate'])->name('nota.filter1')->middleware('owner');
+    Route::get('/filterByDate2', [AdminProductController::class,'filterByDate2'])->name('nota.filter2')->middleware('owner');
+    Route::get('/filterByDate3', [AdminServiceController::class,'filterByDate3'])->name('nota.filter3')->middleware('owner');

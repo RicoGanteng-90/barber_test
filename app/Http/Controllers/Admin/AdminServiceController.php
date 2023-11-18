@@ -15,11 +15,26 @@ class AdminServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $layanan = Jual_layanan::all();
 
-        return view('admin.layanan.laporan3', compact('layanan'));
+    public function filterByDate3(Request $request)
+    {
+        $minDate = Jual_layanan::min('tanggal_transaksi');
+        $maxDate = Jual_layanan::max('tanggal_transaksi');
+
+        $start_date = $minDate ?? now()->toDateString();
+        $end_date = $maxDate ?? now()->toDateString();
+
+        if ($request->has('start_date')) {
+            $start_date = $request->input('start_date');
+        }
+
+        if ($request->has('end_date')) {
+            $end_date = $request->input('end_date');
+        }
+
+        $layanan = Jual_layanan::whereBetween('tanggal_transaksi', [$start_date, $end_date])->get();
+
+        return view('admin.layanan.laporan3', compact('layanan', 'start_date', 'end_date'));
     }
 
     public function tampilUser()

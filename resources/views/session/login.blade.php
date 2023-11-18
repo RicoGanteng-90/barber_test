@@ -20,14 +20,13 @@
                 @enderror
 
                 <label>
-                    <span>Email</span>
+                    <span style="color: black;">Email</span>
                     <input name="email" type="email" required/>
                 </label>
                 <label>
-                    <span>Password</span>
+                    <span style="color: black;">Password</span>
                     <input name="password" type="password" required/>
                 </label>
-                <p class="forgot-pass">Forgot password?</p>
                 <button type="submit" class="submit">Sign In</button>
             </div>
         </form>
@@ -51,27 +50,27 @@
                 <div class="form sign-up">
                     <h2>Create your Account</h2>
                     <label>
-                        <span>Name</span>
+                        <span style="color: black;">Name</span>
                         <input name="nama_user" type="text" required/>
                     </label>
                     <label>
-                        <span>UserName</span>
+                        <span style="color: black;">UserName</span>
                         <input name="username" type="text" required/>
                     </label>
                     <label>
-                        <span>Email</span>
+                        <span style="color: black;">Email</span>
                         <input name="email" type="email" required/>
                     </label>
                     <label>
-                        <span>Password</span>
+                        <span style="color: black;">Password</span>
                         <input name="password" type="password" required/>
                     </label>
                     <label>
-                        <span>Nomor_telp</span>
+                        <span style="color: black;">Nomor_telp</span>
                         <input name="no_telp" type="text" required/>
                     </label>
                     <label>
-                        <span>Alamat</span>
+                        <span style="color: black;">Alamat</span>
                         <input name="alamat" type="text" required/>
                     </label>
                     <button type="submit" class="submit">Sign Up</button>
