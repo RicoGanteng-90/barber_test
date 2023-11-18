@@ -37,7 +37,12 @@
                             </div>
                         </form>
                         <br>
-                        <a href="{{route('note.jualBarang')}}" class="btn btn-primary">PDF</a>
+                        <form action="{{ route('note.jualBarang') }}">
+                            @csrf
+                        <input type="hidden" name="start_date" value="{{$start_date}}">
+                        <input type="hidden" name="end_date" value="{{$end_date}}">
+                        <button type="submit" class="btn btn-info">PDF</button>
+                        </form>
                         </div>
                     </div>
                 </div>

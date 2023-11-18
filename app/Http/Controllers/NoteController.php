@@ -55,9 +55,13 @@ class NoteController extends Controller
      */
     public function beliBarang(Request $request)
     {
+        $start = $request->input('start_date');
+        $end = $request->input('end_date');
+
         $user = Auth::user();
 
-        $barang = Nota_barang::all();
+        $barang = Nota_barang::whereBetween('tanggal_transaksi', [$start, $end])->get();
+
         $pdf = app()->make('dompdf.wrapper');
 
         $filename = 'Nota_' . Str::random(30) . '.pdf';
@@ -74,12 +78,7 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request)
-    {
-        $barang = Nota_barang::all();
 
-        return view('cetak2', compact('barang'));
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -87,18 +86,16 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function tampilNotaBarang(Request $request)
-    {
-        $jual = Nota_barang::all();
-
-        return view('cetak3', compact('jual'));
-    }
 
     public function notaJual(Request $request)
     {
+        $start = $request->input('start_date');
+        $end = $request->input('end_date');
+
         $user = Auth::user();
 
-        $jual = Jual_barang::all();
+        $jual = Jual_barang::whereBetween('tanggal_transaksi', [$start, $end])->get();
+
         $pdf = app()->make('dompdf.wrapper');
 
         $filename = 'Nota_' . str::random(30) . '.pdf';
@@ -117,18 +114,15 @@ class NoteController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     public function tampilNotaLayanan(Request $request)
-     {
-         $layan = Jual_layanan::all();
-
-         return view('cetak3', compact('layan'));
-     }
-
      public function notaLayan(Request $request)
     {
+        $start = $request->input('start_date');
+        $end = $request->input('end_date');
+
         $user = Auth::user();
 
-        $layan = Jual_layanan::all();
+        $layan = Jual_layanan::whereBetween('tanggal_transaksi', [$start, $end])->get();
+
         $pdf = app()->make('dompdf.wrapper');
 
         $filename = 'Nota_' . str::random(30) . '.pdf';

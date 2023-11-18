@@ -38,8 +38,12 @@
                         </form>
 
                         <br>
-
-                        <a href="{{route('note.beliBarang')}}" class="btn btn-primary">PDF</a>
+                        <form action="{{ route('note.beliBarang') }}">
+                            @csrf
+                        <input type="hidden" name="start_date" value="{{$start_date}}">
+                        <input type="hidden" name="end_date" value="{{$end_date}}">
+                        <button type="submit" class="btn btn-info">PDF</button>
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -59,14 +63,14 @@
                                     </thead>
                                     <tbody>
                                     @foreach($nota as $nota)
-                                        <tr>
-                                            <td>{{$nota->tanggal_transaksi}}</td>
-                                            <td>{{$nota->barang}}</td>
-                                            <td>{{$nota->jumlah}}</td>
-                                            <td>{{$nota->total}}</td>
-                                            <td>{{$nota->supplier}}</td>
-                                        </tr>
-                                        @endforeach
+                                            <tr>
+                                                <td>{{$nota->tanggal_transaksi}}</td>
+                                                <td>{{$nota->barang}}</td>
+                                                <td>{{$nota->jumlah}}</td>
+                                                <td>{{$nota->total}}</td>
+                                                <td>{{$nota->supplier}}</td>
+                                            </tr>
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>

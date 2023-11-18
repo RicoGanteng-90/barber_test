@@ -23,7 +23,7 @@
     </head>
 
     <body>
-    <h2>Nota penjualan layanan</h2>
+    <h2>Nota penjualan barang</h2>
 
 <table>
   <tr>
