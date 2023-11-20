@@ -13,48 +13,80 @@
                     </div>
                 </main>
 
-                        <div class="container-fluid px-4">
-
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-area me-1"></i>
-                                    Grafik penjualan barang
-                                </div><br>
-                                <div style="display: inline;">&ensp;
-                                    <button id="downloadBtn2" class="btn btn-primary" style="width: 190px;">Download as PNG</button>
-                                    <button id="downloadPdfBtn2" class="btn btn-info" style="width: 190px;">Download as PDF</button><br><br>
-                                </div>
-                                    <canvas id="myAreaChart" width="100%" height="40"></canvas>
+                <div class="container-fluid px-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                Grafik penjualan barang
+                            </div><br>
+                            <div style="display: inline;">&ensp;
+                                <button id="downloadBtn2" class="btn btn-primary" style="width: 150px;">Download as PNG</button>
+                                <button id="downloadPdfBtn2" class="btn btn-info" style="width: 150px;">Download as PDF</button><br><br>
                             </div>
+                            <canvas id="myAreaChart" width="300"></canvas>
+                        </div>
+                    </div>
 
-                            <br>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-area me-1"></i>
+                                Grafik penjualan layanan
+                            </div><br>
+                            <div style="display: inline;">&ensp;
+                                <button id="downloadBtn3" class="btn btn-primary" style="width: 150;">Download as PNG</button>
+                                <button id="downloadPdfBtn3" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
+                            </div>
+                            <canvas id="myAreaChart2" width="300"></canvas>
+                        </div>
+                    </div>
 
-                            <div class="card mb-4">
+                    <div class="col-md-6">
+                        <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-chart-line me-1"></i>
                                 Grafik pembelian barang
                             </div><br>
-                                <div style="display: inline;">&ensp;
-                                    <button id="downloadBtn" class="btn btn-primary" style="width: 190px;">Download as PNG</button>
-                                    <button id="downloadPdfBtn" class="btn btn-info" style="width: 190px;">Download as PDF</button><br><br>
-                                </div>
-                                    <canvas id="lineChart" width="100%" height="40"></canvas>
+                            <div style="display: inline;">&ensp;
+                                <button id="downloadBtn" class="btn btn-primary" style="width: 150;">Download as PNG</button>
+                                <button id="downloadPdfBtn" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
                             </div>
-
-                            <br>
-
-                            <div class="card mb-4">
-                                <div class="card-header">
-                                    <i class="fas fa-chart-area me-1"></i>
-                                    Grafik penjualan layanan
-                                </div><br>
-                                <div style="display: inline;">&ensp;
-                                    <button id="downloadBtn3" class="btn btn-primary" style="width: 190px;">Download as PNG</button>
-                                    <button id="downloadPdfBtn3" class="btn btn-info" style="width: 190px;">Download as PDF</button>
-                                </div>
-                                    <canvas id="myAreaChart2" width="100%" height="40"></canvas>
-                            </div>
+                            <canvas id="lineChart" width="300"></canvas>
                         </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar"></i>
+                                Grafik customer
+                            </div><br>
+                            <div style="display: inline;">&ensp;
+                                <button id="downloadBtn4" class="btn btn-primary" style="width: 150;">Download as PNG</button>
+                                <button id="downloadPdfBtn4" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
+                            </div>
+                            <canvas id="myBarChart" width="300"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-chart-bar"></i>
+                                Grafik supplier
+                            </div><br>
+                            <div style="display: inline;">&ensp;
+                                <button id="downloadBtn5" class="btn btn-primary" style="width: 150;">Download as PNG</button>
+                                <button id="downloadPdfBtn5" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
+                            </div>
+                            <canvas id="myPieChart" width="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
@@ -250,20 +282,20 @@
                                 scales: {
                                 xAxes: [{
                                     time: {
-                                    unit: 'date'
+                                    unit: 'bulan'
                                     },
                                     gridLines: {
                                     display: false
                                     },
                                     ticks: {
-                                    maxTicksLimit: 7
+                                    maxTicksLimit: 12
                                     }
                                 }],
                                 yAxes: [{
                                     ticks: {
                                     min: 0,
-                                    max: 80000,
-                                    maxTicksLimit: 5
+                                    max: 100000000,
+                                    maxTicksLimit: 20
                                     },
                                     gridLines: {
                                     color: "rgba(0, 0, 0, .125)",
@@ -271,7 +303,7 @@
                                 }],
                                 },
                                 legend: {
-                                display: false
+                                display: true
                                 }
                             }
                             });
@@ -313,8 +345,154 @@
 
                                     pdf.save('chart.pdf');
                                 });
+                            });
+                    </script>
+
+                    <script >
+
+                        document.addEventListener('DOMContentLoaded', function() {
+
+                            var resultData4 = <?php echo $resultJson4; ?>;
+                            var ctx = document.getElementById("myBarChart");
+                            var myLineChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: resultData4.map(item => item.month),
+                                datasets: [{
+                                label: "Total customer",
+                                backgroundColor: "rgba(2,117,216,1)",
+                                borderColor: "rgba(2,117,216,1)",
+                                data: resultData4.map(item => item.customer),
+                                }],
+                            },
+                            options: {
+                                scales: {
+                                xAxes: [{
+                                    time: {
+                                    unit: 'month'
+                                    },
+                                    gridLines: {
+                                    display: false
+                                    },
+                                    ticks: {
+                                    maxTicksLimit: 6
+                                    }
+                                }],
+                                yAxes: [{
+                                    ticks: {
+                                    min: 0,
+                                    max: 10000,
+                                    maxTicksLimit: 5
+                                    },
+                                    gridLines: {
+                                    display: true
+                                    }
+                                }],
+                                },
+                                legend: {
+                                display: true
+                                }
+                            }
+                            });
+
+                            var downloadBtn = document.getElementById('downloadBtn4');
+                                downloadBtn.addEventListener('click', function() {
+                                    var canvas = document.getElementById('myBarChart');
+                                    var ctx = canvas.getContext('2d');
+
+                                    var newCanvas = document.createElement('canvas');
+                                    newCanvas.width = canvas.width;
+                                    newCanvas.height = canvas.height;
+                                    var newCtx = newCanvas.getContext('2d');
+                                    newCtx.fillStyle = 'white';
+                                    newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+
+                                    newCtx.drawImage(canvas, 0, 0);
+
+                                    var url = newCanvas.toDataURL('image/png');
+
+                                    var a = document.createElement('a');
+                                    a.href = url;
+                                    a.download = 'chart.png';
+                                    a.click();
+                                });
+
+                                var downloadPdfBtn = document.getElementById('downloadPdfBtn4');
+                                downloadPdfBtn.addEventListener('click', function() {
+                                    var canvas = document.getElementById('myBarChart');
+                                    var imageData = canvas.toDataURL('image/png');
+
+                                    var pdf = new jsPDF({
+                                        unit: 'mm',
+                                        format: 'a3',
+                                        orientation: 'landscape'
+                                    });
+
+                                    pdf.addImage(imageData, 'PNG', 50, 10, 330, 190);
+
+                                    pdf.save('chart.pdf');
+                                });
+                        });
+
+                    </script>
+
+                    <script>
+
+                        document.addEventListener('DOMContentLoaded', function() {
+
+                            var resultData5 = <?php echo $resultJson5; ?>;
+                            var ctx = document.getElementById("myPieChart");
+                            var myPieChart = new Chart(ctx, {
+                            type: 'pie',
+                            data: {
+                                labels: resultData5.map(item => item.month),
+                                datasets: [{
+                                data: resultData5.map(item => item.supplier),
+                                backgroundColor: ['#1e81b0', '#eab676', '#76b5c5', '#21130d', '#873e23', '#abdbe3', '#827717', '#154c79', '#E55101', '#BD3563', '#689F38', '#FFEB3B'],
+                                }],
+                            },
+                            });
+
+                            var downloadBtn = document.getElementById('downloadBtn5');
+                                downloadBtn.addEventListener('click', function() {
+                                    var canvas = document.getElementById('myPieChart');
+                                    var ctx = canvas.getContext('2d');
+
+                                    var newCanvas = document.createElement('canvas');
+                                    newCanvas.width = canvas.width;
+                                    newCanvas.height = canvas.height;
+                                    var newCtx = newCanvas.getContext('2d');
+                                    newCtx.fillStyle = 'white';
+                                    newCtx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+
+                                    newCtx.drawImage(canvas, 0, 0);
+
+                                    var url = newCanvas.toDataURL('image/png');
+
+                                    var a = document.createElement('a');
+                                    a.href = url;
+                                    a.download = 'chart.png';
+                                    a.click();
+                                });
+
+                                var downloadPdfBtn = document.getElementById('downloadPdfBtn5');
+                                downloadPdfBtn.addEventListener('click', function() {
+                                    var canvas = document.getElementById('myPieChart');
+                                    var imageData = canvas.toDataURL('image/png');
+
+                                    var pdf = new jsPDF({
+                                        unit: 'mm',
+                                        format: 'a3',
+                                        orientation: 'landscape'
+                                    });
+
+                                    pdf.addImage(imageData, 'PNG', 50, 10, 300, 190);
+
+                                    pdf.save('chart.pdf');
+                                });
 
                         });
-                        </script>
+
+                    </script>
 
 @endsection

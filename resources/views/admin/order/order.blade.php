@@ -88,7 +88,7 @@
                                                 <option hidden selected value="{{$order->status_pembayaran}}">{{$order->status_pembayaran}}</option>
                                                 <option value=""></option>
                                                 <option value="Belum lunas">Belum lunas</option>
-                                                <option value="Lunas">Lunas</option>
+                                                <option value="Telah lunas">Telah lunas</option>
                                             </select>
                                             </div>
                                             <div class="modal-footer">

@@ -39,11 +39,9 @@ class AdminDashboardController extends Controller
         }
 
         foreach ($beli as $data) {
-            // Accumulate total for the same month
             $result[$data->bulan]['total'] += $data->total;
         }
 
-        // Convert the associative array to a sequential array
         $result = array_values($result);
 
         $resultJson = json_encode($result);
@@ -65,11 +63,9 @@ class AdminDashboardController extends Controller
         }
 
         foreach ($jual as $data2) {
-            // Accumulate total_harga for the same month
             $result2[$data2->bulan]['total_harga'] += $data2->total_harga;
         }
 
-        // Convert the associative array to a sequential array
         $result2 = array_values($result2);
 
         $resultJson2 = json_encode($result2);
@@ -91,16 +87,65 @@ class AdminDashboardController extends Controller
             }
 
             foreach ($layan as $data3) {
-                // Accumulate total_harga for the same month
                 $result3[$data3->bulan]['total_harga'] += $data3->total_harga;
             }
 
-            // Convert the associative array to a sequential array
             $result3 = array_values($result3);
 
             $resultJson3 = json_encode($result3);
 
-        return view('admin.dashboard.index', compact('resultJson', 'resultJson2', 'resultJson3'));
+            //break
+
+            $customer = DB::table('users')
+                        ->select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as customer'))
+                        ->where('role_user', '=', 'customer')
+                        ->where(DB::raw('YEAR(created_at)'), '=', DB::raw('YEAR(CURDATE())'))
+                        ->groupBy(DB::raw('MONTH(created_at)'))
+                        ->orderBy('month')
+                        ->get();
+
+            $result4 = [];
+            foreach ($allMonths as $monthNumber => $monthName) {
+                $result4[$monthNumber] = [
+                    'month' => $monthName,
+                    'customer' => 0,
+                ];
+            }
+
+            foreach ($customer as $data4) {
+                $result4[$data4->month]['customer'] = $data4->customer;
+            }
+
+            $result4 = array_values($result4);
+
+            $resultJson4 = json_encode($result4);
+
+            //break
+
+            $supplier = DB::table('users')
+                        ->select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as supplier'))
+                        ->where(DB::raw('YEAR(created_at)'), '=', DB::raw('YEAR(CURDATE())'))
+                        ->groupBy(DB::raw('MONTH(created_at)'))
+                        ->orderBy('month')
+                        ->get();
+
+            $result5 = [];
+            foreach ($allMonths as $monthNumber => $monthName) {
+                $result5[$monthNumber] = [
+                    'month' => $monthName,
+                    'supplier' => 0,
+                ];
+            }
+
+            foreach ($supplier as $data5) {
+                $result5[$data5->month]['supplier'] = $data5->supplier;
+            }
+
+            $result5 = array_values($result5);
+
+            $resultJson5 = json_encode($result5);
+
+            return view('admin.dashboard.index', compact('resultJson', 'resultJson2', 'resultJson3', 'resultJson4', 'resultJson5'));
     }
 
     /**
@@ -108,7 +153,7 @@ class AdminDashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
     }

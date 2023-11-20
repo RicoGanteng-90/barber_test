@@ -55,9 +55,10 @@
                 <form action="{{url('uploadBukti/'.$singleOrder->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="file" id="order_img" name="order_img">
+                    {{$singleOrder->order_img}}<br>
                     <button type="submit" class="btn btn-secondary">Kirim</button>
                 </form>
-                @elseif ($singleOrder->status_pemesanan === 'Diproses' && $singleOrder->status_pembayaran === 'Lunas')
+                @elseif ($singleOrder->status_pemesanan === 'Diproses' && $singleOrder->status_pembayaran === 'Telah lunas')
                 <br>
                 <a href="{{url('cetakNota/'.$singleOrder->id)}}" class="btn btn-info">Cetak nota</a>
                 @endif
@@ -66,7 +67,7 @@
     </div>
 
     @else
-    <h1 style="color: red; text-align:center">Pesanan kosong.</h1>
+    <h1 style="color: red; text-align:center">Pesanan kosong</h1>
 @endif
 
 @endsection

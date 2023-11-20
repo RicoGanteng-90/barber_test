@@ -87,7 +87,7 @@
 
                             <a class="nav-link" href="{{ route('adminorder.index')}}">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Orders
+                                Pemesanan
                             </a>
 
                             <a class="nav-link" href="{{route('supplier.index')}}">

@@ -48,7 +48,7 @@ class AdminOrderController extends Controller
             $originalFileName = pathinfo($order_img, PATHINFO_FILENAME);
             $extension = pathinfo($order_img, PATHINFO_EXTENSION);
 
-            $newFileName = 'buktiPembayaran.'.$extension; // Nama baru yang diinginkan untuk file yang diunduh
+            $newFileName = 'buktiPembayaran.' . $extension;
             return response()->download($filePath, $newFileName);
         }
         return back();
