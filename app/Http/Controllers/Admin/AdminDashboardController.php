@@ -30,62 +30,73 @@ class AdminDashboardController extends Controller
                     ->orderBy('bulan')
                     ->get();
 
-
         $result = [];
         foreach ($allMonths as $monthNumber => $monthName) {
-            $result[] = [
+            $result[$monthNumber] = [
                 'bulan' => $monthName,
                 'total' => 0,
             ];
         }
 
         foreach ($beli as $data) {
-            $result[$data->bulan - 1]['total'] = $data->total;
+            // Accumulate total for the same month
+            $result[$data->bulan]['total'] += $data->total;
         }
+
+        // Convert the associative array to a sequential array
+        $result = array_values($result);
 
         $resultJson = json_encode($result);
 
         //Break
 
         $jual = DB::table(DB::raw('(SELECT DISTINCT MONTH(tanggal_transaksi) as bulan FROM jual_barangs) as months'))
-            ->rightJoin('jual_barangs', 'months.bulan', '=', DB::raw('MONTH(tanggal_transaksi)'))
-            ->select(DB::raw('COALESCE(months.bulan, MONTH(tanggal_transaksi)) as bulan'), 'total_harga')
-            ->orderBy('bulan')
-            ->get();
+                    ->rightJoin('jual_barangs', 'months.bulan', '=', DB::raw('MONTH(tanggal_transaksi)'))
+                    ->select(DB::raw('COALESCE(months.bulan, MONTH(tanggal_transaksi)) as bulan'), 'total_harga')
+                    ->orderBy('bulan')
+                    ->get();
 
-            $result2 = [];
-            foreach ($allMonths as $monthNumber => $monthName) {
-                $result2[] = [
-                    'bulan' => $monthName,
-                    'total_harga' => 0,
-                ];
-            }
+        $result2 = [];
+        foreach ($allMonths as $monthNumber => $monthName) {
+            $result2[$monthNumber] = [
+                'bulan' => $monthName,
+                'total_harga' => 0,
+            ];
+        }
 
-            foreach ($jual as $data2) {
-                $result2[$data2->bulan - 1]['total_harga'] = $data2->total_harga;
-            }
+        foreach ($jual as $data2) {
+            // Accumulate total_harga for the same month
+            $result2[$data2->bulan]['total_harga'] += $data2->total_harga;
+        }
 
-            $resultJson2 = json_encode($result2);
+        // Convert the associative array to a sequential array
+        $result2 = array_values($result2);
+
+        $resultJson2 = json_encode($result2);
 
             //Break
 
             $layan = DB::table(DB::raw('(SELECT DISTINCT MONTH(tanggal_transaksi) as bulan FROM jual_layanans) as months'))
-            ->rightJoin('jual_layanans', 'months.bulan', '=', DB::raw('MONTH(tanggal_transaksi)'))
-            ->select(DB::raw('COALESCE(months.bulan, MONTH(tanggal_transaksi)) as bulan'), 'total_harga')
-            ->orderBy('bulan')
-            ->get();
+                        ->rightJoin('jual_layanans', 'months.bulan', '=', DB::raw('MONTH(tanggal_transaksi)'))
+                        ->select(DB::raw('COALESCE(months.bulan, MONTH(tanggal_transaksi)) as bulan'), 'total_harga')
+                        ->orderBy('bulan')
+                        ->get();
 
             $result3 = [];
             foreach ($allMonths as $monthNumber => $monthName) {
-                $result3[] = [
+                $result3[$monthNumber] = [
                     'bulan' => $monthName,
                     'total_harga' => 0,
                 ];
             }
 
             foreach ($layan as $data3) {
-                $result3[$data3->bulan - 1]['total_harga'] = $data3->total_harga;
+                // Accumulate total_harga for the same month
+                $result3[$data3->bulan]['total_harga'] += $data3->total_harga;
             }
+
+            // Convert the associative array to a sequential array
+            $result3 = array_values($result3);
 
             $resultJson3 = json_encode($result3);
 
