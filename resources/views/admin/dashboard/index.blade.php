@@ -74,7 +74,7 @@
                     <div class="col-md-6">
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-chart-bar"></i>
+                                <i class="fas fa-chart-pie"></i>
                                 Grafik supplier
                             </div><br>
                             <div style="display: inline;">&ensp;
