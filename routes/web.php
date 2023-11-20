@@ -90,6 +90,8 @@ Route::middleware(['role'])->group(function () {
 
     //Route untuk halaman dashboard admin
     Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('admindashboard.index');
+    Route::get('/admin/index2', [AdminController::class, 'index2']);
+
 
     //Route untuk halaman produk admin
     Route::get('/adminproduct', [AdminProductController::class,'index'])->name('adminproduct.index');

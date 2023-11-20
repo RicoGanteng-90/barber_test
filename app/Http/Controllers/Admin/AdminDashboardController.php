@@ -15,11 +15,81 @@ class AdminDashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $beli = Nota_barang::all();
+        $allMonths = [
+            1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
+            5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
+            9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+        ];
 
-        return view('admin.dashboard.index', compact('beli'));
+        $beli = DB::table(DB::raw('(SELECT DISTINCT MONTH(tanggal_transaksi) as bulan FROM nota_barangs) as months'))
+                    ->rightJoin('nota_barangs', 'months.bulan', '=', DB::raw('MONTH(tanggal_transaksi)'))
+                    ->select(DB::raw('COALESCE(months.bulan, MONTH(tanggal_transaksi)) as bulan'), 'total')
+                    ->where(DB::raw('YEAR(tanggal_transaksi)'), '=', DB::raw('YEAR(CURDATE())'))
+                    ->orderBy('bulan')
+                    ->get();
+
+
+        $result = [];
+        foreach ($allMonths as $monthNumber => $monthName) {
+            $result[] = [
+                'bulan' => $monthName,
+                'total' => 0,
+            ];
+        }
+
+        foreach ($beli as $data) {
+            $result[$data->bulan - 1]['total'] = $data->total;
+        }
+
+        $resultJson = json_encode($result);
+
+        //Break
+
+        $jual = DB::table(DB::raw('(SELECT DISTINCT MONTH(tanggal_transaksi) as bulan FROM jual_barangs) as months'))
+            ->rightJoin('jual_barangs', 'months.bulan', '=', DB::raw('MONTH(tanggal_transaksi)'))
+            ->select(DB::raw('COALESCE(months.bulan, MONTH(tanggal_transaksi)) as bulan'), 'total_harga')
+            ->orderBy('bulan')
+            ->get();
+
+            $result2 = [];
+            foreach ($allMonths as $monthNumber => $monthName) {
+                $result2[] = [
+                    'bulan' => $monthName,
+                    'total_harga' => 0,
+                ];
+            }
+
+            foreach ($jual as $data2) {
+                $result2[$data2->bulan - 1]['total_harga'] = $data2->total_harga;
+            }
+
+            $resultJson2 = json_encode($result2);
+
+            //Break
+
+            $layan = DB::table(DB::raw('(SELECT DISTINCT MONTH(tanggal_transaksi) as bulan FROM jual_layanans) as months'))
+            ->rightJoin('jual_layanans', 'months.bulan', '=', DB::raw('MONTH(tanggal_transaksi)'))
+            ->select(DB::raw('COALESCE(months.bulan, MONTH(tanggal_transaksi)) as bulan'), 'total_harga')
+            ->orderBy('bulan')
+            ->get();
+
+            $result3 = [];
+            foreach ($allMonths as $monthNumber => $monthName) {
+                $result3[] = [
+                    'bulan' => $monthName,
+                    'total_harga' => 0,
+                ];
+            }
+
+            foreach ($layan as $data3) {
+                $result3[$data3->bulan - 1]['total_harga'] = $data3->total_harga;
+            }
+
+            $resultJson3 = json_encode($result3);
+
+        return view('admin.dashboard.index', compact('resultJson', 'resultJson2', 'resultJson3'));
     }
 
     /**

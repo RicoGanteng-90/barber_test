@@ -39,9 +39,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
-                        <li><hr class="dropdown-divider" /></li>
                         <form id="logout-admin" action="{{route('adminsession.destroy')}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <li style="cursor: pointer;"><a class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-admin').submit();">Logout</a></li>
@@ -139,10 +136,13 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="../../../../assets/js/datatables-simple-demo.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-        <script src="../../../../assets/demo/chart-area-demo.js"></script>
         <script src="../../../../assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.js" integrity="sha512-6LKCH7i2+zMNczKuCT9ciXgFCKFp3MevWTZUXDlk7azIYZ2wF5LRsrwZqO7Flt00enUI+HwzzT5uhOvy6MNPiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
         <script>
             // Mendapatkan tanggal saat ini
@@ -210,6 +210,47 @@
                 });
         </script>
 
+<script>
+    $(document).ready(function () {
+        // Function to fetch and update data based on the selected year
+        function fetchData(selectedYear) {
+            $.ajax({
+                type: 'GET',
+                url: '/dashboard', // Replace with the actual API endpoint
+                data: { tahun: selectedYear },
+                success: function (data) {
+                    // Update the data and refresh the display
+                    updateData(data);
+                },
+                error: function (error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        }
+
+        // Function to update the displayed data
+        function updateData(data) {
+            // Your existing code for updating the $result array
+            // ...
+
+            // Update the display with the new data
+            // ...
+
+            // For example, if you have a function to render the chart or update the UI
+            renderChart(resultJson2);
+        }
+
+        // Handle the input change event
+        $('#tahun').on('change', function () {
+            var selectedYear = $(this).val();
+            fetchData(selectedYear);
+        });
+
+        // Initial data fetch based on the default year
+        var defaultYear = $('#tahun').val();
+        fetchData(defaultYear);
+    });
+</script>
 
 
     </body>
