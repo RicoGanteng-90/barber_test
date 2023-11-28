@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Kelola_pembelian;
-use App\Models\Nota_barang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,6 +15,8 @@ class AdminDashboardController extends Controller
      */
     public function index(Request $request)
     {
+        $year = $request->input('tahun');
+
         $allMonths = [
             1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
             5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
@@ -26,7 +26,7 @@ class AdminDashboardController extends Controller
         $beli = DB::table(DB::raw('(SELECT DISTINCT MONTH(tanggal_transaksi) as bulan FROM nota_barangs) as months'))
                     ->rightJoin('nota_barangs', 'months.bulan', '=', DB::raw('MONTH(tanggal_transaksi)'))
                     ->select(DB::raw('COALESCE(months.bulan, MONTH(tanggal_transaksi)) as bulan'), 'total')
-                    ->where(DB::raw('YEAR(tanggal_transaksi)'), '=', DB::raw('YEAR(CURDATE())'))
+                    ->where(DB::raw('YEAR(tanggal_transaksi)'), '=', $year)
                     ->orderBy('bulan')
                     ->get();
 
@@ -153,9 +153,38 @@ class AdminDashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function fetchData(Request $request)
     {
-        //
+        $year = $request->input('tahun');
+
+        $allMonths = [
+            1 => 'January', 2 => 'February', 3 => 'March', 4 => 'April',
+            5 => 'May', 6 => 'June', 7 => 'July', 8 => 'August',
+            9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
+        ];
+
+        $beli = DB::table(DB::raw('(SELECT DISTINCT MONTH(tanggal_transaksi) as bulan FROM nota_barangs) as months'))
+            ->rightJoin('nota_barangs', 'months.bulan', '=', DB::raw('MONTH(tanggal_transaksi)'))
+            ->select(DB::raw('COALESCE(months.bulan, MONTH(tanggal_transaksi)) as bulan'), 'total')
+            ->where(DB::raw('YEAR(tanggal_transaksi)'), '=', $year)
+            ->orderBy('bulan')
+            ->get();
+
+        $result = [];
+        foreach ($allMonths as $monthNumber => $monthName) {
+            $result[$monthNumber] = [
+                'bulan' => $monthName,
+                'total' => 0,
+            ];
+        }
+
+        foreach ($beli as $data) {
+            $result[$data->bulan]['total'] += $data->total;
+        }
+
+        $result = array_values($result);
+
+        return response()->json($result);
     }
 
     /**

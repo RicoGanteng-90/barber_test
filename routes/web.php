@@ -90,8 +90,7 @@ Route::middleware(['role'])->group(function () {
 
     //Route untuk halaman dashboard admin
     Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('admindashboard.index');
-    Route::get('/beliBarang', [AdminDashboardController::class,'create'])->name('admindashboard.create');
-    Route::get('/admin/index2', [AdminController::class, 'index2']);
+    Route::post('/fetch-chart-data', [AdminDashboardController::class, 'fetchData'])->name('chart.fetchData');
 
 
     //Route untuk halaman produk admin

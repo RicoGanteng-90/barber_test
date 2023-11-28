@@ -22,10 +22,10 @@
                                 Grafik penjualan barang
                             </div><br>
                             <div style="display: inline;">&ensp;
-                                <button id="downloadBtn2" class="btn btn-primary" style="width: 150px;">Download as PNG</button>
-                                <button id="downloadPdfBtn2" class="btn btn-info" style="width: 150px;">Download as PDF</button><br><br>
+                                <button id="downloadBtn2" class="btn btn-primary" style="width: 150;">Download as PNG</button>
+                                <button id="downloadPdfBtn2" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
+                                <canvas id="myAreaChart" width="300"></canvas>
                             </div>
-                            <canvas id="myAreaChart" width="300"></canvas>
                         </div>
                     </div>
 
@@ -52,6 +52,8 @@
                             <div style="display: inline;">&ensp;
                                 <button id="downloadBtn" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
+                                <input type="number" name="tahun" id="tahunInput" style="width: 80px;" value="{{ date('Y') }}">
+                                <button class="btn btn-primary" onclick="updateChart()">Update Chart</button>
                             </div>
                             <canvas id="lineChart" width="300"></canvas>
                         </div>
@@ -84,37 +86,43 @@
                             <canvas id="myPieChart" width="300"></canvas>
                         </div>
                     </div>
-                </div>
 
+                </div>
             </div>
 
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                            var resultData = <?php echo $resultJson; ?>;
 
-                            var ctx = document.getElementById('lineChart').getContext('2d');
-                            var lineChart = new Chart(ctx, {
-                                type: 'line',
-                                data: {
-                                    labels: resultData.map(item => item.bulan),
-                                    datasets: [{
-                                        label: 'Total pembelian barang',
-                                        data: resultData.map(item => item.total),
-                                        borderColor: 'rgba(75, 192, 192, 1)',
-                                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                        borderWidth: 2,
-                                        fill: true
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
+
+                        <script>
+                            var lineChart;
+                            var initialData = <?php echo $resultJson; ?>;
+
+                            document.addEventListener('DOMContentLoaded', function () {
+                                // Initialize the chart with initial data
+                                var ctx = document.getElementById('lineChart').getContext('2d');
+
+                                lineChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: {
+                                        labels: initialData.map(item => item.bulan),
+                                        datasets: [{
+                                            label: 'Total pembelian barang',
+                                            data: initialData.map(item => item.total),
+                                            borderColor: 'rgba(75, 192, 192, 1)',
+                                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                            borderWidth: 2,
+                                            fill: true
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
                                         }
                                     }
-                                }
-                            });
+                                });
+
 
                                 var downloadBtn = document.getElementById('downloadBtn');
                                 downloadBtn.addEventListener('click', function() {
@@ -155,7 +163,34 @@
                                 });
 
                             });
+
+                            function updateChart() {
+                            var year = document.getElementById('tahunInput').value;
+
+                            fetch("{{ route('chart.fetchData') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: 'tahun=' + year
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                lineChart.data.labels = data.map(item => item.bulan);
+                                lineChart.data.datasets[0].data = data.map(item => item.total);
+
+                                lineChart.update();
+                            })
+                            .catch(error => {
+                                console.error('Error fetching data:', error);
+                            });
+
+                            return false;
+                        }
                         </script>
+
+
 
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {

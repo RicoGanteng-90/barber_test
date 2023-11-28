@@ -142,6 +142,7 @@
         <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
         <script>
@@ -209,49 +210,6 @@
                     $('#Customer4').DataTable(); // Menginisialisasi DataTables pada tabel dengan ID "dataTable"
                 });
         </script>
-
-<script>
-    $(document).ready(function () {
-        // Function to fetch and update data based on the selected year
-        function fetchData(selectedYear) {
-            $.ajax({
-                type: 'GET',
-                url: '/dashboard', // Replace with the actual API endpoint
-                data: { tahun: selectedYear },
-                success: function (data) {
-                    // Update the data and refresh the display
-                    updateData(data);
-                },
-                error: function (error) {
-                    console.error('Error fetching data:', error);
-                }
-            });
-        }
-
-        // Function to update the displayed data
-        function updateData(data) {
-            // Your existing code for updating the $result array
-            // ...
-
-            // Update the display with the new data
-            // ...
-
-            // For example, if you have a function to render the chart or update the UI
-            renderChart(resultJson2);
-        }
-
-        // Handle the input change event
-        $('#tahun').on('change', function () {
-            var selectedYear = $(this).val();
-            fetchData(selectedYear);
-        });
-
-        // Initial data fetch based on the default year
-        var defaultYear = $('#tahun').val();
-        fetchData(defaultYear);
-    });
-</script>
-
 
     </body>
 </html>
