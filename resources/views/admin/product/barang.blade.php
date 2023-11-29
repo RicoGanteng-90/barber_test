@@ -160,7 +160,7 @@
                                                         </div>
                                                         <div class="col-6">
                                                             <label for="harga_barang" class="form-label">Harga</label>
-                                                            <input name="harga_barang" type="text" class="form-control" id="harga_barang" required="" oninvalid="this.setCustomValidity('Tolong isi Harga terlebih dahulu')" oninput="setCustomValidity('')">
+                                                            <input name="harga_barang" type="number" class="form-control" id="harga_barang" required="" oninvalid="this.setCustomValidity('Tolong isi Harga terlebih dahulu')" oninput="setCustomValidity('')">
                                                         </div>
                                                         <div class="col-6">
                                                             <label for="information" class="form-label">Keterangan</label>
