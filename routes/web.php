@@ -43,41 +43,41 @@ Route::post('/customer/logout', [SessionController::class,'destroy'])->name('ses
 
 Route::middleware(['customer'])->group(function () {
 
-//Route untuk halaman home customer
-Route::get('/home', [DashboardController::class,'index'])->name('home.index');
+    //Route untuk halaman home customer
+    Route::get('/home', [DashboardController::class,'index'])->name('home.index');
 
-//Route untuk halaman profile customer
-Route::get('/profile', [ProfileController::class,'index'])->name('profile.index');
-Route::post('/profile-update', [ProfileController::class,'update'])->name('profile.update');
-Route::post('/profile-edit', [ProfileController::class,'edit'])->name('profile.edit');
+    //Route untuk halaman profile customer
+    Route::get('/profile', [ProfileController::class,'index'])->name('profile.index');
+    Route::post('/profile-update', [ProfileController::class,'update'])->name('profile.update');
+    Route::post('/profile-edit', [ProfileController::class,'edit'])->name('profile.edit');
 
-//Route untuk halaman produk customer
-Route::get('/productPage', [ProductController::class,'index'])->name('product.index');
+    //Route untuk halaman produk customer
+    Route::get('/productPage', [ProductController::class,'index'])->name('product.index');
 
-//Route untuk halaman keranjang customer
-Route::get('/cart', [CartController::class,'index'])->name('cart.index');
-Route::post('/cartAdd/{id}', [CartController::class,'create'])->name('cart.create');
-Route::post('/layananAdd/{id}', [CartController::class,'tambahLayanan'])->name('cart.tambahLayanan');
-Route::delete('/cartHapus/{id}', [CartController::class,'destroy'])->name('cart.delete');
-Route::post('/cartEdit/{id}', [CartController::class,'edit'])->name('cart.edit');
-Route::get('/check', [CartController::class,'check'])->name('cart.check');
-Route::post('/checkout', [CartController::class,'checkout'])->name('cart.checkout');
+    //Route untuk halaman keranjang customer
+    Route::get('/cart', [CartController::class,'index'])->name('cart.index');
+    Route::post('/cartAdd/{id}', [CartController::class,'create'])->name('cart.create');
+    Route::post('/layananAdd/{id}', [CartController::class,'tambahLayanan'])->name('cart.tambahLayanan');
+    Route::delete('/cartHapus/{id}', [CartController::class,'destroy'])->name('cart.delete');
+    Route::post('/cartEdit/{id}', [CartController::class,'edit'])->name('cart.edit');
+    Route::get('/check', [CartController::class,'check'])->name('cart.check');
+    Route::post('/checkout', [CartController::class,'checkout'])->name('cart.checkout');
 
-//Route untuk halaman about customer
-Route::get('/about', [AboutController::class,'index'])->name('about.index');
+    //Route untuk halaman about customer
+    Route::get('/about', [AboutController::class,'index'])->name('about.index');
 
-//Route untuk halaman order customer
-Route::get('/order', [OrderController::class,'index'])->name('order.index');
-Route::delete('/orderDelete/{id}', [OrderController::class,'hapusOrder'])->name('order.delete');
-Route::post('/uploadBukti/{id}', [OrderController::class,'uploadBukti'])->name('order.bukti');
+    //Route untuk halaman order customer
+    Route::get('/order', [OrderController::class,'index'])->name('order.index');
+    Route::delete('/orderDelete/{id}', [OrderController::class,'hapusOrder'])->name('order.delete');
+    Route::post('/uploadBukti/{id}', [OrderController::class,'uploadBukti'])->name('order.bukti');
 
-//Route untuk halaman layanan customer
-Route::get('/service', [ServiceController::class,'index'])->name('service.index');
+    //Route untuk halaman layanan customer
+    Route::get('/service', [ServiceController::class,'index'])->name('service.index');
 
-//Route untuk halaman pdf
-Route::get('/note/{id}', [NoteController::class,'index'])->name('note.index');
-Route::get('/cetakNota/{id}', [NoteController::class,'cetak_pdf'])->name('note.cetak_pdf');
-});
+    //Route untuk halaman pdf
+    Route::get('/note/{id}', [NoteController::class,'index'])->name('note.index');
+    Route::get('/cetakNota/{id}', [NoteController::class,'cetak_pdf'])->name('note.cetak_pdf');
+    });
 
 
 //Route untuk halaman login dan register admin
