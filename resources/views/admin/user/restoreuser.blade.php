@@ -1,16 +1,16 @@
 @extends('admin.layout.layout')
 
-@section('title', 'Supplier')
+@section('title', 'User')
 
 @section('content')
 
 <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Kelola Supplier</h1>
+                        <h1 class="mt-4">Kelola User</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Supplier</li>
+                            <li class="breadcrumb-item active">User</li>
                         </ol>
                     </div>
                 </main>
@@ -25,28 +25,32 @@
 
                 <div class="card mb-4">
                             <div class="card-body">
-                            <a href="supplierHapus2" class="btn btn-danger">Hapus semua</a>
-                            <a href="supplierKembali2" class="btn btn-success">Restore semua</a>
+                            <a href="userHapus2" class="btn btn-danger">Hapus semua</a>
+                            <a href="userKembali2" class="btn btn-success">Restore semua</a>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
-                                            <th>Nama supplier</th>
+                                            <th>Nama User</th>
+                                            <th>Username</th>
                                             <th>Email</th>
                                             <th>No telepon</th>
                                             <th>Alamat</th>
+                                            <th>Role</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($suppliers as $supplier)
+                                        @foreach($users as $user)
                                         <tr>
-                                            <td>{{$supplier->nama_supplier}}</td>
-                                            <td>{{$supplier->email}}</td>
-                                            <td>{{$supplier->no_telp}}</td>
-                                            <td>{{$supplier->alamat}}</td>
+                                        <td>{{$user->nama_user}}</td>
+                                            <td>{{$user->username}}</td>
+                                            <td>{{$user->email}}</td>
+                                            <td>{{$user->no_telp}}</td>
+                                            <td>{{$user->alamat}}</td>
+                                            <td>{{$user->role_user}}</td>
                                             <td>
-                                                <a href="/supplierKembali/{{$supplier->id}}" class="btn btn-success">Restore</a>
-                                                <a href="/supplierHapus/{{$supplier->id}}" class="btn btn-danger">Hapus</a>
+                                                <a href="/userKembali/{{$user->id}}" class="btn btn-success">Restore</a>
+                                                <a href="/userHapus/{{$user->id}}" class="btn btn-danger">Hapus</a>
                                                 </form>
                                             </td>
                                         </tr>
