@@ -91,6 +91,10 @@ Route::middleware(['role'])->group(function () {
     //Route untuk halaman dashboard admin
     Route::get('/dashboard', [AdminDashboardController::class,'index'])->name('admindashboard.index');
     Route::post('/fetch-chart-data', [AdminDashboardController::class, 'fetchData'])->name('chart.fetchData');
+    Route::post('/fetch-chart-data2', [AdminDashboardController::class, 'fetchData2'])->name('chart.fetchData2');
+    Route::post('/fetch-chart-data3', [AdminDashboardController::class, 'fetchData3'])->name('chart.fetchData3');
+    Route::post('/fetch-chart-data4', [AdminDashboardController::class, 'fetchData4'])->name('chart.fetchData4');
+    Route::post('/fetch-chart-data5', [AdminDashboardController::class, 'fetchData5'])->name('chart.fetchData5');
 
 
     //Route untuk halaman produk admin

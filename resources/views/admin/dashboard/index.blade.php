@@ -24,8 +24,10 @@
                             <div style="display: inline;">&ensp;
                                 <button id="downloadBtn2" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn2" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
-                                <canvas id="myAreaChart" width="300"></canvas>
+                                &ensp;&ensp;<input type="number" name="tahun2" id="tahunInput2" style="width: 80px;" value="{{ date('Y') }}">
+                                <button class="btn btn-primary" onclick="updateChart2()">Update Chart</button>
                             </div>
+                            <canvas id="myAreaChart" width="300"></canvas>
                         </div>
                     </div>
 
@@ -38,6 +40,8 @@
                             <div style="display: inline;">&ensp;
                                 <button id="downloadBtn3" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn3" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
+                                &ensp;&ensp;<input type="number" name="tahun3" id="tahunInput3" style="width: 80px;" value="{{ date('Y') }}">
+                                <button class="btn btn-primary" onclick="updateChart3()">Update Chart</button>
                             </div>
                             <canvas id="myAreaChart2" width="300"></canvas>
                         </div>
@@ -52,7 +56,7 @@
                             <div style="display: inline;">&ensp;
                                 <button id="downloadBtn" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
-                                <input type="number" name="tahun" id="tahunInput" style="width: 80px;" value="{{ date('Y') }}">
+                                &ensp;&ensp;<input type="number" name="tahun" id="tahunInput" style="width: 80px;" value="{{ date('Y') }}">
                                 <button class="btn btn-primary" onclick="updateChart()">Update Chart</button>
                             </div>
                             <canvas id="lineChart" width="300"></canvas>
@@ -68,6 +72,8 @@
                             <div style="display: inline;">&ensp;
                                 <button id="downloadBtn4" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn4" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
+                                &ensp;&ensp;<input type="number" name="tahun4" id="tahunInput4" style="width: 80px;" value="{{ date('Y') }}">
+                                <button class="btn btn-primary" onclick="updateChart4()">Update Chart</button>
                             </div>
                             <canvas id="myBarChart" width="300"></canvas>
                         </div>
@@ -82,6 +88,8 @@
                             <div style="display: inline;">&ensp;
                                 <button id="downloadBtn5" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn5" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
+                                &ensp;&ensp;<input type="number" name="tahun5" id="tahunInput5" style="width: 80px;" value="{{ date('Y') }}">
+                                <button class="btn btn-primary" onclick="updateChart5()">Update Chart</button>
                             </div>
                             <canvas id="myPieChart" width="300"></canvas>
                         </div>
@@ -122,7 +130,6 @@
                                         }
                                     }
                                 });
-
 
                                 var downloadBtn = document.getElementById('downloadBtn');
                                 downloadBtn.addEventListener('click', function() {
@@ -193,14 +200,17 @@
 
 
                         <script>
+                            var lineChart2;
+                            var initialData2 = <?php echo  $resultJson2 ?>;
+
                             document.addEventListener('DOMContentLoaded', function() {
 
-                            var resultData2 = <?php echo $resultJson2; ?>;
-                            var ctx = document.getElementById("myAreaChart");
-                            var myLineChart = new Chart(ctx, {
+                            var ctx = document.getElementById("myAreaChart").getContext('2d');
+
+                            lineChart2 = new Chart(ctx, {
                             type: 'line',
                             data: {
-                                labels: resultData2.map(item => item.bulan),
+                                labels: initialData2.map(item => item.bulan),
                                 datasets: [{
                                     label: "Total penjualan barang",
                                     lineTension: 0.3,
@@ -213,7 +223,7 @@
                                     pointHoverBackgroundColor: "rgba(2,117,216,1)",
                                     pointHitRadius: 50,
                                     pointBorderWidth: 2,
-                                    data: resultData2.map(item => item.total_harga),
+                                    data: initialData2.map(item => item.total_harga),
                                     fill: true
                                 }],
                             },
@@ -284,19 +294,46 @@
 
                                     pdf.save('chart.pdf');
                                 });
-
                         });
+
+                        function updateChart2() {
+                            var year2 = document.getElementById('tahunInput2').value;
+
+                            fetch("{{ route('chart.fetchData2') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: 'tahun2=' + year2
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                lineChart2.data.labels = data.map(item => item.bulan);
+                                lineChart2.data.datasets[0].data = data.map(item => item.total_harga);
+
+                                lineChart2.update();
+                            })
+                            .catch(error => {
+                                console.error('Error fetching data:', error);
+                            });
+
+                            return false;
+                        }
                         </script>
 
                         <script>
+                            var lineChart3;
+                            var initialData3 = <?php echo  $resultJson3 ?>;
+
                             document.addEventListener('DOMContentLoaded', function() {
 
-                            var resultData3 = <?php echo $resultJson3; ?>;
-                            var ctx = document.getElementById("myAreaChart2");
-                            var myLineChart = new Chart(ctx, {
+                            var ctx = document.getElementById("myAreaChart2").getContext('2d');
+
+                            lineChart3 = new Chart(ctx, {
                             type: 'line',
                             data: {
-                                labels: resultData3.map(item => item.bulan),
+                                labels: initialData3.map(item => item.bulan),
                                 datasets: [{
                                     label: "Total penjualan layanan",
                                     lineTension: 0.3,
@@ -309,7 +346,7 @@
                                     pointHoverBackgroundColor: "rgba(2,117,216,1)",
                                     pointHitRadius: 50,
                                     pointBorderWidth: 2,
-                                    data: resultData3.map(item => item.total_harga),
+                                    data: initialData3.map(item => item.total_harga),
                                     fill: true
                                 }],
                             },
@@ -381,23 +418,50 @@
                                     pdf.save('chart.pdf');
                                 });
                             });
+
+                            function updateChart3() {
+                            var year3 = document.getElementById('tahunInput3').value;
+
+                            fetch("{{ route('chart.fetchData3') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: 'tahun3=' + year3
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                lineChart3.data.labels = data.map(item => item.bulan);
+                                lineChart3.data.datasets[0].data = data.map(item => item.total_harga);
+
+                                lineChart3.update();
+                            })
+                            .catch(error => {
+                                console.error('Error fetching data:', error);
+                            });
+
+                            return false;
+                        }
                     </script>
 
                     <script >
+                            var lineChart4;
+                            var initialData4 = <?php echo  $resultJson4 ?>;
 
                         document.addEventListener('DOMContentLoaded', function() {
 
-                            var resultData4 = <?php echo $resultJson4; ?>;
-                            var ctx = document.getElementById("myBarChart");
-                            var myLineChart = new Chart(ctx, {
+                            var ctx = document.getElementById("myBarChart").getContext('2d');
+
+                            lineChart4 = new Chart(ctx, {
                             type: 'bar',
                             data: {
-                                labels: resultData4.map(item => item.month),
+                                labels: initialData4.map(item => item.month),
                                 datasets: [{
                                 label: "Total customer",
                                 backgroundColor: "rgba(2,117,216,1)",
                                 borderColor: "rgba(2,117,216,1)",
-                                data: resultData4.map(item => item.customer),
+                                data: initialData4.map(item => item.customer),
                                 }],
                             },
                             options: {
@@ -469,20 +533,47 @@
                                 });
                         });
 
+                        function updateChart4() {
+                            var year4 = document.getElementById('tahunInput4').value;
+
+                            fetch("{{ route('chart.fetchData4') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: 'tahun4=' + year4
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                lineChart4.data.labels = data.map(item => item.month);
+                                lineChart4.data.datasets[0].data = data.map(item => item.customer);
+
+                                lineChart4.update();
+                            })
+                            .catch(error => {
+                                console.error('Error fetching data:', error);
+                            });
+
+                            return false;
+                        }
+
                     </script>
 
                     <script>
+                        var pieChart5;
+                        var initialData5 = <?php echo  $resultJson5 ?>;
 
                         document.addEventListener('DOMContentLoaded', function() {
 
-                            var resultData5 = <?php echo $resultJson5; ?>;
-                            var ctx = document.getElementById("myPieChart");
-                            var myPieChart = new Chart(ctx, {
+                            var ctx = document.getElementById("myPieChart").getContext('2d');
+
+                            pieChart5 = new Chart(ctx, {
                             type: 'pie',
                             data: {
-                                labels: resultData5.map(item => item.month),
+                                labels: initialData5.map(item => item.month),
                                 datasets: [{
-                                data: resultData5.map(item => item.supplier),
+                                data: initialData5.map(item => item.supplier),
                                 backgroundColor: ['#1e81b0', '#eab676', '#76b5c5', '#21130d', '#873e23', '#abdbe3', '#827717', '#154c79', '#E55101', '#BD3563', '#689F38', '#FFEB3B'],
                                 }],
                             },
@@ -528,6 +619,30 @@
 
                         });
 
+                        function updateChart5() {
+                            var year5 = document.getElementById('tahunInput5').value;
+
+                            fetch("{{ route('chart.fetchData5') }}", {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                },
+                                body: 'tahun5=' + year5
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                pieChart5.data.labels = data.map(item => item.month);
+                                pieChart5.data.datasets[0].data = data.map(item => item.supplier);
+
+                                pieChart5.update();
+                            })
+                            .catch(error => {
+                                console.error('Error fetching data:', error);
+                            });
+
+                            return false;
+                        }
                     </script>
 
 @endsection
