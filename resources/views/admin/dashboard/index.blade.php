@@ -25,7 +25,6 @@
                                 <button id="downloadBtn2" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn2" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
                                 &ensp;&ensp;<input type="number" name="tahun2" id="tahunInput2" style="width: 80px;" value="{{ date('Y') }}">
-                                <button class="btn btn-primary" onclick="updateChart2()">Update Chart</button>
                             </div>
                             <canvas id="myAreaChart" width="300"></canvas>
                         </div>
@@ -41,7 +40,6 @@
                                 <button id="downloadBtn3" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn3" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
                                 &ensp;&ensp;<input type="number" name="tahun3" id="tahunInput3" style="width: 80px;" value="{{ date('Y') }}">
-                                <button class="btn btn-primary" onclick="updateChart3()">Update Chart</button>
                             </div>
                             <canvas id="myAreaChart2" width="300"></canvas>
                         </div>
@@ -57,7 +55,6 @@
                                 <button id="downloadBtn" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
                                 &ensp;&ensp;<input type="number" name="tahun" id="tahunInput" style="width: 80px;" value="{{ date('Y') }}">
-                                <button class="btn btn-primary" onclick="updateChart()">Update Chart</button>
                             </div>
                             <canvas id="lineChart" width="300"></canvas>
                         </div>
@@ -73,7 +70,6 @@
                                 <button id="downloadBtn4" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn4" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
                                 &ensp;&ensp;<input type="number" name="tahun4" id="tahunInput4" style="width: 80px;" value="{{ date('Y') }}">
-                                <button class="btn btn-primary" onclick="updateChart4()">Update Chart</button>
                             </div>
                             <canvas id="myBarChart" width="300"></canvas>
                         </div>
@@ -89,7 +85,6 @@
                                 <button id="downloadBtn5" class="btn btn-primary" style="width: 150;">Download as PNG</button>
                                 <button id="downloadPdfBtn5" class="btn btn-info" style="width: 150;">Download as PDF</button><br><br>
                                 &ensp;&ensp;<input type="number" name="tahun5" id="tahunInput5" style="width: 80px;" value="{{ date('Y') }}">
-                                <button class="btn btn-primary" onclick="updateChart5()">Update Chart</button>
                             </div>
                             <canvas id="myPieChart" width="300"></canvas>
                         </div>
@@ -99,13 +94,11 @@
             </div>
 
 
-
-                        <script>
+                            <script>
                             var lineChart;
                             var initialData = <?php echo $resultJson; ?>;
 
                             document.addEventListener('DOMContentLoaded', function () {
-                                // Initialize the chart with initial data
                                 var ctx = document.getElementById('lineChart').getContext('2d');
 
                                 lineChart = new Chart(ctx, {
@@ -169,33 +162,37 @@
                                     pdf.save('chart.pdf');
                                 });
 
+                                document.getElementById('tahunInput').addEventListener('change', function () {
+                                    updateChart();
+                                });
+
+                                function updateChart() {
+                                    var year = document.getElementById('tahunInput').value;
+
+                                    fetch("{{ route('chart.fetchData') }}", {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        },
+                                        body: 'tahun=' + year
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        lineChart.data.labels = data.map(item => item.bulan);
+                                        lineChart.data.datasets[0].data = data.map(item => item.total);
+
+                                        lineChart.update();
+                                    })
+                                    .catch(error => {
+                                        console.error('Error fetching data:', error);
+                                    });
+                                }
+
+                                updateChart();
                             });
-
-                            function updateChart() {
-                            var year = document.getElementById('tahunInput').value;
-
-                            fetch("{{ route('chart.fetchData') }}", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                },
-                                body: 'tahun=' + year
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                lineChart.data.labels = data.map(item => item.bulan);
-                                lineChart.data.datasets[0].data = data.map(item => item.total);
-
-                                lineChart.update();
-                            })
-                            .catch(error => {
-                                console.error('Error fetching data:', error);
-                            });
-
-                            return false;
-                        }
                         </script>
+
 
 
 
@@ -294,32 +291,36 @@
 
                                     pdf.save('chart.pdf');
                                 });
+
+                                document.getElementById('tahunInput2').addEventListener('change', function () {
+                                    updateChart2();
+                                });
+
+                                function updateChart2() {
+                                var year2 = document.getElementById('tahunInput2').value;
+
+                                fetch("{{ route('chart.fetchData2') }}", {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: 'tahun2=' + year2
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    lineChart2.data.labels = data.map(item => item.bulan);
+                                    lineChart2.data.datasets[0].data = data.map(item => item.total_harga);
+
+                                    lineChart2.update();
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
+                                });
+                            }
+                            updateChart2();
                         });
 
-                        function updateChart2() {
-                            var year2 = document.getElementById('tahunInput2').value;
-
-                            fetch("{{ route('chart.fetchData2') }}", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                },
-                                body: 'tahun2=' + year2
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                lineChart2.data.labels = data.map(item => item.bulan);
-                                lineChart2.data.datasets[0].data = data.map(item => item.total_harga);
-
-                                lineChart2.update();
-                            })
-                            .catch(error => {
-                                console.error('Error fetching data:', error);
-                            });
-
-                            return false;
-                        }
                         </script>
 
                         <script>
@@ -417,32 +418,36 @@
 
                                     pdf.save('chart.pdf');
                                 });
+
+                                document.getElementById('tahunInput3').addEventListener('change', function () {
+                                    updateChart3();
+                                });
+
+                                function updateChart3() {
+                                var year3 = document.getElementById('tahunInput3').value;
+
+                                fetch("{{ route('chart.fetchData3') }}", {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: 'tahun3=' + year3
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    lineChart3.data.labels = data.map(item => item.bulan);
+                                    lineChart3.data.datasets[0].data = data.map(item => item.total_harga);
+
+                                    lineChart3.update();
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
+                                });
+                            }
+                            updateChart3();
                             });
 
-                            function updateChart3() {
-                            var year3 = document.getElementById('tahunInput3').value;
-
-                            fetch("{{ route('chart.fetchData3') }}", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                },
-                                body: 'tahun3=' + year3
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                lineChart3.data.labels = data.map(item => item.bulan);
-                                lineChart3.data.datasets[0].data = data.map(item => item.total_harga);
-
-                                lineChart3.update();
-                            })
-                            .catch(error => {
-                                console.error('Error fetching data:', error);
-                            });
-
-                            return false;
-                        }
                     </script>
 
                     <script >
@@ -531,32 +536,35 @@
 
                                     pdf.save('chart.pdf');
                                 });
+
+                                document.getElementById('tahunInput4').addEventListener('change', function () {
+                                    updateChart4();
+                                });
+
+                                function updateChart4() {
+                                var year4 = document.getElementById('tahunInput4').value;
+
+                                fetch("{{ route('chart.fetchData4') }}", {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: 'tahun4=' + year4
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    lineChart4.data.labels = data.map(item => item.month);
+                                    lineChart4.data.datasets[0].data = data.map(item => item.customer);
+
+                                    lineChart4.update();
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
+                                });
+                            }
+                            updateChart4();
                         });
-
-                        function updateChart4() {
-                            var year4 = document.getElementById('tahunInput4').value;
-
-                            fetch("{{ route('chart.fetchData4') }}", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                },
-                                body: 'tahun4=' + year4
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                lineChart4.data.labels = data.map(item => item.month);
-                                lineChart4.data.datasets[0].data = data.map(item => item.customer);
-
-                                lineChart4.update();
-                            })
-                            .catch(error => {
-                                console.error('Error fetching data:', error);
-                            });
-
-                            return false;
-                        }
 
                     </script>
 
@@ -617,32 +625,35 @@
                                     pdf.save('chart.pdf');
                                 });
 
+                                document.getElementById('tahunInput5').addEventListener('change', function () {
+                                    updateChart5();
+                                });
+
+                                function updateChart5() {
+                                var year5 = document.getElementById('tahunInput5').value;
+
+                                fetch("{{ route('chart.fetchData5') }}", {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    },
+                                    body: 'tahun5=' + year5
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    pieChart5.data.labels = data.map(item => item.month);
+                                    pieChart5.data.datasets[0].data = data.map(item => item.supplier);
+
+                                    pieChart5.update();
+                                })
+                                .catch(error => {
+                                    console.error('Error fetching data:', error);
+                                });
+                            }
+                            updateChart5();
                         });
 
-                        function updateChart5() {
-                            var year5 = document.getElementById('tahunInput5').value;
-
-                            fetch("{{ route('chart.fetchData5') }}", {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                },
-                                body: 'tahun5=' + year5
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                pieChart5.data.labels = data.map(item => item.month);
-                                pieChart5.data.datasets[0].data = data.map(item => item.supplier);
-
-                                pieChart5.update();
-                            })
-                            .catch(error => {
-                                console.error('Error fetching data:', error);
-                            });
-
-                            return false;
-                        }
                     </script>
 
 @endsection
