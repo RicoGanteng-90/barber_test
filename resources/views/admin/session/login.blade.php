@@ -26,11 +26,11 @@
                                         <form action="{{route('adminsession.store')}}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-floating mb-3">
-                                                <input name="email" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                                <input name="email" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" required>
                                                 <label for="inputEmail">Email address</label>
                                             </div>
                                             <div class="form-floating mb-3">
-                                                <input name="password" class="form-control" id="inputPassword" type="password" placeholder="Password" />
+                                                <input name="password" class="form-control" id="inputPassword" type="password" placeholder="Password" required>
                                                 <label for="inputPassword">Password</label>
                                             </div>
                                             <div class="d-flex align-items-center justify-content-between mt-4 mb-0">

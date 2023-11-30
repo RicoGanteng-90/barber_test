@@ -51,10 +51,6 @@ class AdminSessionController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             if (Auth::user()->role_user == 'owner' || Auth::user()->role_user == 'admin') {
-                $token = Str::random(200);
-                User::where('email', $request->email)->update([
-                    'token' => $token,
-                ]);
                 return redirect()->route('admindashboard.index');
             }
         } else {
