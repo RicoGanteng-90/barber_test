@@ -20,8 +20,15 @@ class OrderController extends Controller
         return view('order.order', compact('order'));
     }
 
-    public function hapusOrder($id){
+    public function hapusOrder(Request $request, $id){
         $item = Kelola_pemesanan::findOrFail($id);
+
+        if ($item->order_img) {
+            $oldFile = public_path('bukti/' . $item->order_img);
+            if (File::exists($oldFile)) {
+                unlink($oldFile);
+            }
+        }
 
         $item->delete();
 

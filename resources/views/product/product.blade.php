@@ -83,7 +83,7 @@
                                     <form action="{{url('cartAdd/'.$product2->id)}}" method="post" enctype="multipart/form-data">
                                         @csrf
                                         <button type="submit" class="btn btn-primary add-to-cart">Tambah</button>&ensp;<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#detailBarang{{$product2->id}}" style="width: 70px;">Detail</button> <br><br>
-                                        <input type="number" name="jumlah" style="width: 50px; text-align:center;" value="0">
+                                        <input type="number" name="jumlah" style="width: 50px; text-align:center;" value="0" min="0">
                                     </form>
                                     </small>
                                 </div>

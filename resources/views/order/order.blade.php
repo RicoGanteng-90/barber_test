@@ -45,18 +45,17 @@
                     <strong>Total Harga: {{ $singleOrder->total_bayar }}</strong>
                 </div>
                 <br>
-                @if ($singleOrder->status_pemesanan === 'Menunggu konfirmasi' && $singleOrder->status_pembayaran === 'Belum lunas')
-                <form action="{{url('orderDelete/'.$singleOrder->id)}}" method="post">
-                    @csrf
-                    @method('DELETE')
-                <button type="submit" class="btn btn-danger">Hapus order</button>
-                </form>
-                @elseif ($singleOrder->status_pemesanan === 'Diproses' && $singleOrder->status_pembayaran === 'Belum lunas')
+                @if ($singleOrder->status_pemesanan === 'Diproses' && $singleOrder->status_pembayaran === 'Belum lunas')
                 <form action="{{url('uploadBukti/'.$singleOrder->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <input type="file" id="order_img" name="order_img">
                     {{$singleOrder->order_img}}<br>
                     <button type="submit" class="btn btn-secondary">Kirim</button>
+                </form>
+                <form action="{{url('orderDelete/'.$singleOrder->id)}}" method="post">
+                    @csrf
+                    @method('DELETE')
+                <button type="submit" class="btn btn-danger">Hapus order</button>
                 </form>
                 @elseif ($singleOrder->status_pemesanan === 'Diproses' && $singleOrder->status_pembayaran === 'Telah lunas')
                 <br>

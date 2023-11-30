@@ -46,7 +46,7 @@
                         @csrf
                         <div class="d-flex align-items-center justify-content-center">
                             <button class="btn btn-secondary" type="submit">Tambah</button>&ensp;
-                            <input type="number" name="lay" value="0" style="width: 60px; text-align: center;">
+                            <input type="number" name="lay" value="0" style="width: 60px; text-align: center;" min="0">
                         </div>
                     </form>
                 </div>

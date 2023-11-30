@@ -33,7 +33,6 @@
                                             <th>Metode pembayaran</th>
                                             <th>Total bayar</th>
                                             <th>Bukti</th>
-                                            <th>Status pemesanan</th>
                                             <th>Status pembayaran</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -49,7 +48,6 @@
                                             <td>{{$order->metode_pembayaran}}</td>
                                             <td>{{$order->total_bayar}}</td>
                                             <td><a href="{{ url('download-image/'.$order->order_img) }}"><img src="{{asset('bukti/'.$order->order_img)}}" alt="Belum ada bukti" style="object-fit: cover; width: 95px;"></a></td>
-                                            <td>{{$order->status_pemesanan}}</td>
                                             <td>{{$order->status_pembayaran}}</td>
                                             <td>
                                                 <div style="display: inline;">
@@ -73,15 +71,6 @@
                                             <div class="modal-body">
                                             <form id="updated-form-{{$order->id}}" action="/order-update/{{$order->id}}" method="POST" enctype="multipart/form-data">
                                                 @csrf
-                                            <label for="status_pemesanan" class="form-label">Status order&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                            <input type="hidden" name="customer_id" value="{{$order->customer_id}}">
-                                                <select name="status_pemesanan" class="form-select" id="status_pemesanan" aria-label="State">
-                                                    <option hidden selected value="{{$order->status_pemesanan}}">{{$order->status_pemesanan}}</option>
-                                                    <option value=""></option>
-                                                    <option value="Menunggu konfirmasi">Menunggu konfirmasi</option>
-                                                    <option value="Diproses">Diproses</option>
-                                            </select>
-                                            <br>
                                             <label for="status_pembayaran" class="form-label">Status pembayaran</label>
                                             <input type="hidden" name="customer_id" value="{{$order->customer_id}}">
                                             <select name="status_pembayaran" class="form-select" id="status_pembayaran" aria-label="State">

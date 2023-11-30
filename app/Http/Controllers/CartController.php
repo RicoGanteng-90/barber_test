@@ -283,7 +283,7 @@ public function tambahLayanan(Request $request, $id)
                     $order->tanggal_transaksi = now();
                     $order->tanggal_pemesanan = $request->input('event_time');
                     $order->metode_pembayaran = $request->input('payment_method');
-                    $order->status_pemesanan = 'Menunggu konfirmasi';
+                    $order->status_pemesanan = 'Diproses';
                     $order->status_pembayaran = 'Belum lunas';
                     $order->total_bayar = $request->input('total_price');
                     $order->save();
