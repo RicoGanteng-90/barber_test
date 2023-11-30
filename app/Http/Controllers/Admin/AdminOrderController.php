@@ -87,11 +87,10 @@ class AdminOrderController extends Controller
     {
         $order = Kelola_pemesanan::findOrFail($id);
 
-        $orderStatus = $request->input('status_pemesanan');
         $paymentStatus = $request->input('status_pembayaran');
 
-        $order->status_pemesanan = $orderStatus;
         $order->status_pembayaran = $paymentStatus;
+
         $order->save();
 
         return back()->with('success', 'Status berhasil diupdate');
