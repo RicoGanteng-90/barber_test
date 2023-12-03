@@ -8,8 +8,9 @@
                     <div class="container-fluid px-4">
                         <h1 class="mt-4">Kelola layanan</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Layanan</li>
+                            <li class="breadcrumb-item"><a href="dashboard">Dashboard</a></li>
+                            <li class="breadcrumb-item active"><a href="layanan2">Kelola layanan</a></li>
+                            <li class="breadcrumb-item">Layanan terhapus</li>
                         </ol>
                     </div>
                 </main>
