@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Jual_barang;
+use App\Models\Kelola_barang;
 use App\Models\Kelola_penjualan;
 use Illuminate\Http\Request;
 
@@ -36,6 +37,15 @@ class PenjualanController extends Controller
             $total += $item->jumlah;
             $productNames[] = $item->barang . '(' . $item->jumlah . ')';
             $customer = $item->nama_customer;
+
+            $kelola_barang = Kelola_barang::where('nama_barang', $item->barang)->first();
+
+            if ($kelola_barang) {
+                $kelola_barang->quantity -= $item->jumlah;
+                $kelola_barang->save();
+            } else {
+                return back()->with('error', 'Barang tidak ditemukan');
+            }
         }
 
         $productList = implode(', ', $productNames);

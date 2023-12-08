@@ -67,7 +67,13 @@
                             <div class="collapse" id="pembelian" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="{{ route('adminproduct.index')}}">Transaksi barang</a>
-                                    <a class="nav-link" href="{{route('nota.filter1')}}">Laporan</a>
+
+                                    @if(Auth::user()->role_user == 'owner')
+
+                                        <a class="nav-link" href="{{route('nota.filter1')}}">Laporan</a>
+
+                                    @endif
+
                                 </nav>
                             </div>
 
@@ -80,8 +86,11 @@
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="{{ route('barang2.index')}}">Transaksi barang</a>
                                     <a class="nav-link" href="{{ route('adminlayanan.index')}}">Transaksi layanan</a>
+
+                                    @if(Auth::user()->role_user == 'owner')
                                     <a class="nav-link" href="{{route('nota.filter2')}}">Laporan Barang</a>
                                     <a class="nav-link" href="{{route('nota.filter3')}}">Laporan Layanan</a>
+                                    @endif
                                 </nav>
                             </div>
 

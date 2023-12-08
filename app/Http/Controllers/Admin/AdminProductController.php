@@ -76,6 +76,15 @@ class AdminProductController extends Controller
             $total += $item->quantity;
             $productNames[] = $item->name . '(' . $item->quantity . ')';
             $supplier = $item->supplier;
+
+            $kelola_barang = Kelola_barang::where('nama_barang', $item->name)->first();
+
+            if ($kelola_barang) {
+                $kelola_barang->quantity += $item->quantity;
+                $kelola_barang->save();
+            } else {
+                return back()->with('error', 'Barang tidak ditemukan');
+            }
         }
 
         $productList = implode(', ', $productNames);
